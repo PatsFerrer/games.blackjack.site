@@ -39,14 +39,14 @@ export default function Jogador({ jogador, index }: PropsJogador) {
 
         <div
           key={cartaIndex}
-          className="absolute bg-red-400 w-16 h-20 shadow-md rounded-md"
+          className="absolute bg-red-400 w-16 shadow-md rounded-md"
           style={{
             left: `${posicionarCartasX(index, cartaIndex)}%`,
-            top: `${50 + 50 * Math.sin((cartaIndex * 2 * Math.PI) / 30)}%`,
+            top: `${65 + 50 * Math.sin((cartaIndex * 2 * Math.PI) / 30)}%`,
             transform: `translate(-10%, -50%)`,
           }}
         >
-          <img src={cartaUrl} alt={`Carta ${cartaIndex + 1}`} className="w-16 h-20 rounded-md shadow-md" />
+          <img src={cartaUrl} alt={`Carta ${cartaIndex + 1}`} className="rounded-md shadow-md" />
         </div>
       ))}
 

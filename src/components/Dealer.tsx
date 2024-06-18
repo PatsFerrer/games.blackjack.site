@@ -23,14 +23,14 @@ export default function Dealer({ cartas }: Dealer) {
 
         <div
           key={cartaIndex}
-          className="absolute bg-red-400 w-14 h-18 shadow-md rounded-md"
+          className="absolute bg-red-400 w-14 shadow-md rounded-md"
           style={{
             left: `${-55 + -30 * Math.cos((cartaIndex * 2 * Math.PI) / 5)}%`,
             top: `${50 + 50 * Math.sin((cartaIndex * 2 * Math.PI) / 30)}%`,
             transform: `translate(-10%, -50%)`,
           }}
         >
-          <img src={cartaUrl} alt={`Carta ${cartaIndex + 1}`} className="w-14 h-18 rounded-md shadow-md" />
+          <img src={cartaUrl} alt={`Carta ${cartaIndex + 1}`} className="w-14 rounded-md shadow-md" />
         </div>
       ))}
 
