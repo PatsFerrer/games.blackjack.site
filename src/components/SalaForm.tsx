@@ -1,6 +1,27 @@
-export default function SalaForm() {
+"use client";
+import { useState } from "react";
+
+export default function SalaForm({onCreate}) {
+  const [nome, setNome] = useState("");
+  const [senha, setSenha] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const novaSala = {
+      nome: nome,
+      senha: senha,
+    }
+
+    onCreate(novaSala)
+
+    setNome("")
+    setSenha("")
+  };
+
   return (
-    <form action="">
+    <form onSubmit={handleSubmit}>
+      <h3 className="font-bold text-lg mb-5 text-center">Criar Sala</h3>
       <label className="input input-bordered flex items-center gap-2 mb-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +31,9 @@ export default function SalaForm() {
         >
           <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
         </svg>
-        <input type="text" className="grow" placeholder="Nome da sala" />
+        <input type="text" className="grow" placeholder="Nome da sala" 
+        value={nome}
+        onChange={(e) => setNome(e.target.value)}/>
       </label>
       <label className="input input-bordered flex items-center gap-2">
         <svg
@@ -25,9 +48,10 @@ export default function SalaForm() {
             clipRule="evenodd"
           />
         </svg>
-        <input type="text" className="grow" placeholder="Senha" />
+        <input type="text" className="grow" placeholder="Senha" value={senha}
+          onChange={(e) => setSenha(e.target.value)}/>
       </label>
-      <button className="btn btn-success mt-5 ">Criar</button>
+      <button type="submit" className="btn btn-success mt-5 ">Criar</button>
     </form>
   );
 }
