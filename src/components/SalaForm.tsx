@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export default function SalaForm({onCreate}) {
+export default function SalaForm({onCreate, closeModal}) {
   const [nome, setNome] = useState("");
   const [senha, setSenha] = useState("");
 
@@ -17,6 +17,7 @@ export default function SalaForm({onCreate}) {
 
     setNome("")
     setSenha("")
+    closeModal();
   };
 
   return (

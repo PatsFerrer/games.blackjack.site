@@ -1,14 +1,13 @@
 "use client";
 import { SalaForm, Salas } from "@/components";
 import { ISala } from "@/interface/ISala";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Home() {
   const [salas, setSalas] = useState<ISala[]>([]);
-
   const [isLoading, setLoading] = useState(true);
-
   const [search, setSearch] = useState("");
+  const modalRef = useRef();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,6 +44,7 @@ export default function Home() {
         setSalas([...salas, listaSalas])
       }else {
         console.error('Erro ao criar sala:', req.status, req.statusText);
+        modalRef.current.close();
       }
 
     }catch (error){
@@ -84,14 +84,14 @@ export default function Home() {
         >
           Criar nova sala
         </button>
-        <dialog id="my_modal_3" className="modal">
+        <dialog id="my_modal_3" className="modal" ref={modalRef}>
           <div className="modal-box">
             <form method="dialog">
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                 ✕
               </button>
             </form>
-            <SalaForm onCreate={handleCreateSala}/>
+            <SalaForm onCreate={handleCreateSala} closeModal={() => modalRef.current.close()}/>
           </div>
         </dialog>
       </div>
