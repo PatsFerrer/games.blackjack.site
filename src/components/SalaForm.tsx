@@ -34,7 +34,7 @@ export default function SalaForm({onCreate, closeModal}) {
         </svg>
         <input type="text" className="grow" placeholder="Nome da sala" 
         value={nome}
-        onChange={(e) => setNome(e.target.value)}/>
+        onChange={(e) => setNome(e.target.value)} required/>
       </label>
       <label className="input input-bordered flex items-center gap-2">
         <svg
@@ -50,7 +50,7 @@ export default function SalaForm({onCreate, closeModal}) {
           />
         </svg>
         <input type="text" className="grow" placeholder="Senha" value={senha}
-          onChange={(e) => setSenha(e.target.value)}/>
+          onChange={(e) => setSenha(e.target.value)} required/>
       </label>
       <button type="submit" className="btn btn-success mt-5 ">Criar</button>
     </form>
