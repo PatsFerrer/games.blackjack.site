@@ -1,10 +1,11 @@
 "use client";
 import { SalaForm, Salas } from "@/components";
+import {ISala} from "@/interface/ISala";
 import { useState } from "react";
 
 export default function SalasDisponiveis() {
 
-  const [salas, setSalas] = useState([
+  const [salas, setSalas] = useState<ISala[]>([
     {
       id: 1,
       nome: "primeira sala",
@@ -51,7 +52,7 @@ export default function SalasDisponiveis() {
         />
       </div>
 
-      <div className="p-4 flex gap-2.5 flex-wrap justify-center ">
+      <div className="p-4 flex gap-2.5 flex-wrap justify-center min-h-[450px]">
         {salas
           .filter((sala) =>
             sala.nome.toLowerCase().includes(search.toLowerCase())

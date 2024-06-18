@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { FC } from "react";
+import { ISala } from "@/interface/ISala";
 
+interface SalasProps {
+  sala: ISala;
+}
 
-export default function Salas({sala}) {
+const Salas: FC<SalasProps> = ({ sala }) => {
   return (
-      <div className="card w-72 bg-base-100 shadow-xl image-full" key={sala.id}>
+      <div className="card max-w-72 max-h-52 bg-base-100 shadow-xl image-full" key={sala.id}>
         <figure>
           <img
             src="https://images.unsplash.com/photo-1646809014367-2c267bcba69f?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -19,3 +23,5 @@ export default function Salas({sala}) {
     </div>
   );
 }
+
+export default Salas;
