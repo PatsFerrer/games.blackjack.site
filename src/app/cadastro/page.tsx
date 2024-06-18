@@ -1,5 +1,7 @@
 export default function Cadastro() {
   return (
-    <div>Página de Cadastro</div>
+    <div> tela de cadastro" </div>
+      
   )
 }
+  
