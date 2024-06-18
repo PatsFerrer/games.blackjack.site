@@ -1,7 +1,9 @@
-import { Jogador, Dealer } from "@/components";
+import Link from "next/link";
 import { FaArrowLeft, FaShareAlt } from "react-icons/fa";
 import { GiCardPickup } from "react-icons/gi";
 import { TbHandStop } from "react-icons/tb";
+
+import { Jogador, Dealer } from "@/components";
 
 export default function Mesa() {
 
@@ -18,8 +20,8 @@ export default function Mesa() {
 
     <main className="flex justify-center items-center min-h-screen bg-green-800">
 
-      <a href="/home" className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 left-5"><FaArrowLeft /></a>
-      <a href="/home" className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 left-5"><FaArrowLeft />Deixar a mesa</a>
+      <Link href="/home" className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 left-5"><FaArrowLeft /></Link>
+      <Link href="/home" className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 left-5"><FaArrowLeft />Deixar a mesa</Link>
 
       <button className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 right-5"><FaShareAlt /></button>
       <button className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 right-5">Convidar amigos<FaShareAlt /></button>
