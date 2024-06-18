@@ -1,11 +1,9 @@
-//import Jogador from '@/components/Jogador';
-//import Botao from './Botao';
+import Jogador from '@/components/Jogador';
 import Navbar from './Navbar';
-//import Dealer from './Dealer';
+import Dealer from './Dealer';
 
 export {
-  //Jogador,
-  //Botao,
+  Jogador,
   Navbar,
-  //Dealer
+  Dealer
 }
