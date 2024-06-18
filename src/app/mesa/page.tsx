@@ -51,6 +51,12 @@ export default function Mesa() {
           ))}
 
         </div>
+
+        {/* deck */}
+        <div className="relative bg-red-400 w-14 h-18 shadow-md rounded-md left-[65.33%] top-[-31.66%] ">
+          <img src="./cartas/BACK.png" alt="Cartas" className="w-14 h-18 rounded-md shadow-md" />
+        </div>
+
       </div>
       {/* Mesa fim */}
 
