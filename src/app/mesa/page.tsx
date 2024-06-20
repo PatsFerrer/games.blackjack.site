@@ -1,11 +1,18 @@
+'use client';
 import Link from "next/link";
 import { FaArrowLeft, FaShareAlt } from "react-icons/fa";
 import { GiCardPickup } from "react-icons/gi";
 import { TbHandStop } from "react-icons/tb";
+// import { useState, useEffect } from "react";
 
 import { Jogador, Dealer } from "@/components";
+// import { IJogador } from "@/interface/IJogador";
 
 export default function Mesa() {
+
+  // TODO: Implementar jogadores vindo da API
+  // const [jogadores2, setJogadores2] = useState<IJogador[]>([]);
+  // const [isLoading, setLoading] = useState(true);
 
   // jogadores mock
   const jogadores = [

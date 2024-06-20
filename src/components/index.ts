@@ -1,4 +1,4 @@
-import Jogador from '@/components/Jogador';
+import Jogador from './Jogador';
 import Navbar from './Navbar';
 import Dealer from './Dealer';
 

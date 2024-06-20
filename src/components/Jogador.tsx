@@ -1,16 +1,17 @@
-type Jogador = {
-  imagemUrl?: string;
-  nome?: string;
-  fichas?: number;
-  cartas?: string[];
-}
+import { IJogador } from "@/interface/IJogador"
+// type Jogador = {
+//   imagemUrl?: string;
+//   nome?: string;
+//   fichas?: number;
+//   cartas?: string[];
+// }
 
-interface PropsJogador {
-  jogador: Jogador;
-  index: number;
-}
+// interface PropsJogador {
+//   jogador: Jogador;
+//   index: number;
+// }
 
-export default function Jogador({ jogador, index }: PropsJogador) {
+export default function Jogador({ jogador, index }: IJogador) {
 
   let { imagemUrl, nome, fichas, cartas } = jogador;
 
