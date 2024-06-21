@@ -35,7 +35,8 @@ const handler = NextAuth({
           if (!authData.token || !authData.usuario) return null;
 
           cookies().set('token', authData.token);
-
+          cookies().set('user', JSON.stringify(authData.usuario));
+      
           return {
             id: authData.usuario.id,
             login: authData.usuario.login,
@@ -50,17 +51,27 @@ const handler = NextAuth({
   ],
 
   // pra aparecer o nome do nosso usuario, tem que configurar o callback
-  
+
   // callbacks: {
 
+  //   async signIn({ user, account, profile, email, credentials }) {
+  //     // console.log(user);
+
+  //     return true
+  //   },
+  //   async session({ session, user, token }) {
+  //    // console.log('session:', session);
+
+  //     return session
+
+  //   },
   //   async jwt({ token, user, account, profile }) {
-  //     console.log('token', token)
+  //     // console.log(user);
 
   //     return token
   //   }
 
   // }
-
 
 })
 
