@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 //import Dealer from './Dealer';
 import FormLogin from './FormLogin';
 import LogoutButton from './LogoutButton';
+import FormCadastro from './FormCadastro';
 
 export {
   //Jogador,
@@ -12,4 +13,5 @@ export {
   //Dealer,
   FormLogin,
   LogoutButton,
+  FormCadastro
 }
