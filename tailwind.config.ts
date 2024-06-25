@@ -10,10 +10,14 @@ const config: Config = {
     extend: {
       // configurar nossas cores
       colors: {
-        black: {
-          DEFAULT: "#000",
-          100: '#000319'
-        },
+        // black: {
+        //   DEFAULT: "#000",
+        //   100: '#000319'
+        // },
+        devland: {
+          DEFAULT: "#b21750",
+          200: "#9f1347"
+        }
       }
     },
   },

@@ -24,10 +24,10 @@ export default async function Navbar() {
       <ListPathPages />
 
       {/* dropdown do perfil */}
-      <div className="dropdown dropdown-end">
-        <div tabIndex={0} role="button" className="btn flex flex-col">
+      <div className="dropdown dropdown-end bg-bla">
+        <div tabIndex={0} role="button" className="btn flex flex-col bg-devland hover:bg-devland-200">
           <div>{login}</div>
-          <div className="badge badge-neutral ">
+          <div className="badge badge-neutral">
             <span>$30000</span> {/* colocar qtd de fichas */}
           </div>
 
