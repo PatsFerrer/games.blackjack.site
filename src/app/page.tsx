@@ -7,9 +7,9 @@ export default function Home() {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm bg-white p-6 shadow-md rounded-lg">
         <div>
           <img
-            className="mx-auto h-10 w-auto "
-            src="/img/esx-logo.png"
-            alt="Your Company"
+            className="mx-auto h-10 w-auto shadow-inherit"
+            src="/img/logo-devland_dark.png"
+            alt="Logo da DevLand"
           />
         </div>
         <h2 className="mt-6 text-2xl text-center font-bold text-gray-900">
@@ -23,7 +23,7 @@ export default function Home() {
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Ainda não possui cadastro?{' '}
-          <Link href="/cadastro" className="font-medium text-indigo-600 hover:text-indigo-500">
+          <Link href="/cadastro" className="font-medium text-devland hover:text-devland-200">
             Cadastre-se
           </Link>
         </p>

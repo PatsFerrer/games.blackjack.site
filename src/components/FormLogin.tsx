@@ -45,7 +45,7 @@ export default function FormLogin() {
           <label htmlFor="senha" className="block text-sm font-medium text-gray-900">
             Senha
           </label>
-          <Link href="#" className="text-sm font-semibold text-indigo-600 hover:text-indigo-500">
+          <Link href="#" className="text-sm font-semibold text-devland hover:text-devland-200">
             Esqueceu a senha?
           </Link>
         </div>
@@ -62,7 +62,7 @@ export default function FormLogin() {
       <div className="mt-6">
         <button
           type="submit"
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-devland hover:bg-devland-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           Entrar
         </button>
