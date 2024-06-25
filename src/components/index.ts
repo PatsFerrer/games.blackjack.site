@@ -5,6 +5,8 @@ import Navbar from './Navbar';
 import FormLogin from './FormLogin';
 import LogoutButton from './LogoutButton';
 import FormCadastro from './FormCadastro';
+import ListPathPages from './ListPathPages';
+import ListarPessoasButton from './ListarPessoasButton';
 
 export {
   //Jogador,
@@ -13,5 +15,7 @@ export {
   //Dealer,
   FormLogin,
   LogoutButton,
-  FormCadastro
+  FormCadastro,
+  ListPathPages,
+  ListarPessoasButton
 }

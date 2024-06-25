@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
-import ListPathPages from "./ListPathPages";
 import LogoutButton from "./LogoutButton";
-import ListarPessoasButton from "./ListarPessoasButton";
+import Image from "next/image";
+
+import { ListPathPages, ListarPessoasButton } from "@/components";
 
 export default async function Navbar() {
   const user = JSON.parse(cookies().get("user")!.value);
@@ -13,10 +14,12 @@ export default async function Navbar() {
     <nav className="navbar bg-[#111111] border-gray-200 gap-5 shadow-md ">
       <div className="flex-1">
         <Link href="/home">
-          <img
-            src="./img/logo-devland-horiz.png"
-            alt="Logo ESX"
+          <Image
+            src="/img/logo-devland-horiz.png"
+            alt="Logo Devland"
             className="h-6"
+            width={182}
+            height={24}
           />
         </Link>
       </div>
@@ -26,7 +29,7 @@ export default async function Navbar() {
       {/* dropdown do perfil */}
       <div className="dropdown dropdown-end bg-bla">
         <div tabIndex={0} role="button" className="btn flex flex-col bg-devland hover:bg-devland-200">
-          <div>{login}</div>
+          <div className="text-white">{login}</div>
           <div className="badge badge-neutral">
             <span>$30000</span> {/* colocar qtd de fichas */}
           </div>
@@ -38,7 +41,13 @@ export default async function Navbar() {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="w-10 rounded-full">
-                <img alt={`Foto de ${login}`} src={avatar} />
+                <Image
+                  alt={`Foto de ${login}`}
+                  src={avatar}
+                  width={500}
+                  height={500}
+                  quality={100}
+                />
               </div>
             </div>
             <ul
@@ -70,7 +79,7 @@ export default async function Navbar() {
       </div>
 
       {/* trofeu */}
-      <ListarPessoasButton/>
+      <ListarPessoasButton />
     </nav>
   );
 }
