@@ -14,12 +14,9 @@ const config: Config = {
         terciary: "var(--terciary-color)",
         jackWhite: "var(--jackWhite)",
         jackBlack: "var(--jackBlack)",
-        // black: {
-        //   DEFAULT: "#000",
-        //   100: '#000319'
-        // },
         devland: {
-          DEFAULT: "#b21750",
+          DEFAULT: "#DF0B56",
+          100: "#b21750",
           200: "#9f1347"
         }
       }

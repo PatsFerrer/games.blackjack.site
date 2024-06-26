@@ -39,7 +39,7 @@ export default async function Navbar() {
 
       {/* dropdown do perfil */}
       <div className="dropdown dropdown-end bg-bla">
-        <div tabIndex={0} role="button" className="btn flex flex-col bg-devland hover:bg-devland-200">
+        <div tabIndex={0} role="button" className="btn flex flex-col bg-devland hover:bg-devland-100">
           <div className="text-white">{login}</div>
           <div className="badge badge-neutral">
             <span>$30000</span> {/* colocar qtd de fichas */}
