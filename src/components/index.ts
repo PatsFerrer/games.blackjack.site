@@ -1,7 +1,6 @@
-//import Jogador from '@/components/Jogador';
-//import Botao from './Botao';
+import Jogador from './Jogador';
 import Navbar from './Navbar';
-//import Dealer from './Dealer';
+import Dealer from './Dealer';
 import FormLogin from './FormLogin';
 import LogoutButton from './LogoutButton';
 import FormCadastro from './FormCadastro';
@@ -10,10 +9,9 @@ import ListarPessoasButton from './ListarPessoasButton';
 import Loading from './Loading';
 
 export {
-  //Jogador,
-  //Botao,
+  Jogador,
   Navbar,
-  //Dealer,
+  Dealer
   FormLogin,
   LogoutButton,
   FormCadastro,
