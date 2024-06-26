@@ -2,8 +2,13 @@
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+
+import Loading from "./Loading";
 
 export default function FormLogin() {
+
+  const [loading, setLoading] = useState(false);
 
   const searchParams = useSearchParams();
   const error = searchParams.get('error');
@@ -61,10 +66,11 @@ export default function FormLogin() {
 
       <div className="mt-6">
         <button
+          onClick={() => setLoading(true)}
           type="submit"
           className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-devland hover:bg-devland-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
-          Entrar
+          {loading ? <Loading /> : "Entrar"}
         </button>
         {error === 'CredentialsSignin' && <div className="text-red-600 text-center pt-2">Credenciais inválidas. Por favor, verifique seu username e senha e tente novamente.
         </div>}

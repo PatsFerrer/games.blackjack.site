@@ -1,13 +1,18 @@
 'use client';
-import cadastro from "@/app/cadastro/_actions/cadastro";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+
+import cadastro from "@/app/cadastro/_actions/cadastro";
+import Loading from "./Loading";
 
 export default function FormCadastro() {
 
+  const [loading, setLoading] = useState(false);
+
   return (
     <div className="mx-auto w-full max-w-sm bg-white p-6 shadow-md rounded-lg mt-4 mb-4">
-      
+
       <div className="avatar flex flex-col gap-2 items-center justify-center">
         <div className="w-24 rounded-full">
           <Image src="/img/logo-circ_black_05x.png" width={150} height={150} alt="Logo da Devland" />
@@ -19,7 +24,7 @@ export default function FormCadastro() {
         Realize seu cadastro
       </h3>
 
-     <form action={cadastro} className="mt-2 space-y-3">
+      <form action={cadastro} className="mt-2 space-y-3">
         <div>
           <label htmlFor="login" className="block text-sm font-medium text-gray-900">
             Username
@@ -110,10 +115,11 @@ export default function FormCadastro() {
 
         <div className="mt-6">
           <button
+            onClick={() => setLoading(true)}
             type="submit"
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-devland hover:bg-devland-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            Cadastrar
+            {loading ? <Loading /> : "Cadastrar"}
           </button>
         </div>
       </form>
