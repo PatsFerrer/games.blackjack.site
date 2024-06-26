@@ -5,6 +5,7 @@ import Image from "next/image";
 import { LogoutButton } from "@/components";
 import ServerFunction from "@/components/ServerFunction";
 import { cookies } from "next/headers";
+import validarImagem from "@/utils/imageUtil";
 
 export default async function PaginaInicial() {
 
@@ -26,7 +27,7 @@ export default async function PaginaInicial() {
 
       <Image
         alt={`Foto de ${login}`}
-        src={avatar ? avatar : "/img/logo-circ_black_05x.png"}
+        src={validarImagem(avatar)}
         width={200}
         height={200}
         quality={100}

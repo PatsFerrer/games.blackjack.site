@@ -5,6 +5,7 @@ import Image from "next/image";
 
 import { ListPathPages, ListarPessoasButton } from "@/components";
 import { redirect } from "next/navigation";
+import validarImagem from "@/utils/imageUtil";
 
 export default async function Navbar() {
 
@@ -53,7 +54,7 @@ export default async function Navbar() {
               <div className="w-10 rounded-full">
                 <Image
                   alt={`Foto de ${login}`}
-                  src={avatar ? avatar : "/img/logo-circ_black_05x.png"}
+                  src={validarImagem(avatar)}
                   width={500}
                   height={500}
                   quality={100}
