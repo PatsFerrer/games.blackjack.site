@@ -1,5 +1,6 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 import { LogoutButton } from "@/components";
 import ServerFunction from "@/components/ServerFunction";
@@ -23,9 +24,13 @@ export default async function PaginaInicial() {
       <h1>Olá, {login} </h1>
       <h1>email: {email} </h1>
 
-      <div className="w-10 rounded-full ">
-        <img src={avatar} alt={`avatar de ${login}`} />
-      </div>
+      <Image
+        alt={`Foto de ${login}`}
+        src={avatar ? avatar : "/img/logo-circ_black_05x.png"}
+        width={200}
+        height={200}
+        quality={100}
+      />
 
       <div>
         <LogoutButton />
