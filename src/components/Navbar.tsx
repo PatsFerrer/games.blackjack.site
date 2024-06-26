@@ -4,9 +4,19 @@ import LogoutButton from "./LogoutButton";
 import Image from "next/image";
 
 import { ListPathPages, ListarPessoasButton } from "@/components";
+import { redirect } from "next/navigation";
 
 export default async function Navbar() {
-  const user = JSON.parse(cookies().get("user")!.value);
+
+  let user;
+
+  try {
+    user = JSON.parse(cookies().get("user")!.value);
+
+  } catch (error) {
+    console.error(error, "user perdeu seu cookie!");
+    redirect('/');
+  }
 
   const { login, avatar, email } = user;
 
@@ -43,7 +53,7 @@ export default async function Navbar() {
               <div className="w-10 rounded-full">
                 <Image
                   alt={`Foto de ${login}`}
-                  src={avatar}
+                  src={avatar ? avatar : "/img/logo-circ_black_05x.png"}
                   width={500}
                   height={500}
                   quality={100}
