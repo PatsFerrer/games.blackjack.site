@@ -10,10 +10,14 @@ const config: Config = {
     extend: {
       // configurar nossas cores
       colors: {
-        black: {
-          DEFAULT: "#000",
-          100: '#000319'
-        },
+        // black: {
+        //   DEFAULT: "#000",
+        //   100: '#000319'
+        // },
+        devland: {
+          DEFAULT: "#b21750",
+          200: "#9f1347"
+        }
       }
     },
   },
@@ -28,7 +32,7 @@ const config: Config = {
     styled: true, // include daisyUI colors and design decisions for all components
     utils: true, // adds responsive and modifier utility classes
     prefix: "", // prefix for daisyUI classnames (components, modifiers and responsive class names. Not colors)
-    logs: true, // Shows info about daisyUI version and used config in the console when building your CSS
+    logs: false, // Shows info about daisyUI version and used config in the console when building your CSS
     themeRoot: ":root", // The element that receives theme color CSS variables
   },
 };
