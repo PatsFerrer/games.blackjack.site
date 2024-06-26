@@ -25,7 +25,7 @@ export default function ListarPessoasButton() {
   }, []);
 
   return (
-    <div>
+    <div className="">
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle mr-4">
         <div className="indicator">
           <div className="drawer-content">
@@ -41,7 +41,7 @@ export default function ListarPessoasButton() {
         </div>
       </div>
 
-      <div className="drawer drawer-end">
+      <div className="drawer drawer-end z-50 absolute">
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
         <div className="drawer-side">
           <label
