@@ -6,7 +6,7 @@ export default async function ServerFunction() {
   async function fetchFunctions() {
 
     'use server';
-    const URL = 'http://localhost:7071/api/ComprarCarta'
+    const URL = 'http://localhost:7071/api/salas'
     const response = await fetchServer(URL);
 
     if (response.status === 200) return { error: response.statusText }

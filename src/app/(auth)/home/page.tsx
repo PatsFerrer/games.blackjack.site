@@ -1,45 +1,18 @@
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-import Image from "next/image";
+import { ISala } from "@/interface/ISala";
+import HomeClient from "@/components/HomeClient";
 
-import { LogoutButton } from "@/components";
-import ServerFunction from "@/components/ServerFunction";
-import { cookies } from "next/headers";
-import validarImagem from "@/utils/imageUtil";
-
-export default async function PaginaInicial() {
-
-  const session = await getServerSession();
-
-  const user = JSON.parse(cookies().get('user')!.value)
-
-  const { login, avatar, email } = user;
-
-  if (!session) {
-    redirect('/')
+export default async function Home() {
+  let salas: ISala[] = [];
+  try {
+    const res = await fetch("https://66718da9e083e62ee43c1800.mockapi.io/salas-disponiveis/salas", { method: "GET" });
+    salas = await res.json();
+  } catch (error) {
+    console.error("Failed to fetch salas", error);
   }
 
   return (
-    <div className="">Página inicial
-      <h1 className="text-2xl">Todas as mesas</h1>
-      <h1>Olá, {login} </h1>
-      <h1>email: {email} </h1>
-
-      <Image
-        alt={`Foto de ${login}`}
-        src={validarImagem(avatar)}
-        width={200}
-        height={200}
-        quality={100}
-      />
-
-      <div>
-        <LogoutButton />
-      </div>
-      <div>
-        {/* acessando o Function1 */}
-        <ServerFunction />
-      </div>
+    <div className="p-14 flex flex-col min-h-screen bg-primary">
+      <HomeClient salas={salas} />
     </div>
-  )
+  );
 }
