@@ -1,5 +1,7 @@
 import Jogador from './Jogador';
 import Navbar from './Navbar';
+import Salas from './Salas';
+import SalaForm from './SalaForm';
 import Dealer from './Dealer';
 import FormLogin from './FormLogin';
 import LogoutButton from './LogoutButton';
@@ -11,7 +13,9 @@ import Loading from './Loading';
 export {
   Jogador,
   Navbar,
-  Dealer
+  Salas,
+  SalaForm,
+  Dealer,
   FormLogin,
   LogoutButton,
   FormCadastro,

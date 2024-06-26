@@ -8,8 +8,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      // configurar nossas cores
       colors: {
+        primary: "var(--primary-color)",
+        secondary: "var(--secondary-color)",
+        terciary: "var(--terciary-color)",
+        jackWhite: "var(--jackWhite)",
+        jackBlack: "var(--jackBlack)",
         // black: {
         //   DEFAULT: "#000",
         //   100: '#000319'
