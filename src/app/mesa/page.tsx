@@ -6,9 +6,17 @@ import { TbHandStop } from "react-icons/tb";
 // import { useState, useEffect } from "react";
 
 import { Jogador, Dealer } from "@/components";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
 // import { IJogador } from "@/interface/IJogador";
 
-export default function Mesa() {
+export default async function Mesa() {
+
+  const session = await getServerSession();
+
+  if (!session) {
+    redirect('/')
+  }
 
   // TODO: Implementar jogadores vindo da API
   // const [jogadores2, setJogadores2] = useState<IJogador[]>([]);

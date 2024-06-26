@@ -1,7 +1,16 @@
 import { ISala } from "@/interface/ISala";
 import HomeClient from "@/components/HomeClient";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
 
 export default async function Home() {
+
+  const session = await getServerSession();
+
+  if (!session) {
+    redirect('/')
+  }
+
   let salas: ISala[] = [];
   try {
     const res = await fetch("https://66718da9e083e62ee43c1800.mockapi.io/salas-disponiveis/salas", { method: "GET" });
