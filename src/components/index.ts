@@ -7,6 +7,7 @@ import LogoutButton from './LogoutButton';
 import FormCadastro from './FormCadastro';
 import ListPathPages from './ListPathPages';
 import ListarPessoasButton from './ListarPessoasButton';
+import Loading from './Loading';
 
 export {
   //Jogador,
@@ -17,5 +18,6 @@ export {
   LogoutButton,
   FormCadastro,
   ListPathPages,
-  ListarPessoasButton
+  ListarPessoasButton,
+  Loading
 }
