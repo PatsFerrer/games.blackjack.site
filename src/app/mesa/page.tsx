@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 import Link from "next/link";
 import { FaArrowLeft, FaShareAlt } from "react-icons/fa";
 import { GiCardPickup } from "react-icons/gi";

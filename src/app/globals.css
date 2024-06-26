@@ -9,3 +9,9 @@
     --jackWhite: #FEFEFE;
     --jackBlack: #000201;
 }
+
+@layer components {
+    .active {
+      @apply underline underline-offset-8;
+    }
+  }
