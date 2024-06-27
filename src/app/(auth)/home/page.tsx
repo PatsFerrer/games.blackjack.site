@@ -1,7 +1,8 @@
-import { ISala } from "@/interface/ISala";
-import HomeClient from "@/components/HomeClient";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
+
+import { HomeClient } from "@/components";
+import { ISala } from "@/interface/ISala";
 
 export default async function Home() {
 
