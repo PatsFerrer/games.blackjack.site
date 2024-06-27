@@ -1,9 +1,9 @@
-//teste pra bater no endpoint Function1
-import { fetchServer } from '../libs/fetchServer/index';
+//teste pra bater no endpoint das salas, exemplo antigo
+import { fetchServer } from '@/libs/fetchServer';
 
-export default async function ServerFunction() {
+export default async function GetSalas() {
 
-  async function fetchFunctions() {
+  async function fetchSalas() {
 
     'use server';
     const URL = 'http://localhost:7071/api/salas'
@@ -13,7 +13,7 @@ export default async function ServerFunction() {
     return response.json();
   }
 
-  const funcao = await fetchFunctions();
+  const funcao = await fetchSalas();
 
   return (
     <div>
