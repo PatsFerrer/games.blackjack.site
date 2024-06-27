@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import LogoutButton from "./LogoutButton";
 import Image from "next/image";
 
-import { ListPathPages, ListarPessoasButton } from "@/components";
+import { ListarPessoasButton } from "@/components";
 import { redirect } from "next/navigation";
 import validarImagem from "@/utils/imageUtil";
 
@@ -35,8 +35,6 @@ export default async function Navbar() {
         </Link>
       </div>
 
-      <ListPathPages />
-
       {/* dropdown do perfil */}
       <div className="dropdown dropdown-end bg-bla">
         <div tabIndex={0} role="button" className="btn flex flex-col bg-devland hover:bg-devland-100">
@@ -65,14 +63,9 @@ export default async function Navbar() {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <li className="md:hidden">
+              <li className="">
                 <Link href="/home" className="justify-between">
                   Início
-                </Link>
-              </li>
-              <li className="md:hidden">
-                <Link href="/criar-sala" className="justify-between">
-                  Criar Sala
                 </Link>
               </li>
 
