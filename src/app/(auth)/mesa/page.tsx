@@ -1,13 +1,10 @@
-// 'use client';
 import Link from "next/link";
-import { FaArrowLeft, FaShareAlt } from "react-icons/fa";
-import { GiCardPickup } from "react-icons/gi";
-import { TbHandStop } from "react-icons/tb";
-// import { useState, useEffect } from "react";
-
-import { Jogador, Dealer } from "@/components";
-import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
+import { FaArrowLeft, FaShareAlt } from "react-icons/fa";
+import { TbHandStop } from "react-icons/tb";
+
+import { Jogador, Dealer, ComprarCartaButton } from "@/components";
+import { redirect } from "next/navigation";
 // import { IJogador } from "@/interface/IJogador";
 
 export default async function Mesa() {
@@ -35,11 +32,11 @@ export default async function Mesa() {
 
     <main className="flex justify-center items-center min-h-screen bg-green-800">
 
-      <Link href="/home" className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 left-5"><FaArrowLeft /></Link>
-      <Link href="/home" className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 left-5"><FaArrowLeft />Deixar a mesa</Link>
+      <Link href="/home" className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute top-20 left-5"><FaArrowLeft /></Link>
+      <Link href="/home" className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute top-20 left-5"><FaArrowLeft />Deixar a mesa</Link>
 
-      <button className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 right-5"><FaShareAlt /></button>
-      <button className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 right-5">Convidar amigos<FaShareAlt /></button>
+      <button className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute top-20 right-5"><FaShareAlt /></button>
+      <button className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute top-20 right-5">Convidar amigos<FaShareAlt /></button>
 
       {/* Mesa */}
       <div className="relative w-4/5 h-96 border border-indigo-100 rounded-3xl md:max-w-[950px] bg-blue-950 shadow-sm shadow-slate-900 hover:shadow-lg">
@@ -78,8 +75,7 @@ export default async function Mesa() {
       {/* Mesa fim */}
 
       {/* chama funçao comprar carta */}
-      <button className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute bottom-10 right-20"><GiCardPickup /></button>
-      <button className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute bottom-10 right-32"><GiCardPickup />Comprar</button>
+      <ComprarCartaButton />
 
       {/* chama a função Parar */}
       <button className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute bottom-10 right-5"><TbHandStop /></button>
