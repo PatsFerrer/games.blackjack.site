@@ -45,14 +45,34 @@ export default function HomeClient({ salas }: HomeClientProps) {
 
   return (
     <>
-      <div className="flex justify-center">
-        <input
-          type="text"
-          placeholder="Pesquisar sala..."
-          className="input input-bordered w-full max-w-md ml-auto mr-auto mb-5"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
+      <div className="justify-center items-center sm:flex">
+        <div className="flex justify-center">
+          <input
+            type="text"
+            placeholder="Pesquisar sala..."
+            className="input input-bordered min-w-80 ml-auto mr-auto"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+        <div className="flex justify-center items-end m-3">
+          <button
+            className="btn bg-jackWhite"
+            onClick={() => modalRef.current?.showModal()}
+          >
+            Criar nova sala
+          </button>
+          <dialog id="my_modal_3" className="modal" ref={modalRef}>
+            <div className="modal-box">
+              <form method="dialog">
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                  ✕
+                </button>
+              </form>
+              <SalaForm onCreate={handleCreateSala} closeModal={() => modalRef.current?.close()} />
+            </div>
+          </dialog>
+        </div>
       </div>
 
       <div className="p-4 flex gap-2.5 flex-wrap justify-center min-h-[450px]">
@@ -68,25 +88,6 @@ export default function HomeClient({ salas }: HomeClientProps) {
               sala.nome.toLowerCase().includes(search.toLowerCase())
             )
             .map((sala) => <Salas key={sala.id} sala={sala} />)}
-      </div>
-
-      <div className="flex justify-center items-end m-3">
-        <button
-          className="btn btn-wide bg-jackWhite"
-          onClick={() => modalRef.current?.showModal()}
-        >
-          Criar nova sala
-        </button>
-        <dialog id="my_modal_3" className="modal" ref={modalRef}>
-          <div className="modal-box">
-            <form method="dialog">
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                ✕
-              </button>
-            </form>
-            <SalaForm onCreate={handleCreateSala} closeModal={() => modalRef.current?.close()} />
-          </div>
-        </dialog>
       </div>
     </>
   );

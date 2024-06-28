@@ -8,7 +8,7 @@ interface SalasProps {
 
 const Salas: FC<SalasProps> = ({ sala }) => {
   return (
-    <div className="card max-w-72 max-h-52 bg-base-100 shadow-xl image-full" key={sala.id}>
+    <div className="card max-w-48 max-h-52 bg-base-100 shadow-xl image-full sm:max-w-72" key={sala.id}>
       <figure>
         <img
           src="https://images.unsplash.com/photo-1646809014367-2c267bcba69f?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -16,9 +16,10 @@ const Salas: FC<SalasProps> = ({ sala }) => {
         />
       </figure>
       <div className="card-body justify-center">
-        <h2 className="card-title h-full text-2xl">{sala.nome}</h2>
+        <h2 className="card-title h-full 
+        text-base sm:text-2xl">{sala.nome}</h2>
         <div className="card-actions justify-end items-end">
-          <button className="btn text-terciary border-none">Juntar-se</button>
+          <button className="bg-white p-2 text-xs text-terciary border-none sm:p-4 sm:text-sm rounded-md">Juntar-se</button>
         </div>
       </div>
     </div>
