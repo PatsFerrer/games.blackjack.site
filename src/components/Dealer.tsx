@@ -1,13 +1,9 @@
 type Dealer = {
   cartas?: string[];
-}
+};
 
 export default function Dealer({ cartas }: Dealer) {
-
-  const cartasMock = [
-    "./cartas/2-D.png",
-    "./cartas/BACK.png"
-  ]
+  const cartasMock = ["./../cartas/2-D.png", "./../cartas/BACK.png"];
 
   return (
     <div
@@ -20,7 +16,6 @@ export default function Dealer({ cartas }: Dealer) {
     >
       {/* Cartas do Dealer */}
       {cartasMock.map((cartaUrl, cartaIndex) => (
-
         <div
           key={cartaIndex}
           className="absolute bg-red-400 w-14 shadow-md rounded-md"
@@ -30,15 +25,19 @@ export default function Dealer({ cartas }: Dealer) {
             transform: `translate(-10%, -50%)`,
           }}
         >
-          <img src={cartaUrl} alt={`Carta ${cartaIndex + 1}`} className="w-14 rounded-md shadow-md" />
+          <img
+            src={cartaUrl}
+            alt={`Carta ${cartaIndex + 1}`}
+            className="w-14 rounded-md shadow-md"
+          />
         </div>
       ))}
 
       <img
         className="object-cover aspect-square rounded-full"
-        src="./dealer.png"
-        alt={'Foto de Dealer'}
+        src="./../dealer.png"
+        alt={"Foto de Dealer"}
       />
     </div>
-  )
+  );
 }

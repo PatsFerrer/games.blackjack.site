@@ -21,7 +21,7 @@ export default async function Home() {
   }
 
   return (
-    <div className="p-14 flex flex-col min-h-screen bg-primary">
+    <div className="p-14 flex flex-col min-h-screen bg-secondary">
       <HomeClient salas={salas} />
     </div>
   );

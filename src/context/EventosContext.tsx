@@ -1,5 +1,5 @@
 'use client'
-import React, { createContext, useState, ReactNode } from 'react';
+import React, { createContext, useState, ReactNode, useContext } from 'react';
 
 interface EventosContextType {
   eventos: string[];
@@ -21,3 +21,8 @@ export const EventosProvider: React.FC<EventosProviderProps> = ({ children }) =>
     </EventosContext.Provider>
   );
 };
+
+export const useEventosContext = () : EventosContextType => {
+  const context = useContext(EventosContext);
+  return context!
+}

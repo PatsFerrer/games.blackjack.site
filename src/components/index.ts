@@ -10,6 +10,7 @@ import Loading from './Loading';
 import Salas from './Salas';
 import HomeClient from './HomeClient';
 import ComprarCartaButton from './ComprarCartaButton';
+import Mesa from './Mesa';
 
 export {
   Jogador,
@@ -23,5 +24,6 @@ export {
   ListarPessoasButton,
   Loading,
   HomeClient,
-  ComprarCartaButton
+  ComprarCartaButton,
+  Mesa
 }
