@@ -1,6 +1,8 @@
 // src/components/Salas.tsx
 import { FC } from "react";
 import { ISala } from "@/interface/ISala";
+import Link from "next/link";
+
 
 interface SalasProps {
   sala: ISala;
@@ -19,7 +21,7 @@ const Salas: FC<SalasProps> = ({ sala }) => {
         <h2 className="card-title h-full 
         text-base sm:text-2xl">{sala.nome}</h2>
         <div className="card-actions justify-end items-end">
-          <button className="bg-white p-2 text-xs text-terciary border-none sm:p-4 sm:text-sm rounded-md">Juntar-se</button>
+          <Link className="bg-white p-2 text-xs text-terciary border-none sm:p-4 sm:text-sm rounded-md" href={`/mesa/${sala.id}`}>Juntar-se</Link>
         </div>
       </div>
     </div>

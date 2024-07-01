@@ -14,7 +14,7 @@ export default async function Home() {
 
   let salas: ISala[] = [];
   try {
-    const res = await fetch("https://66718da9e083e62ee43c1800.mockapi.io/salas-disponiveis/salas", { method: "GET" });
+    const res = await fetch(`${process.env.API_URL}/salas`, { method: "GET" });
     salas = await res.json();
   } catch (error) {
     console.error("Failed to fetch salas", error);

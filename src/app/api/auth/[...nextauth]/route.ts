@@ -19,7 +19,7 @@ const handler = NextAuth({
         }
 
         try {
-          const response = await fetch('http://localhost:7071/api/auth/login', {
+          const response = await fetch(`${process.env.API_URL}/auth/login`, {
             method: 'POST',
             body: JSON.stringify({
               login: credentials.login, //back usa login e nao email

@@ -13,7 +13,7 @@ export default async function cadastro(FormData: FormData) {
     throw new Error('Preencha todos os campos');
   }
 
-  const response = await fetch('http://localhost:7071/api/auth/cadastro', {
+  const response = await fetch(`${process.env.API_URL}/auth/cadastro`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
