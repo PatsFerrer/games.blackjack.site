@@ -11,6 +11,8 @@ export default async function Sala({ params }: { params: { salaId: string } }) {
   if (!session) {
     redirect("/");
   }
+  //  console.log(params);
+  
 
   // TODO: Implementar jogadores vindo da API
   // const [jogadores2, setJogadores2] = useState<IJogador[]>([]);

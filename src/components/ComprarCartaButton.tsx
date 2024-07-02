@@ -5,11 +5,14 @@ import { comprarCarta } from '@/app/api/endpoints';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { GiCardPickup } from 'react-icons/gi';
+import { useParams } from 'next/navigation';
 
 const ComprarCartaButton = () => {
+  const { salaId } = useParams<{ salaId: string }>();
+
   const handleCompraCarta = async () => {
     try {
-      const result = await comprarCarta();
+      const result = await comprarCarta(salaId);
       if (result.success) {
         console.log('Compra de carta realizada com sucesso');
       } else {
