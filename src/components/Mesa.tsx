@@ -73,7 +73,7 @@ const Mesa: React.FC = () => {
 
   return (
     <main className="flex justify-center items-center min-h-screen bg-green-800">
-      {isLoading ? (<div>Imagine um loading girando</div>) : (<>
+      {isLoading ? (<span className="loading loading-dots loading-lg text-white"></span>) : (<>
         <Link
           href="/home"
           className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 left-5"
