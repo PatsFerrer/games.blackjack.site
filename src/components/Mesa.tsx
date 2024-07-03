@@ -8,13 +8,14 @@ import ComprarCartaButton from "./ComprarCartaButton";
 import { TbHandStop } from "react-icons/tb";
 import { getStatusJogo } from "@/app/api/servicos/jogoServico"
 import { useEffect, useState } from "react";
-
+import ConvidarAmigoModal from "./ConvidarAmigoModal";
 
 const Mesa: React.FC = () => {
   const { eventos } = useEventosContext();
 
   const [jogo, setJogo] = useState('');
   const [isLoading, setLoading] = useState(true);
+  const [isOpen, setIsOpen] = useState<boolean>(false)
 
   useEffect(() => {
     const fetchStatus = async () => {
@@ -86,13 +87,23 @@ const Mesa: React.FC = () => {
           <FaArrowLeft />
           Deixar a mesa
         </Link>
-        <button className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 right-5">
+
+        {/*  botao convidar amigos */}
+        <button
+          onClick={() => setIsOpen(true)}
+          className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 right-5">
           <FaShareAlt />
         </button>
-        <button className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 right-5">
+        <button
+          onClick={() => setIsOpen(true)}
+          className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 right-5">
           Convidar amigos
           <FaShareAlt />
         </button>
+        {isOpen && (
+          <ConvidarAmigoModal
+            onClose={() => setIsOpen(false)} />
+        )}
 
         {/* Mesa */}
         <div className="relative w-4/5 h-96 border border-indigo-100 rounded-3xl md:max-w-[950px] bg-blue-950 shadow-sm shadow-slate-900 hover:shadow-lg">
