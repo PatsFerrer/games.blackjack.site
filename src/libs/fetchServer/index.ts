@@ -12,7 +12,7 @@ export const fetchServer = async (
     throw new Error('Token de autenticação não encontrado');
   }
 
-  console.log('Token capturado:', token);
+  console.log('Token capturado:', baseURL);
 
   const headers = {
     ...options.headers,
@@ -20,7 +20,7 @@ export const fetchServer = async (
     'Content-Type': 'application/json',
   };
 
-  const response = await fetch("http://localhost:7071/api" + path, {
+  const response = await fetch("http://localhost:7002/api" + path, {
     ...options,
     headers,
   });

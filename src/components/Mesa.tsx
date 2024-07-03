@@ -5,75 +5,75 @@ import { FaArrowLeft, FaShareAlt } from "react-icons/fa";
 import Dealer from "./Dealer";
 import Jogador from "./Jogador";
 import ComprarCartaButton from "./ComprarCartaButton";
-import { TbHandStop } from "react-icons/tb";
 import { getStatusJogo } from "@/app/api/servicos/jogoServico"
 import { useEffect, useState } from "react";
 import ConvidarAmigoModal from "./ConvidarAmigoModal";
+import io from 'socket.io-client';
+import PararJogadaButton from "./PararButton";
 
-const Mesa: React.FC = () => {
+interface IProps {
+  salaId: string;
+  [key: string]: any
+}
+
+const Mesa: React.FC<IProps> = ({salaId, ...props}) => {
   const { eventos } = useEventosContext();
 
-  const [jogo, setJogo] = useState('');
+  const [jogo, setJogo] = useState();
   const [isLoading, setLoading] = useState(true);
+  const [isError, setError] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
-  useEffect(() => {
-    const fetchStatus = async () => {
-      try {
-        setLoading(true);
-        const data = await getStatusJogo("fff");
-        setJogo(await data.json());
-      } catch (error) {
-        console.error("Deu ruim", error);
-      } finally {
-        setLoading(false);
-      }
-    }
+  const [messages, setMessages] = useState<string[]>([]);
 
-    fetchStatus();
+  useEffect(() => {
+    const socket = io('http://localhost:3002', {
+      transports: ['websocket'],
+    });
+
+    socket.on('connect', () => {
+      console.log('Connected to socket server');
+    });
+
+    socket.on('mensagem', (message: string) => {
+      const evento = JSON.parse(message);
+      if(evento.Tipo == 8){
+        //O que fazer patricia?
+        //R: Verifica se o array que está dentro do Valor contem o ID do usuario que está jogando, se tiver mostra o snackbar de ganhador, se não de perdedor;
+        console.log("Patricia");
+      }
+      console.log(message);
+      fetchStatus(false);
+    });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
-  const jogadores = [
-    {
-      id: 1,
-      imagemUrl: "https://github.com/patsferrer.png",
-      nome: "Pats",
-      fichas: 100,
-      cartas: [" ./../cartas/2-H.png", " ./../cartas/7-C.png"],
-    },
-    {
-      id: 2,
-      imagemUrl: "https://github.com/airaarima.png",
-      nome: "Aira",
-      fichas: 150,
-      cartas: [" ./../cartas/4-S.png", " ./../cartas/5-H.png"],
-    },
-    {
-      id: 3,
-      imagemUrl: "https://github.com/patsferreresx.png",
-      nome: "Irineu",
-      fichas: 75,
-      cartas: [" ./../cartas/8-C.png", " ./../cartas/J-C.png"],
-    },
-    {
-      id: 4,
-      imagemUrl: "https://github.com/karinasantana-esx.png",
-      nome: "Bertolazzo",
-      fichas: 200,
-      cartas: [" ./../cartas/3-D.png", " ./../cartas/2-C.png"],
-    },
-    {
-      id: 5,
-      imagemUrl: "https://images.futebolinterior.com.br/2022/12/MESSI-2.jpg",
-      nome: "Messi",
-      fichas: 50,
-      cartas: [" ./../cartas/Q-H.png", " ./../cartas/2-C.png"],
-    },
-  ];
+  useEffect(() => {
+    fetchStatus(true);
+  }, []);
+
+  const fetchStatus = async (hasLoading: boolean) => {
+    try {
+      if(hasLoading){
+        setLoading(true);
+      }
+      const data = await getStatusJogo(salaId);
+      const jogo = await data.json();
+      setJogo(jogo);
+    } catch (error) {
+      setError(true);
+      console.error("Deu ruim", error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <main className="flex justify-center items-center min-h-screen bg-green-800">
-      {isLoading ? (<span className="loading loading-dots loading-lg text-white"></span>) : (<>
+      {isError ? <div>Deu ruim: Erro</div>: isLoading ? (<span className="loading loading-dots loading-lg text-white"></span>) : (<>
         <Link
           href="/home"
           className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 left-5"
@@ -110,7 +110,7 @@ const Mesa: React.FC = () => {
           {/* cadeiras dos jogadores */}
           <div className="absolute inset-0 flex justify-center items-center">
             {/* Dealer */}
-            <Dealer />
+            <Dealer cartas={jogo.dealer.cartas}/>
 
             {/* Jogadores ao redor da mesa */}
             {jogo.jogadores.map((jogador, index) => (
@@ -144,13 +144,7 @@ const Mesa: React.FC = () => {
         <ComprarCartaButton />
 
         {/* chama a função Parar */}
-        <button className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute bottom-10 right-5">
-          <TbHandStop />
-        </button>
-        <button className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute bottom-10 right-5">
-          <TbHandStop />
-          Parar
-        </button>
+        <PararJogadaButton />
       </>
       )
       }

@@ -21,9 +21,6 @@ export default async function Sala({ params }: { params: { salaId: string } }) {
   // jogadores mock
 
   return (
-    <EventosProvider>
-      <ConexaoMesa />
-      <Mesa />
-    </EventosProvider>
+      <Mesa salaId={params.salaId}/>
   );
 }
