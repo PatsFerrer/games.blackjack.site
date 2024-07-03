@@ -6,8 +6,7 @@ export default async function GetSalas() {
   async function fetchSalas() {
 
     'use server';
-    const URL = 'http://localhost:7071/api/salas'
-    const response = await fetchServer(URL);
+    const response = await fetchServer("/salas");
 
     if (response.status === 200) return { error: response.statusText }
     return response.json();

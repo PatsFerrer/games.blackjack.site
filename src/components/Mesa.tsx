@@ -6,9 +6,32 @@ import Dealer from "./Dealer";
 import Jogador from "./Jogador";
 import ComprarCartaButton from "./ComprarCartaButton";
 import { TbHandStop } from "react-icons/tb";
+import { getStatusJogo } from "@/app/api/servicos/jogoServico"
+import { useEffect, useState } from "react";
+
 
 const Mesa: React.FC = () => {
   const { eventos } = useEventosContext();
+
+  const [jogo, setJogo] = useState('');
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        setLoading(true);
+        const data = await getStatusJogo("fff");
+        setJogo(await data.json());
+      } catch (error) {
+        console.error("Deu ruim", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchStatus();
+  }, []);
+
   const jogadores = [
     {
       id: 1,
@@ -49,73 +72,78 @@ const Mesa: React.FC = () => {
 
   return (
     <main className="flex justify-center items-center min-h-screen bg-green-800">
-      <Link
-        href="/home"
-        className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 left-5"
-      >
-        <FaArrowLeft />
-      </Link>
-      <Link
-        href="/home"
-        className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 left-5"
-      >
-        <FaArrowLeft />
-        Deixar a mesa
-      </Link>
-      <button className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 right-5">
-        <FaShareAlt />
-      </button>
-      <button className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 right-5">
-        Convidar amigos
-        <FaShareAlt />
-      </button>
+      {isLoading ? (<div>Imagine um loading girando</div>) : (<>
+        <Link
+          href="/home"
+          className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 left-5"
+        >
+          <FaArrowLeft />
+        </Link>
+        <Link
+          href="/home"
+          className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 left-5"
+        >
+          <FaArrowLeft />
+          Deixar a mesa
+        </Link>
+        <button className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 right-5">
+          <FaShareAlt />
+        </button>
+        <button className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 right-5">
+          Convidar amigos
+          <FaShareAlt />
+        </button>
 
-      {/* Mesa */}
-      <div className="relative w-4/5 h-96 border border-indigo-100 rounded-3xl md:max-w-[950px] bg-blue-950 shadow-sm shadow-slate-900 hover:shadow-lg">
-        {/* cadeiras dos jogadores */}
-        <div className="absolute inset-0 flex justify-center items-center">
-          {/* Dealer */}
-          <Dealer />
+        {/* Mesa */}
+        <div className="relative w-4/5 h-96 border border-indigo-100 rounded-3xl md:max-w-[950px] bg-blue-950 shadow-sm shadow-slate-900 hover:shadow-lg">
+          {/* cadeiras dos jogadores */}
+          <div className="absolute inset-0 flex justify-center items-center">
+            {/* Dealer */}
+            <Dealer />
 
-          {/* Jogadores ao redor da mesa */}
-          {jogadores.map((jogador, index) => (
-            <div
-              key={jogador.id}
-              className={`absolute rounded-full border-4 border-yellow-600`}
-              style={{
-                left: `${46 + 55 * Math.cos((index * 2 * Math.PI) / 5)}%`, // Posição X
-                top: `${52 + 53 * Math.sin((index * 2 * Math.PI) / 5)}%`, // Posição Y
-                transform: `translate(-50%, -43%)`,
-              }}
-            >
-              {/* componente jogador */}
-              <Jogador jogador={jogador} index={index} />
-            </div>
-          ))}
+            {/* Jogadores ao redor da mesa */}
+            {jogo.jogadores.map((jogador, index) => (
+              <div
+                key={jogador.usuarioId}
+                className={`absolute rounded-full border-4 border-yellow-600`}
+                style={{
+                  left: `${46 + 55 * Math.cos((index * 2 * Math.PI) / 5)}%`, // Posição X
+                  top: `${52 + 53 * Math.sin((index * 2 * Math.PI) / 5)}%`, // Posição Y
+                  transform: `translate(-50%, -43%)`,
+                }}
+              >
+                {/* componente jogador */}
+                <Jogador jogador={jogador} index={index} />
+              </div>
+            ))}
+          </div>
+
+          {/* deck */}
+          <div className="relative bg-red-400 w-14 h-18 shadow-md rounded-md left-[65.33%] top-[-31.66%] ">
+            <img
+              src=" ./../cartas/BACK.png"
+              alt="Cartas"
+              className="w-14 h-18 rounded-md shadow-md"
+            />
+          </div>
         </div>
+        {/* Mesa fim */}
 
-        {/* deck */}
-        <div className="relative bg-red-400 w-14 h-18 shadow-md rounded-md left-[65.33%] top-[-31.66%] ">
-          <img
-            src=" ./../cartas/BACK.png"
-            alt="Cartas"
-            className="w-14 h-18 rounded-md shadow-md"
-          />
-        </div>
-      </div>
-      {/* Mesa fim */}
+        {/* chama funçao comprar carta */}
+        <ComprarCartaButton />
 
-      {/* chama funçao comprar carta */}
-      <ComprarCartaButton />
+        {/* chama a função Parar */}
+        <button className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute bottom-10 right-5">
+          <TbHandStop />
+        </button>
+        <button className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute bottom-10 right-5">
+          <TbHandStop />
+          Parar
+        </button>
+      </>
+      )
+      }
 
-      {/* chama a função Parar */}
-      <button className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute bottom-10 right-5">
-        <TbHandStop />
-      </button>
-      <button className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute bottom-10 right-5">
-        <TbHandStop />
-        Parar
-      </button>
     </main>
   );
 };

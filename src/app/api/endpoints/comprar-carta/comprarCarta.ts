@@ -1,10 +1,8 @@
 import { fetchServer } from "@/libs/fetchServer";
 
-const URL = 'http://localhost:7071/api/jogo/comprar';
-
 export const comprarCarta = async (sala_id: string) => {
   try {
-    const response = await fetchServer(URL, {
+    const response = await fetchServer("/jogo/comprar", {
       method: 'POST',
       body: JSON.stringify({ sala_id }),
     });

@@ -15,15 +15,6 @@ export default function Jogador({ jogador, index }: IJogador) {
 
   let { imagemUrl, nome, fichas, cartas } = jogador;
 
-  const cartasMockadas = [
-    "https://via.placeholder.com/150x200?text=Carta+1",
-    "https://via.placeholder.com/150x200?text=Carta+2",
-  ];
-
-  if (cartas!.length === 0) {
-    cartas = cartasMockadas;
-  }
-
   function posicionarCartasX(index: number, cartaIndex: number) {
     if (index === 2 || index === 3) {
       return 155 + -30 * Math.cos((cartaIndex * 2 * Math.PI) / 5);
@@ -36,8 +27,7 @@ export default function Jogador({ jogador, index }: IJogador) {
 
     <div className="flex flex-col items-center text-center w-20 h-20 relative">
       {/* Cartas */}
-      {cartas!.map((cartaUrl, cartaIndex) => (
-
+      {cartas!.map((carta, cartaIndex) => (
         <div
           key={cartaIndex}
           className="absolute bg-red-400 w-16 shadow-md rounded-md"
@@ -47,7 +37,7 @@ export default function Jogador({ jogador, index }: IJogador) {
             transform: `translate(-10%, -50%)`,
           }}
         >
-          <img src={cartaUrl} alt={`Carta ${cartaIndex + 1}`} className="rounded-md shadow-md" />
+          <img src={`./../cartas/${carta.alt}.png`} alt={`Carta ${cartaIndex + 1}`} className="rounded-md shadow-md" />
         </div>
       ))}
 

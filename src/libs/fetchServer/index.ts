@@ -1,7 +1,9 @@
 import Cookies from 'js-cookie';
 
+const baseURL = process.env.API_URL;
+
 export const fetchServer = async (
-  url: string,
+  path: string,
   options: RequestInit = {}
 ): Promise<Response> => {
   const token = Cookies.get('token');
@@ -18,7 +20,7 @@ export const fetchServer = async (
     'Content-Type': 'application/json',
   };
 
-  const response = await fetch(url, {
+  const response = await fetch("http://localhost:7002/api" + path, {
     ...options,
     headers,
   });
