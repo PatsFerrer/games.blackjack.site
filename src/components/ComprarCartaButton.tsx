@@ -6,8 +6,17 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { GiCardPickup } from 'react-icons/gi';
 import { useParams } from 'next/navigation';
+import io from 'socket.io-client';
 
-const ComprarCartaButton = () => {
+interface ComprarCartaButtonProps {
+  onCartaComprada: () => void; // Função para chamar após comprar a carta
+}
+
+const socket = io('http://localhost:3002', {
+  transports: ['websocket'],
+});
+
+const ComprarCartaButton: React.FC<ComprarCartaButtonProps> = ({ onCartaComprada }) => {
   const { salaId } = useParams<{ salaId: string }>();
 
   const handleCompraCarta = async () => {
@@ -15,6 +24,13 @@ const ComprarCartaButton = () => {
       const result = await comprarCarta(salaId);
       if (result.success) {
         console.log('Compra de carta realizada com sucesso');
+        onCartaComprada();
+        // Emitir evento via Socket.IO
+        const evento = {
+          SalaId: salaId,
+          Tipo: 2
+        };
+        socket.emit('mensagem', JSON.stringify(evento));
       } else {
         toast.error(result.message || 'Erro ao comprar carta');
       }
