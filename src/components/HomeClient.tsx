@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ISala } from "@/interface/ISala";
 import Salas from "@/components/Salas";
 import SalaForm from "@/components/SalaForm";
@@ -15,33 +15,14 @@ export default function HomeClient({ salas }: HomeClientProps) {
   const [isLoading, setLoading] = useState(false);
   const modalRef = useRef<HTMLDialogElement>(null);
 
-  const handleCreateSala = async (novaSala: ISala) => {
-    setLoading(true);
-    try {
-      const req = await fetch("https://66718da9e083e62ee43c1800.mockapi.io/salas-disponiveis/salas", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(novaSala),
-      });
-
-      if (req.ok) {
-        const newSala = await req.json();
-        setClientSalas([...clientSalas, newSala]);
-        setLoading(false);
-        modalRef.current?.close();
-      } else {
-        console.error('Erro ao criar sala:', req.status, req.statusText);
-        setLoading(false);
-        modalRef.current?.close();
-      }
-    } catch (error) {
-      console.log('Erro ao criar sala:', error);
-      setLoading(false);
-      modalRef.current?.close();
-    }
+  const handleCreateSala = (novaSala: ISala) => {
+    setClientSalas([...clientSalas, novaSala]);
+    modalRef.current?.close();
   };
+
+  useEffect(() => {
+    setClientSalas(salas);
+  }, [salas]);
 
   return (
     <>
@@ -69,7 +50,7 @@ export default function HomeClient({ salas }: HomeClientProps) {
                   ✕
                 </button>
               </form>
-              <SalaForm onCreate={handleCreateSala} closeModal={() => modalRef.current?.close()} />
+              <SalaForm closeModal={() => modalRef.current?.close()} onCreate = {handleCreateSala}/>
             </div>
           </dialog>
         </div>
