@@ -20,7 +20,7 @@ export const fetchServer = async (
     'Content-Type': 'application/json',
   };
 
-  const response = await fetch("http://localhost:7002/api" + path, {
+  const response = await fetch("http://localhost:7071/api" + path, {
     ...options,
     headers,
   });
