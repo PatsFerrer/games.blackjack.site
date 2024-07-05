@@ -6,6 +6,11 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'next/navigation';
 import { TbHandStop } from "react-icons/tb";
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3002', {
+  transports: ['websocket'],
+});
 
 const PararJogadaButton = () => {
   const { salaId } = useParams<{ salaId: string }>();
@@ -15,6 +20,11 @@ const PararJogadaButton = () => {
       const result = await pararJogada(salaId);
       if (result.ok) {
         console.log('Parada realizada com sucesso');
+        const evento = {
+          SalaId: salaId,
+          Tipo: 3
+        };
+        socket.emit('mensagem', JSON.stringify(evento))
       } else {
         toast.error(result.statusText || 'Erro ao parar');
       }

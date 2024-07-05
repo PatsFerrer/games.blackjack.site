@@ -43,6 +43,8 @@ const Mesa: React.FC<IProps> = ({salaId, ...props}) => {
         //O que fazer patricia?
         //R: Verifica se o array que está dentro do Valor contem o ID do usuario que está jogando, se tiver mostra o snackbar de ganhador, se não de perdedor;
         console.log("Patricia");
+      }else if(evento.Tipo == 5){
+
       }
       console.log(message);
       fetchStatus(false);
@@ -72,6 +74,11 @@ const Mesa: React.FC<IProps> = ({salaId, ...props}) => {
       setLoading(false);
     }
   }
+
+  const handleCartaComprada = () => {
+    // Função para atualizar o estado do jogo após comprar a carta
+    fetchStatus(false); // Atualiza o estado do jogo
+  };
 
   return (
     <main className="flex justify-center items-center min-h-screen bg-green-800">
@@ -151,7 +158,7 @@ const Mesa: React.FC<IProps> = ({salaId, ...props}) => {
 
 
         {/* chama funçao comprar carta */}
-        <ComprarCartaButton />
+        <ComprarCartaButton onCartaComprada={handleCartaComprada}/>
 
         {/* chama a função Parar */}
         <PararJogadaButton />

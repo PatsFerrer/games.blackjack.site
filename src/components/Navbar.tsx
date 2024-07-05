@@ -6,20 +6,24 @@ import Image from "next/image";
 import { ListarPessoasButton } from "@/components";
 import { redirect } from "next/navigation";
 import validarImagem from "@/utils/imageUtil";
+import Cookies from 'js-cookie';
+import { getUsuario } from "@/app/api/endpoints/getUsuario";
 
 export default async function Navbar() {
 
+  let usuarioLogado;
   let user;
-
   try {
-    user = JSON.parse(cookies().get("user")!.value);
+    usuarioLogado = JSON.parse(cookies().get("user")!.value);
+    user = await getUsuario(usuarioLogado.id)
 
   } catch (error) {
     console.error(error, "user perdeu seu cookie!");
     redirect('/');
   }
 
-  const { login, avatar, email } = user;
+  //const { login, avatar, email } = user;
+  const { nome, avatarUrl, fichas } = user;
 
   return (
     <nav className="navbar bg-[#111111] border-gray-200 gap-5 shadow-md ">
@@ -38,9 +42,9 @@ export default async function Navbar() {
       {/* dropdown do perfil */}
       <div className="dropdown dropdown-end bg-bla">
         <div tabIndex={0} role="button" className="btn flex flex-col bg-devland hover:bg-devland-100">
-          <div className="text-white">{login}</div>
+          <div className="text-white">{nome}</div>
           <div className="badge badge-neutral">
-            <span>$30000</span> {/* colocar qtd de fichas */}
+            <span>${fichas}</span> {/* colocar qtd de fichas */}
           </div>
 
           <div className="dropdown dropdown-end">
@@ -51,8 +55,8 @@ export default async function Navbar() {
             >
               <div className="w-10 rounded-full">
                 <Image
-                  alt={`Foto de ${login}`}
-                  src={validarImagem(avatar)}
+                  alt={`Foto de ${nome}`}
+                  src={validarImagem(avatarUrl)}
                   width={500}
                   height={500}
                   quality={100}
