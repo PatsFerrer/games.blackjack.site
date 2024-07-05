@@ -12,6 +12,8 @@ import HomeClient from './HomeClient';
 import ComprarCartaButton from './ComprarCartaButton';
 import Mesa from './Mesa';
 import ConvidarAmigoModal from './ConvidarAmigoModal';
+import SnackbarGanhador from './SnackbarGanhador';
+import SnackbarInformaGanhador from './SnackbarInformaGanhador';
 
 export {
   Jogador,
@@ -28,4 +30,6 @@ export {
   ComprarCartaButton,
   Mesa,
   ConvidarAmigoModal,
+  SnackbarGanhador,
+  SnackbarInformaGanhador
 }
