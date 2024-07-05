@@ -24,8 +24,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [showSnackbar, setShowSnackbar] = useState(false); //snackbar informa ganhador
-
+  const [showSnackbar, setShowSnackbar] = useState(false); 
   const [messages, setMessages] = useState<string[]>([]);
 
   useEffect(() => {
@@ -39,12 +38,24 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
 
     socket.on("mensagem", (message: string) => {
       const evento = JSON.parse(message);
-      if (evento.Tipo == 8) {
+      if (evento.Tipo == 6) {
 
-        //R: Verifica se o array que está dentro do Valor contem o ID do usuario que está jogando, se tiver mostra o snackbar de ganhador, se não de perdedor;
-      } else if (evento.Tipo == 6) {
-        // alert("cheguei aqui");
+      } else if (evento.Tipo == 8) {
         setShowSnackbar(true);
+
+        try {
+          const valorObj: Resultado = JSON.parse(evento.Valor);
+        
+          const empates: string[] = valorObj.Empates;
+          const ganhadores: string[] = valorObj.Ganhadores;
+          const perdedores: string[] = valorObj.Perdedores;
+        
+          console.log('Empates:', empates);
+          console.log('Ganhadores:', ganhadores);
+          console.log('Perdedores:', perdedores);
+        } catch (error) {
+          console.error('Erro ao parsear o JSON de Valor:', error);
+        }
       }
       console.log(message);
       fetchStatus(false);
