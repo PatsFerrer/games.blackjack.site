@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import ConvidarAmigoModal from "./ConvidarAmigoModal";
 import io from 'socket.io-client';
 import PararJogadaButton from "./PararButton";
+import SnackbarInformaGanhador from "./SnackbarInformaGanhador";
 
 interface IProps {
   salaId: string;
@@ -23,6 +24,7 @@ const Mesa: React.FC<IProps> = ({salaId, ...props}) => {
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [showSnackbar, setShowSnackbar] = useState(true); //snackbar informa ganhador 
 
   const [messages, setMessages] = useState<string[]>([]);
 
@@ -139,6 +141,14 @@ const Mesa: React.FC<IProps> = ({salaId, ...props}) => {
           </div>
         </div>
         {/* Mesa fim */}
+
+        {/*  snackbar informa ganhador */}
+        <SnackbarInformaGanhador
+          message="Parabéns! Você é o ganhador! (teste, clique em fechar)"
+          show={showSnackbar}
+          onClose={() => setShowSnackbar(false)}
+        />
+
 
         {/* chama funçao comprar carta */}
         <ComprarCartaButton />
