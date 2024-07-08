@@ -12,7 +12,7 @@ export const fetchServer = async (
     throw new Error('Token de autenticação não encontrado');
   }
 
-  console.log('Token capturado:', baseURL);
+  // console.log('Token capturado:', baseURL);
 
   const headers = {
     ...options.headers,

@@ -1,6 +1,6 @@
 export const getUsuario = async (user_id: string) => {
   try {
-    console.log('response')
+    // console.log('response')
     const response = await fetch(`${process.env.API_URL}/user/${user_id}`);
     if (response.ok) {
 

@@ -3,7 +3,7 @@ import validarImagem from "@/utils/imageUtil";
 
 export default function Jogador({ jogador, index }: IJogador) {
 
-   console.log(jogador)
+  //  console.log(jogador)
   let { avatarUrl, nome, fichas, fichasApostadas, cartas } = jogador;
 
   function posicionarCartasX(index: number, cartaIndex: number) {

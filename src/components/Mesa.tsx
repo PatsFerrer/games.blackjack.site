@@ -5,7 +5,7 @@ import { FaArrowLeft, FaShareAlt } from "react-icons/fa";
 import Dealer from "./Dealer";
 import Jogador from "./Jogador";
 import ComprarCartaButton from "./ComprarCartaButton";
-import { getStatusJogo } from "@/app/api/servicos/jogoServico";
+import { getStatusJogo, jogadorConectado, jogadorDesconectado } from "@/app/api/servicos/jogoServico";
 import { useEffect, useState } from "react";
 import ConvidarAmigoModal from "./ConvidarAmigoModal";
 import io from "socket.io-client";
@@ -20,7 +20,7 @@ interface IProps {
 const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   const { eventos } = useEventosContext();
 
-  const [jogo, setJogo] = useState();
+  const [jogo, setJogo] = useState(); //verificar tipo para objeto
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -32,8 +32,13 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
       transports: ["websocket"],
     });
 
-    socket.on("connect", () => {
+    socket.on("connect", async () => {
       console.log("Connected to socket server");
+      await jogadorConectado(salaId);
+    });
+
+    socket.on("disconnect", async () => {
+      await jogadorDesconectado(salaId);
     });
 
     socket.on("mensagem", (message: string) => {
@@ -56,7 +61,11 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
         } catch (error) {
           console.error('Erro ao parsear o JSON de Valor:', error);
         }
-      }
+      } else if(evento.Tipo == 0){
+          console.log("evento tipo 0: conectado")
+      } else if(evento.Tipo == 1){
+        console.log("evento tipo 1: desconectado")
+    }
       console.log(message);
       fetchStatus(false);
     });

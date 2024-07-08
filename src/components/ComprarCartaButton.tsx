@@ -25,12 +25,6 @@ const ComprarCartaButton: React.FC<ComprarCartaButtonProps> = ({ onCartaComprada
       if (result.success) {
         console.log('Compra de carta realizada com sucesso');
         onCartaComprada();
-        // Emitir evento via Socket.IO
-        const evento = {
-          SalaId: salaId,
-          Tipo: 2
-        };
-        socket.emit('mensagem', JSON.stringify(evento));
       } else {
         toast.error(result.message || 'Erro ao comprar carta');
       }

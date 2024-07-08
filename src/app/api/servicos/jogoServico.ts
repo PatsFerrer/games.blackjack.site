@@ -20,3 +20,25 @@ export const pararJogada = async (salaId : string) => {
         throw error;
     }
 }
+
+export const jogadorConectado = async (salaId : string) => {
+    try{
+        return await fetchServer('/jogo/conectar', {
+            method: 'post',
+            body: JSON.stringify({ "sala_id": salaId })
+        });
+    }catch(error){
+        throw error;
+    }
+}
+
+export const jogadorDesconectado = async (salaId : string) => {
+    try{
+        return await fetchServer('/jogo/desconectar', {
+            method: 'post',
+            body: JSON.stringify({ "sala_id": salaId })
+        });
+    }catch(error){
+        throw error;
+    }
+}
