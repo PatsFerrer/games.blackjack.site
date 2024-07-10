@@ -35,6 +35,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
     socket.on("connect", async () => {
       console.log("Connected to socket server");
       await jogadorConectado(salaId);
+      fetchStatus(true);
     });
 
     socket.on("disconnect", async () => {
