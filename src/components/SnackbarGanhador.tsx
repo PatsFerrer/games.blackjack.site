@@ -1,4 +1,5 @@
-import React from 'react';
+'use client'
+import { useState } from 'react';
 
 interface SnackbarGanhadorProps {
     message: string;
@@ -8,6 +9,15 @@ interface SnackbarGanhadorProps {
   }
   
   const SnackbarGanhador: React.FC<SnackbarGanhadorProps> = ({ message, show, onClose }) => {
+    const [showSnackbar, setShowSnackbar] = useState(true);
+
+    const handleShowSnackbar = () => {
+      setShowSnackbar(true);
+      setTimeout(() => {
+        setShowSnackbar(false);
+      }, 5000); 
+    };
+    
     return (
         <div
         className={`fixed top-1/2  px-4 py-2 animate-bounce bg-gray-800 text-white rounded-lg shadow-md transition-all duration-300 ${
