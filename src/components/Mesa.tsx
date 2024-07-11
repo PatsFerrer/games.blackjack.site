@@ -10,8 +10,8 @@ import { useEffect, useState } from "react";
 import ConvidarAmigoModal from "./ConvidarAmigoModal";
 import io from "socket.io-client";
 import PararJogadaButton from "./PararButton";
-import SnackbarInformaGanhador from "./SnackbarInformaGanhador";
 import { Result } from "@/types";
+import SnackbarGanhador from "./SnackbarGanhador";
 
 interface IProps {
   salaId: string;
@@ -198,15 +198,15 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
           {/* Mesa fim */}
 
           {/*  snackbar informa ganhador */}
-          {
-            !resultado && (
-              <SnackbarInformaGanhador
+          {/* {
+            !resultado && ( */}
+              <SnackbarGanhador
                 resultado={resultado}
                 show={showSnackbar}
                 onClose={() => setShowSnackbar(false)}
               />
-            )
-          }
+            {/* )
+          } */}
 
           {/* chama funçao comprar carta */}
           <ComprarCartaButton onCartaComprada={handleCartaComprada} />
