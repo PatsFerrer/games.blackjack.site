@@ -11,6 +11,7 @@ import ConvidarAmigoModal from "./ConvidarAmigoModal";
 import io from "socket.io-client";
 import PararJogadaButton from "./PararButton";
 import SnackbarInformaGanhador from "./SnackbarInformaGanhador";
+import { Result } from "@/types";
 
 interface IProps {
   salaId: string;
@@ -24,8 +25,11 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [showSnackbar, setShowSnackbar] = useState(false); 
+  const [showSnackbar, setShowSnackbar] = useState(false);
   const [messages, setMessages] = useState<string[]>([]);
+  const [resultado, setResultado] = useState<Result>(Result.EMPATE);
+  const [ganhadores, setGanhadores] = useState<string[]>([]);
+  const [perdedores, setPerdedores] = useState<string[]>([]);
 
   useEffect(() => {
     const socket = io("http://localhost:3002", {
@@ -42,34 +46,45 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
       await jogadorDesconectado(salaId);
     });
 
-    socket.on("mensagem", (message: string) => {
+    socket.on("mensagem", async (message: string) => {
       const evento = JSON.parse(message);
+      let userId;
+
       if (evento.Tipo == 6) {
+        console.log('entrei no tipo 6')
 
       } else if (evento.Tipo == 8) {
         setShowSnackbar(true);
 
         try {
+          console.log('entrei no tipo 8') // nova partida
           const valorObj: Resultado = JSON.parse(evento.Valor);
-        
-          const empates: string[] = valorObj.Empates;
-          const ganhadores: string[] = valorObj.Ganhadores;
-          const perdedores: string[] = valorObj.Perdedores;
-        
-          console.log('Empates:', empates);
+          // console.log("meu valorObj dentro tipo 8:", valorObj)
+
+          // const empates: string[] = valorObj.Empates;
+          // const ganhadores: string[] = valorObj.Ganhadores;
+          // const perdedores: string[] = valorObj.Perdedores;
+
+          setGanhadores(valorObj.Ganhadores)
+          setPerdedores(valorObj.Perdedores)
           console.log('Ganhadores:', ganhadores);
           console.log('Perdedores:', perdedores);
+
         } catch (error) {
           console.error('Erro ao parsear o JSON de Valor:', error);
         }
-      } else if(evento.Tipo == 0){
-          console.log("evento tipo 0: conectado")
-      } else if(evento.Tipo == 1){
+      } else if (evento.Tipo == 0) {
+        // userId = evento.UserId;
+        sessionStorage.setItem('userId', JSON.stringify(evento.UserId));
+
+      } else if (evento.Tipo == 1) {
         console.log("evento tipo 1: desconectado")
-    }
+      }
       console.log(message);
       fetchStatus(false);
     });
+
+    fetchStatus(true);
 
     return () => {
       socket.disconnect();
@@ -77,8 +92,16 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   }, []);
 
   useEffect(() => {
-    fetchStatus(true);
-  }, []);
+    const user = JSON.stringify(sessionStorage.getItem('userId'));
+
+    console.log('teste: ', ganhadores.includes(user))
+    console.log(perdedores.includes(user))
+    if (ganhadores.includes(user)) {
+      setResultado(Result.VITORIA)
+    } else if (perdedores.includes(user)) {
+      setResultado(Result.DERROTA)
+    }
+  }, [ganhadores, perdedores]);
 
   const fetchStatus = async (hasLoading: boolean) => {
     try {
@@ -175,11 +198,15 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
           {/* Mesa fim */}
 
           {/*  snackbar informa ganhador */}
-          <SnackbarInformaGanhador
-            message="Parabéns! Você é o ganhador! (teste, clique em fechar)"
-            show={showSnackbar}
-            onClose={() => setShowSnackbar(false)}
-          />
+          {
+            !resultado && (
+              <SnackbarInformaGanhador
+                resultado={resultado}
+                show={showSnackbar}
+                onClose={() => setShowSnackbar(false)}
+              />
+            )
+          }
 
           {/* chama funçao comprar carta */}
           <ComprarCartaButton onCartaComprada={handleCartaComprada} />
