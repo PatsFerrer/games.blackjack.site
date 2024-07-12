@@ -21,6 +21,10 @@ export default async function Sala({ params }: { params: { salaId: string } }) {
   // jogadores mock
 
   return (
+    <div
+      className="bg-green-800"
+    >
       <Mesa salaId={params.salaId}/>
+    </div>
   );
 }

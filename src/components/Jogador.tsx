@@ -6,23 +6,19 @@ import { verificarResultado } from "@/utils/resultadoUtil";
 import { useEffect, useState } from "react";
 
 export default function Jogador({ jogador, index, ganhadores, perdedores }: IJogador) {
-
   const [status, setStatus] = useState<Result>(Result.EMPATE)
-
-  const statusClass = status === Result.VITORIA 
+  const {usuarioId} = jogador
+  
+  let statusClass = status === Result.VITORIA 
     ? 'border-emerald-500' 
     : status === Result.DERROTA 
       ? 'border-red-800' 
       : 'border-yellow-600';
-
   
-
   useEffect(() => {
-    /* const user = JSON.parse(sessionStorage.getItem('userId')!);
-    console.log(user) */
+    setStatus(verificarResultado(ganhadores, perdedores, usuarioId!))
+  }, [usuarioId, ganhadores, perdedores])
 
-    setStatus(verificarResultado(ganhadores, perdedores))
-  }, [ganhadores, perdedores])
 
 
   

@@ -50,7 +50,7 @@ export default function ListarPessoasButton() {
             className="drawer-overlay"
           ></label>
           <div className="menu bg-[#DF0B56] text-base-content min-h-full w-80 p-4">
-            {jogadores.map((jogador) => <ListarPessoasFichas topJogador ={jogador}/>)}
+            {jogadores.map((jogador, i) => <ListarPessoasFichas key={i} topJogador ={jogador}/>)}
           </div>
         </div>
       </div>

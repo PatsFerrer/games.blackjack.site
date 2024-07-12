@@ -1,4 +1,4 @@
-type Jogador = {
+export type Jogador = {
   avatarUrl?: string;
   cartas?: string[];
   ehVez?: boolean;

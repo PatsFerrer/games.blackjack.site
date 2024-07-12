@@ -10,28 +10,30 @@ import { useEffect, useState } from "react";
 import ConvidarAmigoModal from "./ConvidarAmigoModal";
 import io from "socket.io-client";
 import PararJogadaButton from "./PararButton";
-import { Result } from "@/types";
 import SnackbarGanhador from "./SnackbarGanhador";
+
 
 interface IProps {
   salaId: string;
   [key: string]: any;
+  className?: string
 }
 
 const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   const { eventos } = useEventosContext();
 
-  const [jogo, setJogo] = useState(); //verificar tipo para objeto
+  const [jogo, setJogo] = useState<any>(); //verificar tipo para objeto
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
   const [showSnackbar, setShowSnackbar] = useState(false);
+
   const [messages, setMessages] = useState<string[]>([]);
-  const [resultado, setResultado] = useState<Result>(Result.EMPATE);
+
   const [ganhadores, setGanhadores] = useState<string[]>([]);
   const [perdedores, setPerdedores] = useState<string[]>([]);
-  const [win, setWin] = useState<boolean>(false)
-  const [dealerWin, setDealerWin] = useState<boolean>(false)
+
 
   useEffect(() => {
     const socket = io("http://localhost:3002", {
@@ -50,10 +52,9 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
 
     socket.on("mensagem", async (message: string) => {
       const evento = JSON.parse(message);
-      let userId;
 
       if (evento.Tipo == 6) {
-        console.log('entrei no tipo 6')
+       // console.log('entrei no tipo 6')
 
       } else if (evento.Tipo == 8) {
         setShowSnackbar(true);
@@ -63,15 +64,18 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
 
           setGanhadores(valorObj.Ganhadores)
           setPerdedores(valorObj.Perdedores)
-
         } catch (error) {
           console.error('Erro ao parsear o JSON de Valor:', error);
         }
       } else if (evento.Tipo == 0) {
-        sessionStorage.setItem('userId', JSON.stringify(evento.UserId));
+        let userId = sessionStorage.getItem('userId')
+        if(userId == null){
+          sessionStorage.setItem('userId', JSON.stringify(evento.UserId));
+        }
 
       } else if (evento.Tipo == 1) {
-        console.log("evento tipo 1: desconectado")
+       console.log("evento tipo 1: desconectado")
+       sessionStorage.removeItem('userId')
       }
       console.log(message);
       fetchStatus(false);
@@ -84,18 +88,9 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
     };
   }, []);
 
-  useEffect(() => {
-    const user = JSON.parse(sessionStorage.getItem('userId')!);
-    console.log(user)
-
-    if (ganhadores.includes(user)) {
-      setResultado(Result.VITORIA)
-    } else if (perdedores.includes(user)) {
-      setResultado(Result.DERROTA)
-    } else {
-      setResultado(Result.EMPATE)
-    }
-  }, [ganhadores, perdedores]);
+  const handleSairMesa = () => {
+    sessionStorage.removeItem('userId')
+  }
 
   const fetchStatus = async (hasLoading: boolean) => {
     try {
@@ -119,7 +114,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   };
 
   return (
-    <main className="flex justify-center items-center min-h-screen bg-green-800">
+    <main className="flex justify-center items-center h-screen bg-green-800">
       {isError ? (
         <div>Deu ruim: Erro</div>
       ) : isLoading ? (
@@ -135,6 +130,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
           <Link
             href="/home"
             className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 left-5"
+            onClick={() => handleSairMesa()}
           >
             <FaArrowLeft />
             Deixar a mesa
@@ -167,9 +163,10 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
               />
 
               {/* Jogadores ao redor da mesa */}
-              {jogo.jogadores.map((jogador, index) => (
+              {jogo.jogadores.map((jogador: any, index: number) => (
 
                 <Jogador
+                  key={index}
                   index={index}
                   ganhadores={ganhadores}
                   perdedores={perdedores}
@@ -191,11 +188,15 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
           {/* Mesa fim */}
 
           {/*  snackbar informa ganhador */}
-          <SnackbarGanhador
-            resultado={resultado}
-            show={showSnackbar}
-            onClose={() => setShowSnackbar(false)}
-          />
+          {
+            showSnackbar && (
+            <SnackbarGanhador
+              ganhadores={ganhadores}
+              perdedores={perdedores}
+              show={showSnackbar}
+              onClose={() => setShowSnackbar(false)}
+            />
+          )}
 
 
           {/* chama funçao comprar carta */}

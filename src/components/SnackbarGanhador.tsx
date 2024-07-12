@@ -1,36 +1,55 @@
 'use client'
 import { Result } from "@/types";
-import { useState } from 'react';
+import { verificarResultado } from "@/utils/resultadoUtil";
+import { getCookie } from "cookies-next";
+import { useEffect, useState } from 'react';
 
 interface SnackbarGanhadorProps {
-  resultado: Result;
   show: boolean;
+  ganhadores: string[],
+  perdedores: string[],
   onClose: () => void;
+
 }
 
-export default function SnackbarGanhador({ resultado, show, onClose }: SnackbarGanhadorProps) {
-  const [showSnackbar, setShowSnackbar] = useState(true);
+export default function SnackbarGanhador({ show, onClose, ganhadores, perdedores }: SnackbarGanhadorProps) {
+  
+  const [status, setStatus] = useState<Result>(Result.EMPATE)
+  let mensagem = '';
+  
 
-  const handleShowSnackbar = () => {
-    setShowSnackbar(true);
+  const closeSnackbar = () => {
     setTimeout(() => {
-      setShowSnackbar(false);
+      onClose();
     }, 5000);
   };
+ 
+useEffect(() => {
+  closeSnackbar()
+}, [])
 
-  let mensagem = '';
 
-  switch (resultado) {
+  useEffect(() => {
+    
+    setStatus(verificarResultado(ganhadores, perdedores))
+  }, [ganhadores, perdedores])
+
+  
+  const user = getCookie('user')
+  const usuario = JSON.parse(user!)
+  
+  switch (status) {
     case Result.VITORIA:
-      mensagem = 'Vitória!'
+      mensagem = `Parabéns ${usuario.login}, você venceu!!!`
       break
     case Result.DERROTA:
-      mensagem = 'DERROTA!'
+      mensagem = `Infelizmente ${usuario.login}, você perdeu`
       break
     case Result.EMPATE:
-      mensagem = 'EMPATE!'
+      mensagem = `${usuario.login} você empatou.`
       break
   }
+
 
   return (
     <div
