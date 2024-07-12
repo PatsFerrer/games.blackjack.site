@@ -1,9 +1,31 @@
+'use client'
 import { IJogador } from "@/interface/IJogador"
+import { Result } from "@/types";
 import validarImagem from "@/utils/imageUtil";
+import { verificarResultado } from "@/utils/resultadoUtil";
+import { useEffect, useState } from "react";
 
-export default function Jogador({ jogador, index }: IJogador) {
+export default function Jogador({ jogador, index, ganhadores, perdedores }: IJogador) {
 
-  //  console.log(jogador)
+  const [status, setStatus] = useState<Result>(Result.EMPATE)
+
+  const statusClass = status === Result.VITORIA 
+    ? 'border-emerald-500' 
+    : status === Result.DERROTA 
+      ? 'border-red-800' 
+      : 'border-yellow-600';
+
+  
+
+  useEffect(() => {
+    /* const user = JSON.parse(sessionStorage.getItem('userId')!);
+    console.log(user) */
+
+    setStatus(verificarResultado(ganhadores, perdedores))
+  }, [ganhadores, perdedores])
+
+
+  
   let { avatarUrl, nome, fichas, fichasApostadas, cartas } = jogador;
 
   function posicionarCartasX(index: number, cartaIndex: number) {
@@ -15,7 +37,15 @@ export default function Jogador({ jogador, index }: IJogador) {
   }
 
   return (
-
+    <div
+    key={jogador.usuarioId}
+    className={`absolute rounded-full border-4 ${statusClass}`}
+    style={{
+      left: `${46 + 55 * Math.cos((index * 2 * Math.PI) / 5)}%`, // Posição X
+      top: `${52 + 53 * Math.sin((index * 2 * Math.PI) / 5)}%`, // Posição Y
+      transform: `translate(-50%, -43%)`,
+    }}
+  >
     <div className="flex flex-col items-center text-center w-20 h-20 relative">
       {/* Cartas */}
       {cartas!.map((carta, cartaIndex) => (
@@ -41,6 +71,7 @@ export default function Jogador({ jogador, index }: IJogador) {
       <h3 className="text-lg text-white font-semibold mb-1">{nome}</h3>
       <p className="text-sm text-white">Fichas: ${fichas}</p>
       <p className="text-sm text-white">Fichas Apostadas: ${fichasApostadas}</p>
+    </div>
     </div>
   )
 }

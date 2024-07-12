@@ -30,6 +30,8 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   const [resultado, setResultado] = useState<Result>(Result.EMPATE);
   const [ganhadores, setGanhadores] = useState<string[]>([]);
   const [perdedores, setPerdedores] = useState<string[]>([]);
+  const [win, setWin] = useState<boolean>(false)
+  const [dealerWin, setDealerWin] = useState<boolean>(false)
 
   useEffect(() => {
     const socket = io("http://localhost:3002", {
@@ -57,24 +59,15 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
         setShowSnackbar(true);
 
         try {
-          console.log('entrei no tipo 8') // nova partida
           const valorObj: Resultado = JSON.parse(evento.Valor);
-          // console.log("meu valorObj dentro tipo 8:", valorObj)
-
-          // const empates: string[] = valorObj.Empates;
-          // const ganhadores: string[] = valorObj.Ganhadores;
-          // const perdedores: string[] = valorObj.Perdedores;
 
           setGanhadores(valorObj.Ganhadores)
           setPerdedores(valorObj.Perdedores)
-          console.log('Ganhadores:', ganhadores);
-          console.log('Perdedores:', perdedores);
 
         } catch (error) {
           console.error('Erro ao parsear o JSON de Valor:', error);
         }
       } else if (evento.Tipo == 0) {
-        // userId = evento.UserId;
         sessionStorage.setItem('userId', JSON.stringify(evento.UserId));
 
       } else if (evento.Tipo == 1) {
@@ -92,14 +85,15 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   }, []);
 
   useEffect(() => {
-    const user = JSON.stringify(sessionStorage.getItem('userId'));
+    const user = JSON.parse(sessionStorage.getItem('userId')!);
+    console.log(user)
 
-    console.log('teste: ', ganhadores.includes(user))
-    console.log(perdedores.includes(user))
     if (ganhadores.includes(user)) {
       setResultado(Result.VITORIA)
     } else if (perdedores.includes(user)) {
       setResultado(Result.DERROTA)
+    } else {
+      setResultado(Result.EMPATE)
     }
   }, [ganhadores, perdedores]);
 
@@ -167,22 +161,21 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
             {/* cadeiras dos jogadores */}
             <div className="absolute inset-0 flex justify-center items-center">
               {/* Dealer */}
-              <Dealer cartas={jogo.dealer.cartas} />
+              <Dealer
+                className={`absolute rounded-full border-4 border-yellow-600 w-24 h-24`}
+                cartas={jogo.dealer.cartas}
+              />
 
               {/* Jogadores ao redor da mesa */}
               {jogo.jogadores.map((jogador, index) => (
-                <div
-                  key={jogador.usuarioId}
-                  className={`absolute rounded-full border-4 border-yellow-600`}
-                  style={{
-                    left: `${46 + 55 * Math.cos((index * 2 * Math.PI) / 5)}%`, // Posição X
-                    top: `${52 + 53 * Math.sin((index * 2 * Math.PI) / 5)}%`, // Posição Y
-                    transform: `translate(-50%, -43%)`,
-                  }}
-                >
-                  {/* componente jogador */}
-                  <Jogador jogador={jogador} index={index} />
-                </div>
+
+                <Jogador
+                  index={index}
+                  ganhadores={ganhadores}
+                  perdedores={perdedores}
+                  jogador={jogador}
+                />
+
               ))}
             </div>
 
@@ -198,15 +191,12 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
           {/* Mesa fim */}
 
           {/*  snackbar informa ganhador */}
-          {/* {
-            !resultado && ( */}
-              <SnackbarGanhador
-                resultado={resultado}
-                show={showSnackbar}
-                onClose={() => setShowSnackbar(false)}
-              />
-            {/* )
-          } */}
+          <SnackbarGanhador
+            resultado={resultado}
+            show={showSnackbar}
+            onClose={() => setShowSnackbar(false)}
+          />
+
 
           {/* chama funçao comprar carta */}
           <ComprarCartaButton onCartaComprada={handleCartaComprada} />

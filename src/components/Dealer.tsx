@@ -1,11 +1,12 @@
 type Dealer = {
-  cartas?: string[];
+  cartas?: string[],
+  className?: string
 };
 
-export default function Dealer({ cartas }: Dealer) {
+export default function Dealer({ cartas, className }: Dealer) {
   return (
     <div
-      className="absolute rounded-full border-4 border-yellow-600 w-24 h-24"
+      className={className}
       style={{
         left: `50%`,
         top: `-20%`,

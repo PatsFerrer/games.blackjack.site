@@ -11,4 +11,6 @@ type Jogador = {
 export interface IJogador {
   jogador: Jogador;
   index: number;
+  ganhadores: string[],
+  perdedores: string[]
 }
