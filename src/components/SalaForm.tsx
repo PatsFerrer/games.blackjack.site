@@ -1,5 +1,5 @@
 "use client";
-import novaSala from "@/app/(auth)/home/_actions/novaSala";
+import novaSala from "@/app/(auth)/mesa/_actions/novaSala";
 
 export default function SalaForm({ closeModal, onCreate }) {
 

@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useEffect } from "react";
-import apostarFichas from "@/app/(auth)/home/_actions/apostarFichas";
+import apostarFichas from "@/app/(auth)/mesa/_actions/apostarFichas";
 
 export default function ApostarFichas({ close, idSala }) {
   const handleSubmit = () => {
