@@ -111,7 +111,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   };
 
   return (
-    <main className="flex flex-col justify-center items-center h-full bg-green-800 gap-2.5">
+    <main className="flex flex-col justify-center items-center h-full bg-green-800 gap-12">
       {isError ? (
         <div>Deu ruim: Erro</div>
       ) : isLoading ? (
