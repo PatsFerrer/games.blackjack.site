@@ -5,9 +5,11 @@ export default function AuthLayout({ children }: {
   readonly children: React.ReactNode;
 }) {
   return (
-      <EventosProvider>
+    <EventosProvider>
+      <div className="grid grid-rows-layout min-h-screen">
         <Navbar />
         {children}
-      </EventosProvider>
+      </div>
+    </EventosProvider>
   );
 }

@@ -11,8 +11,6 @@ import ConvidarAmigoModal from "./ConvidarAmigoModal";
 import io from "socket.io-client";
 import PararJogadaButton from "./PararButton";
 import SnackbarGanhador from "./SnackbarGanhador";
-
-
 interface IProps {
   salaId: string;
   [key: string]: any;
@@ -21,19 +19,14 @@ interface IProps {
 
 const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   const { eventos } = useEventosContext();
-
-  const [jogo, setJogo] = useState<any>(); //verificar tipo para objeto
+  const [jogo, setJogo] = useState<any>();
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
   const [showSnackbar, setShowSnackbar] = useState(false);
-
   const [messages, setMessages] = useState<string[]>([]);
-
   const [ganhadores, setGanhadores] = useState<string[]>([]);
   const [perdedores, setPerdedores] = useState<string[]>([]);
-
 
   useEffect(() => {
     const socket = io("http://localhost:3002", {
@@ -54,7 +47,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
       const evento = JSON.parse(message);
 
       if (evento.Tipo == 6) {
-       // console.log('entrei no tipo 6')
+        // console.log('entrei no tipo 6')
 
       } else if (evento.Tipo == 8) {
         setShowSnackbar(true);
@@ -69,15 +62,15 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
         }
       } else if (evento.Tipo == 0) {
         let userId = sessionStorage.getItem('userId')
-        if(userId == null){
+        if (userId == null) {
           sessionStorage.setItem('userId', JSON.stringify(evento.UserId));
         }
 
       } else if (evento.Tipo == 1) {
-       console.log("evento tipo 1: desconectado")
-       sessionStorage.removeItem('userId')
+        console.log("evento tipo 1: desconectado")
+        sessionStorage.removeItem('userId')
       }
-      console.log(message);
+      // console.log(message);
       fetchStatus(false);
     });
 
@@ -114,42 +107,49 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   };
 
   return (
-    <main className="flex justify-center items-center h-screen bg-green-800">
+    <main className="flex flex-col justify-center items-center h-full bg-green-800 gap-2.5">
       {isError ? (
         <div>Deu ruim: Erro</div>
       ) : isLoading ? (
         <span className="loading loading-dots loading-lg text-white"></span>
       ) : (
         <>
-          <Link
-            href="/home"
-            className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 left-5"
-          >
-            <FaArrowLeft />
-          </Link>
-          <Link
-            href="/home"
-            className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 left-5"
-            onClick={() => handleSairMesa()}
-          >
-            <FaArrowLeft />
-            Deixar a mesa
-          </Link>
+          <div className="flex justify-between w-full px-5 2xl:w-4/5">
 
-          {/*  botao convidar amigos */}
-          <button
-            onClick={() => setIsOpen(true)}
-            className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 right-5"
-          >
-            <FaShareAlt />
-          </button>
-          <button
-            onClick={() => setIsOpen(true)}
-            className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute top-10 right-5"
-          >
-            Convidar amigos
-            <FaShareAlt />
-          </button>
+            {/* botão deixar a mesa */}
+            <Link
+              href="/home"
+              className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900"
+            >
+              <FaArrowLeft />
+            </Link>
+            <Link
+              href="/home"
+              className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900"
+              onClick={() => handleSairMesa()}
+            >
+              <FaArrowLeft />
+              Deixar a mesa
+            </Link>
+
+            {/*  botao convidar amigos */}
+            <button
+              onClick={() => setIsOpen(true)}
+              className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900"
+            >
+              <FaShareAlt />
+            </button>
+            <button
+              onClick={() => setIsOpen(true)}
+              className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900"
+            >
+              Convidar amigos
+              <FaShareAlt />
+            </button>
+
+
+          </div>
+
           {isOpen && <ConvidarAmigoModal onClose={() => setIsOpen(false)} />}
 
           {/* Mesa */}
@@ -164,7 +164,6 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
 
               {/* Jogadores ao redor da mesa */}
               {jogo.jogadores.map((jogador: any, index: number) => (
-
                 <Jogador
                   key={index}
                   index={index}
@@ -172,24 +171,12 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
                   perdedores={perdedores}
                   jogador={jogador}
                 />
-
               ))}
             </div>
-
-            {/* deck */}
-            <div className="relative bg-red-400 w-14 h-18 shadow-md rounded-md left-[65.33%] top-[-31.66%] ">
-              <img
-                src=" ./../cartas/BACK.png"
-                alt="Cartas"
-                className="w-14 h-18 rounded-md shadow-md"
-              />
-            </div>
           </div>
-          {/* Mesa fim */}
 
           {/*  snackbar informa ganhador */}
-          {
-            showSnackbar && (
+          {showSnackbar && (
             <SnackbarGanhador
               ganhadores={ganhadores}
               perdedores={perdedores}
@@ -198,16 +185,17 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
             />
           )}
 
-
-          {/* chama funçao comprar carta */}
-          <ComprarCartaButton onCartaComprada={handleCartaComprada} />
-
-          {/* chama a função Parar */}
-          <PararJogadaButton />
+          <div className="flex w-full px-5 justify-end gap-2 2xl:w-4/5">
+            {/* chama função comprar carta */}
+            <ComprarCartaButton onCartaComprada={handleCartaComprada} />
+            {/* chama a função Parar */}
+            <PararJogadaButton />
+          </div>
         </>
       )}
     </main>
   );
+
 };
 
 export default Mesa;

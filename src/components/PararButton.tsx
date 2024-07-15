@@ -37,10 +37,10 @@ const PararJogadaButton = () => {
   return (
     <div>
       {/* Botões para compra de carta */}
-      <button onClick={handlePararJogada} className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute bottom-10 right-5">
+      <button onClick={handlePararJogada} className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900">
           <TbHandStop />
         </button>
-        <button onClick={handlePararJogada} className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute bottom-10 right-5">
+        <button onClick={handlePararJogada} className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900">
           <TbHandStop />
           Parar
         </button>
