@@ -3,7 +3,7 @@ type Dealer = {
   className?: string
 };
 
-export default function Dealer({ cartas, className }: Dealer) {
+export default function Dealer({ cartas = [], className }: Dealer) {
   return (
     <div
       className={className}
@@ -24,18 +24,26 @@ export default function Dealer({ cartas, className }: Dealer) {
             transform: `translate(-10%, -50%)`,
           }}
         >
-          <img
-            src={`./../cartas/${carta.alt}.png`} 
-            alt={`Carta ${cartaIndex + 1}`}
-            className="w-14 rounded-md shadow-md"
-          />
+          {cartaIndex === 1 ? (
+            <img
+              src="./../cartas/BACK.png"
+              alt="Carta Escondida"
+              className="w-14 rounded-md shadow-md"
+            />
+          ) : (
+            <img
+              src={`./../cartas/${carta.alt}.png`}
+              alt={`Carta ${carta.alt}`}
+              className="w-14 rounded-md shadow-md"
+            />
+          )}
         </div>
       ))}
 
       <img
         className="object-cover aspect-square rounded-full"
         src="./../dealer.png"
-        alt={"Foto de Dealer"}
+        alt="Foto de Dealer"
       />
     </div>
   );

@@ -37,10 +37,10 @@ const ComprarCartaButton: React.FC<ComprarCartaButtonProps> = ({ onCartaComprada
   return (
     <div>
       {/* Botões para compra de carta */}
-      <button onClick={handleCompraCarta} className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900 absolute bottom-10 right-20">
+      <button onClick={handleCompraCarta} className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900">
         <GiCardPickup />
       </button>
-      <button onClick={handleCompraCarta} className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900 absolute bottom-10 right-32">
+      <button onClick={handleCompraCarta} className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900">
         <GiCardPickup />
         Comprar
       </button>
