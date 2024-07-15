@@ -17,7 +17,7 @@ export default function ApostarFichas({ close, idSala }) {
     <div>
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box">
-          <form action={apostarFichas}>
+          <form action={apostarFichas} onSubmit={handleSubmit}>
             <h3 className="font-bold text-lg">Aposte suas fichas!</h3>
             <label className="input input-bordered flex items-center gap-2 mt-3">
               <input
@@ -36,7 +36,6 @@ export default function ApostarFichas({ close, idSala }) {
             <button
               type="submit"
               className="btn btn-success mt-5"
-              onClick={handleSubmit}
             >
               Apostar
             </button>
