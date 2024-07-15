@@ -6,12 +6,12 @@ import Dealer from "./Dealer";
 import Jogador from "./Jogador";
 import ComprarCartaButton from "./ComprarCartaButton";
 import { getStatusJogo, jogadorConectado, jogadorDesconectado } from "@/app/api/servicos/jogoServico";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ConvidarAmigoModal from "./ConvidarAmigoModal";
 import io from "socket.io-client";
 import PararJogadaButton from "./PararButton";
 import SnackbarGanhador from "./SnackbarGanhador";
-
+import ApostarFichas from "./ApostarFichas";
 
 interface IProps {
   salaId: string;
@@ -28,6 +28,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const [showSnackbar, setShowSnackbar] = useState(false);
+  const modalRef = useRef<HTMLDialogElement>(null);
 
   const [messages, setMessages] = useState<string[]>([]);
 
@@ -197,6 +198,8 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
               onClose={() => setShowSnackbar(false)}
             />
           )}
+
+          <ApostarFichas close={() => modalRef.current?.close()} idSala = {salaId}/>
 
 
           {/* chama funçao comprar carta */}
