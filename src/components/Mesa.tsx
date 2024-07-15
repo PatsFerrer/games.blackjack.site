@@ -11,11 +11,8 @@ import ConvidarAmigoModal from "./ConvidarAmigoModal";
 import io from "socket.io-client";
 import PararJogadaButton from "./PararButton";
 import SnackbarGanhador from "./SnackbarGanhador";
-<<<<<<< HEAD
 import ApostarFichas from "./ApostarFichas";
 
-=======
->>>>>>> 741375f14a472928fcdc2e2701d5d3f34ae73ded
 interface IProps {
   salaId: string;
   [key: string]: any;
@@ -29,11 +26,8 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   const [isError, setError] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
-<<<<<<< HEAD
   const modalRef = useRef<HTMLDialogElement>(null);
 
-=======
->>>>>>> 741375f14a472928fcdc2e2701d5d3f34ae73ded
   const [messages, setMessages] = useState<string[]>([]);
   const [ganhadores, setGanhadores] = useState<string[]>([]);
   const [perdedores, setPerdedores] = useState<string[]>([]);
