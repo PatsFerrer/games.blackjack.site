@@ -1,7 +1,8 @@
 // src/components/Salas.tsx
 import { FC } from "react";
 import { ISala } from "@/interface/ISala";
-import Link from "next/link";
+// import Link from "next/link";
+import VerificarSenhaSala from "./VerificarSenhaSala";
 
 
 interface SalasProps {
@@ -9,6 +10,11 @@ interface SalasProps {
 }
 
 const Salas: FC<SalasProps> = ({ sala }) => {
+
+  const handleClick = () => {
+    document.getElementById("verificarSenha").showModal();
+  }
+
   return (
     <div className="card max-w-48 max-h-52 bg-base-100 shadow-xl image-full sm:max-w-72" key={sala.id}>
       <figure>
@@ -21,7 +27,23 @@ const Salas: FC<SalasProps> = ({ sala }) => {
         <h2 className="card-title h-full 
         text-base sm:text-2xl">{sala.nome}</h2>
         <div className="card-actions justify-end items-end">
-          <Link className="bg-white p-2 text-xs text-terciary border-none sm:p-4 sm:text-sm rounded-md" href={`/mesa/${sala.id}`}>Juntar-se</Link>
+          {/* <Link className="bg-white p-2 text-xs text-terciary border-none sm:p-4 sm:text-sm rounded-md" href={`/mesa/${sala.id}`}>Juntar-se</Link> */}
+          <button
+            className="bg-white p-2 text-xs text-terciary border-none sm:p-4 sm:text-sm rounded-md"
+            onClick={handleClick}
+          >
+            Juntar-se
+          </button>
+          <dialog id="verificarSenha" className="modal">
+            <div className="modal-box">
+              <form method="dialog">
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                  ✕
+                </button>
+              </form>
+              <VerificarSenhaSala sala = {sala}/>
+            </div>
+          </dialog>
         </div>
       </div>
     </div>
