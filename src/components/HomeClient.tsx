@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { ISala } from "@/interface/ISala";
 import Salas from "@/components/Salas";
 import SalaForm from "@/components/SalaForm";
+import VerificarSenhaSala from "./VerificarSenhaSala";
 
 interface HomeClientProps {
   salas: ISala[];
@@ -13,11 +14,17 @@ export default function HomeClient({ salas }: HomeClientProps) {
   const [clientSalas, setClientSalas] = useState<ISala[]>(salas);
   const [search, setSearch] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const [selectedSala, setSelectedSala] = useState<ISala | null>(null);
   const modalRef = useRef<HTMLDialogElement>(null);
 
   const handleCreateSala = (novaSala: ISala) => {
     setClientSalas([...clientSalas, novaSala]);
     modalRef.current?.close();
+  };
+
+  const handleOpenVerificarSenha = (sala: ISala) => {
+    setSelectedSala(sala);
+    document.getElementById("verificarSenha")?.showModal();
   };
 
   useEffect(() => {
@@ -61,15 +68,28 @@ export default function HomeClient({ salas }: HomeClientProps) {
           <span className="loading loading-spinner loading-lg text-jackWhite"></span>
         )}
         {!clientSalas.length && !isLoading && (
-          <p className="text-jackWhite">Nenhuma sala foi criada ainda.</p>
+          <p className="text-jackBlack">Nenhuma sala foi criada ainda.</p>
         )}
         {clientSalas &&
           clientSalas
             .filter((sala) =>
               sala.nome.toLowerCase().includes(search.toLowerCase())
             )
-            .map((sala) => <Salas key={sala.id} sala={sala} />)}
+            .map((sala) => <Salas key={sala.id} sala={sala} onJoin={handleOpenVerificarSenha}/>)}
       </div>
+
+      {selectedSala && (
+        <dialog id="verificarSenha" className="modal">
+          <div className="modal-box">
+            <form method="dialog">
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                ✕
+              </button>
+            </form>
+            <VerificarSenhaSala sala={selectedSala} />
+          </div>
+        </dialog>
+      )}
     </>
   );
 }

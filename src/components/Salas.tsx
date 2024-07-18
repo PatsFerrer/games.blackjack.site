@@ -7,16 +7,13 @@ import VerificarSenhaSala from "./VerificarSenhaSala";
 
 interface SalasProps {
   sala: ISala;
+  key: string;
+  onJoin: (sala: ISala) => void;
 }
 
-const Salas: FC<SalasProps> = ({ sala }) => {
-
-  const handleClick = () => {
-    document.getElementById("verificarSenha").showModal();
-  }
-
+const Salas: FC<SalasProps> = ({ key, sala, onJoin }) => {
   return (
-    <div className="card max-w-48 max-h-52 bg-base-100 shadow-xl image-full sm:max-w-72" key={sala.id}>
+    <div className="card max-w-48 max-h-52 bg-base-100 shadow-xl image-full sm:max-w-72" key={key}>
       <figure>
         <img
           src="https://images.unsplash.com/photo-1646809014367-2c267bcba69f?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -30,20 +27,10 @@ const Salas: FC<SalasProps> = ({ sala }) => {
           {/* <Link className="bg-white p-2 text-xs text-terciary border-none sm:p-4 sm:text-sm rounded-md" href={`/mesa/${sala.id}`}>Juntar-se</Link> */}
           <button
             className="bg-white p-2 text-xs text-terciary border-none sm:p-4 sm:text-sm rounded-md"
-            onClick={handleClick}
+            onClick={() => onJoin(sala)}
           >
             Juntar-se
           </button>
-          <dialog id="verificarSenha" className="modal">
-            <div className="modal-box">
-              <form method="dialog">
-                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-                  ✕
-                </button>
-              </form>
-              <VerificarSenhaSala sala = {sala}/>
-            </div>
-          </dialog>
         </div>
       </div>
     </div>
