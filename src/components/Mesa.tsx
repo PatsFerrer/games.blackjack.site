@@ -74,11 +74,8 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
         console.log("evento tipo 1: desconectado")
         sessionStorage.removeItem('userId')
       }
-      // console.log(message);
       fetchStatus(false);
     });
-
-    fetchStatus(true);
 
     return () => {
       socket.disconnect();
