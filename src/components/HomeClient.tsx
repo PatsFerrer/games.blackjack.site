@@ -24,7 +24,10 @@ export default function HomeClient({ salas }: HomeClientProps) {
 
   const handleOpenVerificarSenha = (sala: ISala) => {
     setSelectedSala(sala);
-    document.getElementById("verificarSenha")?.showModal();
+    const modal = document.getElementById("verificarSenha") as HTMLDialogElement | null;
+    if (modal) {
+      modal.showModal();
+    }
   };
 
   useEffect(() => {

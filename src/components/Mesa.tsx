@@ -54,13 +54,17 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
         // console.log('entrei no tipo 6')
 
       } else if (evento.Tipo == 8) {
+        console.log("aaaaaaaa");
         setShowSnackbar(true);
-
+        const valorObj: Resultado = JSON.parse(evento.Valor);
+          console.log(valorObj.Ganhadores)
+          console.log(valorObj.Perdedores)
         try {
-          const valorObj: Resultado = JSON.parse(evento.Valor);
+          
 
           setGanhadores(valorObj.Ganhadores)
           setPerdedores(valorObj.Perdedores)
+          
         } catch (error) {
           console.error('Erro ao parsear o JSON de Valor:', error);
         }

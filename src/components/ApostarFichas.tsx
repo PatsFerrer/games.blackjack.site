@@ -1,16 +1,29 @@
 "use client";
-
+import { FC } from "react";
 import React from "react";
 import { useEffect } from "react";
 import apostarFichas from "@/app/(auth)/mesa/_actions/apostarFichas";
 
-export default function ApostarFichas({ close, idSala }) {
+interface FichasProps {
+  close: any;
+  idSala: string;
+}
+
+
+const ApostarFichas: FC<FichasProps> =({ close, idSala }) => {
+
   const handleSubmit = () => {
-    document.getElementById("my_modal_3").close();
+    const modal = document.getElementById("my_modal_3") as HTMLDialogElement | null;
+    if (modal) {
+      modal.close();
+    }
   };
 
   useEffect(() => {
-    document.getElementById("my_modal_3").showModal();
+    const modal = document.getElementById("my_modal_3") as HTMLDialogElement | null;
+    if (modal) {
+      modal.showModal();
+    }
   }, []);
 
   return (
@@ -45,3 +58,5 @@ export default function ApostarFichas({ close, idSala }) {
     </div>
   );
 }
+
+export default ApostarFichas;

@@ -1,10 +1,14 @@
 "use client"
 import { useSearchParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { FC, useState } from "react";
 import Loading from "./Loading";
 import entrarSala from "@/app/(auth)/home/_actions/entrarSala";
 
-export default function VerificarSenhaSala({ sala }) {
+interface VerificarSenhaProps {
+  sala: any;
+}
+
+const VerificarSenhaSala: FC<VerificarSenhaProps> = ({ sala }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -64,3 +68,5 @@ export default function VerificarSenhaSala({ sala }) {
     </form>
   );
 }
+
+export default VerificarSenhaSala;

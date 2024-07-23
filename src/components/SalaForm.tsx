@@ -1,7 +1,13 @@
 "use client";
 import novaSala from "@/app/(auth)/mesa/_actions/novaSala";
+import { FC } from "react";
 
-export default function SalaForm({ closeModal, onCreate }) {
+interface SalasProps {
+  closeModal: any;
+  onCreate: any;
+}
+
+const SalaForm: FC<SalasProps> = ({ closeModal, onCreate }) => {
 
   const handleSubmit = () => {
     closeModal();
@@ -55,3 +61,5 @@ export default function SalaForm({ closeModal, onCreate }) {
     </form>
   );
 }
+
+export default SalaForm;

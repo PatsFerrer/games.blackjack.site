@@ -7,7 +7,7 @@ import VerificarSenhaSala from "./VerificarSenhaSala";
 
 interface SalasProps {
   sala: ISala;
-  key: string;
+  key: number;
   onJoin: (sala: ISala) => void;
 }
 

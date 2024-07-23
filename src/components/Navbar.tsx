@@ -68,7 +68,7 @@ export default async function Navbar() {
                 </Link>
               </li>
               <li>
-                <Link href="/editar-cadastro" className="justify-between">
+                <Link href="" className="justify-between">
                   Editar Perfil
                 </Link>
               </li>

@@ -1,5 +1,7 @@
+import { Carta } from "@/interface/IJogador";
+
 type Dealer = {
-  cartas?: string[],
+  cartas?: Carta[],
   className?: string
 };
 

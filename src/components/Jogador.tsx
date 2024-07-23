@@ -59,7 +59,7 @@ export default function Jogador({ jogador, index, ganhadores, perdedores }: IJog
 
         <img
           className="object-cover aspect-square rounded-full mb-2"
-          src={validarImagem(avatarUrl)}
+          src={validarImagem(avatarUrl  || "")}
           alt={`Foto de ${nome}`}
         />
 
