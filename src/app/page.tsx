@@ -1,7 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { FormLogin } from "@/components";
+import { FormLogin, Loading } from "@/components";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -25,7 +26,10 @@ export default function Home() {
           Faça login para começar
         </h3>
 
-        <FormLogin />
+        <Suspense fallback={<Loading/>}>
+          <FormLogin />
+        </Suspense>
+        
 
         <p className="mt-6 text-center text-sm text-gray-600">
           Ainda não possui cadastro?{' '}

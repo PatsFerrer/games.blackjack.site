@@ -4,6 +4,8 @@ import { getServerSession } from "next-auth";
 import { HomeClient } from "@/components";
 import { ISala } from "@/interface/ISala";
 
+export const dynamic = 'force-dynamic'
+
 export default async function Home() {
 
   const session = await getServerSession();

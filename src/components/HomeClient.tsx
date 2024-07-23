@@ -5,6 +5,8 @@ import { ISala } from "@/interface/ISala";
 import Salas from "@/components/Salas";
 import SalaForm from "@/components/SalaForm";
 import VerificarSenhaSala from "./VerificarSenhaSala";
+import { Suspense } from 'react';
+import Loading from "./Loading";
 
 interface HomeClientProps {
   salas: ISala[];
@@ -89,7 +91,10 @@ export default function HomeClient({ salas }: HomeClientProps) {
                 ✕
               </button>
             </form>
-            <VerificarSenhaSala sala={selectedSala} />
+            <Suspense fallback={<Loading/>}>
+              <VerificarSenhaSala sala={selectedSala} />
+            </Suspense>
+            
           </div>
         </dialog>
       )}

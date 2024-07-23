@@ -1,8 +1,6 @@
 // src/components/Salas.tsx
 import { FC } from "react";
 import { ISala } from "@/interface/ISala";
-// import Link from "next/link";
-import VerificarSenhaSala from "./VerificarSenhaSala";
 
 
 interface SalasProps {
