@@ -1,7 +1,10 @@
-import { ISala } from "@/interface/ISala";
-import HomeClient from "@/components/HomeClient";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
+
+import { HomeClient } from "@/components";
+import { ISala } from "@/interface/ISala";
+
+export const dynamic = 'force-dynamic'
 
 export default async function Home() {
 
@@ -13,14 +16,14 @@ export default async function Home() {
 
   let salas: ISala[] = [];
   try {
-    const res = await fetch("https://66718da9e083e62ee43c1800.mockapi.io/salas-disponiveis/salas", { method: "GET" });
+    const res = await fetch(`${process.env.API_URL}/salas`, { method: "GET" });
     salas = await res.json();
   } catch (error) {
     console.error("Failed to fetch salas", error);
   }
 
   return (
-    <div className="p-14 flex flex-col min-h-screen bg-primary">
+    <div className="p-14 flex flex-col min-h-screen bg-secondary">
       <HomeClient salas={salas} />
     </div>
   );

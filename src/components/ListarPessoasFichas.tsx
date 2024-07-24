@@ -1,39 +1,27 @@
 import { FC } from "react";
 import { ITopJogador } from "@/interface/ITopJogador";
+import validarImagem from "@/utils/imageUtil";
 
 interface ITopJogadores {
   topJogador: ITopJogador;
 }
 
 const ListarPessoasFichas: FC<ITopJogadores> = ({ topJogador }) => {
+const {Avatar, Login, TotalFichas} = topJogador
   return (
-    <div>
-      <div className="overflow-x-auto">
-        <table className="table text-[#000201]">
-            <div className="card bg-[#F2EFF0] mb-2 mr-4 rounded-sm">
-                <tr className="flex justify-around">
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <img
-                            src={topJogador.avatar}
-                            alt="Avatar Jogador"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font- ">{topJogador.nome}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="flex justify-center items-center">${topJogador.fichas}</td>
-                </tr>
-            </div>
-        </table>
+    <div className="overflow-x-auto mb-3">
+      <div className="card flex-row bg-[#F2EFF0] mr-4 rounded-sm justify-around p-3 h-24">
+        <div className="flex items-center gap-3">
+          <div className="avatar mask mask-squircle h-12 w-12 mr-4">
+            <img src={validarImagem(Avatar)} alt="Avatar Jogador" />
+          </div>
+          <div>{Login}</div>
+        </div>
+
+        <div className="flex justify-center items-center">${TotalFichas}</div>
       </div>
     </div>
   );
-}
+};
 
 export default ListarPessoasFichas;

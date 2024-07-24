@@ -3,26 +3,28 @@ import { cookies } from "next/headers";
 import LogoutButton from "./LogoutButton";
 import Image from "next/image";
 
-import { ListPathPages, ListarPessoasButton } from "@/components";
+import { ListarPessoasButton } from "@/components";
 import { redirect } from "next/navigation";
 import validarImagem from "@/utils/imageUtil";
+import { getUsuario } from "@/app/api/endpoints/getUsuario";
 
 export default async function Navbar() {
 
+  let usuarioLogado;
   let user;
-
   try {
-    user = JSON.parse(cookies().get("user")!.value);
+    usuarioLogado = JSON.parse(cookies().get("user")!.value);
+    user = await getUsuario(usuarioLogado.id)
 
   } catch (error) {
     console.error(error, "user perdeu seu cookie!");
     redirect('/');
   }
 
-  const { login, avatar, email } = user;
+  const { nome, avatarUrl, fichas } = user;
 
   return (
-    <nav className="navbar bg-[#111111] border-gray-200 gap-5 shadow-md ">
+    <nav className="navbar bg-[#111111] border-gray-200 gap-5 shadow-md p-4">
       <div className="flex-1">
         <Link href="/home">
           <Image
@@ -34,17 +36,12 @@ export default async function Navbar() {
           />
         </Link>
       </div>
-
-      <ListPathPages />
-
-      {/* dropdown do perfil */}
-      <div className="dropdown dropdown-end bg-bla">
+      <div className="dropdown dropdown-end">
         <div tabIndex={0} role="button" className="btn flex flex-col bg-devland hover:bg-devland-100">
-          <div className="text-white">{login}</div>
+          <div className="text-white">{nome}</div>
           <div className="badge badge-neutral">
-            <span>$30000</span> {/* colocar qtd de fichas */}
+            <span>${fichas}</span>
           </div>
-
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
@@ -53,8 +50,8 @@ export default async function Navbar() {
             >
               <div className="w-10 rounded-full">
                 <Image
-                  alt={`Foto de ${login}`}
-                  src={validarImagem(avatar)}
+                  alt={`Foto de ${nome}`}
+                  src={validarImagem(avatarUrl)}
                   width={500}
                   height={500}
                   quality={100}
@@ -65,19 +62,13 @@ export default async function Navbar() {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <li className="md:hidden">
+              <li className="">
                 <Link href="/home" className="justify-between">
                   Início
                 </Link>
               </li>
-              <li className="md:hidden">
-                <Link href="/criar-sala" className="justify-between">
-                  Criar Sala
-                </Link>
-              </li>
-
               <li>
-                <Link href="/editar-cadastro" className="justify-between">
+                <Link href="" className="justify-between">
                   Editar Perfil
                 </Link>
               </li>

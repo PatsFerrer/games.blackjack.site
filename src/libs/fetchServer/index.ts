@@ -1,24 +1,29 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import Cookies from 'js-cookie';
+
+const baseURL = process.env.API_URL;
 
 export const fetchServer = async (
-  input: string | URL | Request,
-  init?: RequestInit | undefined
+  path: string,
+  options: RequestInit = {}
 ): Promise<Response> => {
+  const token = Cookies.get('token');
 
-  const token = cookies().get('token');
-
-  const response = await fetch(input, {
-    ...init,
-    headers: {
-      ...init?.headers,
-      ...(token && { Authorization: `Bearer ${token.value}` }),
-    },
-  });
-
-  if (response.status === 401) {
-    return redirect('/');
+  if (!token) {
+    throw new Error('Token de autenticação não encontrado');
   }
 
+  // console.log('Token capturado:', baseURL);
+
+  const headers = {
+    ...options.headers,
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+  };
+
+  const response = await fetch("http://localhost:7071/api" + path, {
+    ...options,
+    headers,
+  });
+
   return response;
-}
+};

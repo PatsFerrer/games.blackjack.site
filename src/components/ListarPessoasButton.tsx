@@ -10,12 +10,10 @@ export default function ListarPessoasButton() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("https://66718da9e083e62ee43c1800.mockapi.io/salas-disponiveis/salas", { method: "GET" });
+        const res = await fetch("http://localhost:7071/api/usuarios/topfichas", { method: "GET" });
         const topJogadores = await res.json();
+        console.log(topJogadores)
         setJogadores(topJogadores);
-        const sortedJogadores = topJogadores.sort((a, b) => b.fichas - a.fichas);
-        const top5Jogadores = sortedJogadores.slice(0, 5);
-        setJogadores(top5Jogadores);
       } catch (error) {
         console.log(error);
       }
@@ -49,8 +47,8 @@ export default function ListarPessoasButton() {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <div className="menu bg-[#DF0B56] text-base-content min-h-full w-80 p-4">
-            {jogadores.map((jogador) => <ListarPessoasFichas topJogador ={jogador}/>)}
+          <div className="menu bg-[#171c30] text-base-content min-h-full w-80 p-4">
+            {jogadores.map((jogador, i) => <ListarPessoasFichas key={i} topJogador ={jogador}/>)}
           </div>
         </div>
       </div>

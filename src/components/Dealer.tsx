@@ -1,17 +1,14 @@
+import { Carta } from "@/interface/IJogador";
+
 type Dealer = {
-  cartas?: string[];
-}
+  cartas?: Carta[],
+  className?: string
+};
 
-export default function Dealer({ cartas }: Dealer) {
-
-  const cartasMock = [
-    "./cartas/2-D.png",
-    "./cartas/BACK.png"
-  ]
-
+export default function Dealer({ cartas = [], className }: Dealer) {
   return (
     <div
-      className="absolute rounded-full border-4 border-yellow-600 w-24 h-24"
+      className={className}
       style={{
         left: `50%`,
         top: `-20%`,
@@ -19,8 +16,7 @@ export default function Dealer({ cartas }: Dealer) {
       }}
     >
       {/* Cartas do Dealer */}
-      {cartasMock.map((cartaUrl, cartaIndex) => (
-
+      {cartas.map((carta, cartaIndex) => (
         <div
           key={cartaIndex}
           className="absolute bg-red-400 w-14 shadow-md rounded-md"
@@ -30,15 +26,27 @@ export default function Dealer({ cartas }: Dealer) {
             transform: `translate(-10%, -50%)`,
           }}
         >
-          <img src={cartaUrl} alt={`Carta ${cartaIndex + 1}`} className="w-14 rounded-md shadow-md" />
+          {cartaIndex === 1 ? (
+            <img
+              src="./../cartas/BACK.png"
+              alt="Carta Escondida"
+              className="w-14 rounded-md shadow-md"
+            />
+          ) : (
+            <img
+              src={`./../cartas/${carta.alt}.png`}
+              alt={`Carta ${carta.alt}`}
+              className="w-14 rounded-md shadow-md"
+            />
+          )}
         </div>
       ))}
 
       <img
         className="object-cover aspect-square rounded-full"
-        src="./dealer.png"
-        alt={'Foto de Dealer'}
+        src="./../dealer.png"
+        alt="Foto de Dealer"
       />
     </div>
-  )
+  );
 }

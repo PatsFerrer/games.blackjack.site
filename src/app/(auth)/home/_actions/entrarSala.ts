@@ -1,0 +1,36 @@
+"use server";
+
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+
+export default async function entrarSala(FormData: FormData) {
+  const nome = FormData.get("nome");
+  const senha = FormData.get("senha");
+  const salaId = FormData.get("salaId");
+
+  const token = cookies().get("token")?.value;
+
+  if (!token) {
+    return { success: false, message: "Usuário não autenticado" };
+  }
+
+  const response = await fetch(`${process.env.API_URL}/entrar-sala`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      nome,
+      senha,
+    }),
+  });
+
+  if (response.status === 200) {
+    return { success: true };
+  } else if (response.status === 401 || response.status === 404) {
+    return { success: false, message: "Senha inválida. Por favor, verifique a senha e tente novamente." };
+  } else {
+    return { success: false, message: "Ocorreu um erro. Por favor, tente novamente mais tarde." };
+  }
+}

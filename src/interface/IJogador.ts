@@ -1,11 +1,20 @@
-type Jogador = {
-  imagemUrl?: string;
-  nome?: string;
+export type Jogador = {
+  avatarUrl?: string;
+  cartas?: Carta[];
+  ehVez?: boolean;
   fichas?: number;
-  cartas?: string[];
+  fichasApostadas?: number;
+  nome?: string;
+  usuarioId?: string;
 }
+
+export type Carta = {
+  alt: string;
+};
 
 export interface IJogador {
   jogador: Jogador;
   index: number;
+  ganhadores: string[],
+  perdedores: string[]
 }
