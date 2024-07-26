@@ -12,7 +12,7 @@ export default function ListarPessoasButton() {
       try {
         const res = await fetch(`${process.env.API_URL}/usuarios/topfichas`, { method: "GET" });
         const topJogadores = await res.json();
-        console.log(topJogadores)
+        // console.log(topJogadores)
         setJogadores(topJogadores);
       } catch (error) {
         console.log(error);

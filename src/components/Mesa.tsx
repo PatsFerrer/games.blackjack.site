@@ -54,11 +54,8 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
         // console.log('entrei no tipo 6')
 
       } else if (evento.Tipo == 8) {
-        console.log("aaaaaaaa");
         setShowSnackbar(true);
         const valorObj: Resultado = JSON.parse(evento.Valor);
-          console.log(valorObj.Ganhadores)
-          console.log(valorObj.Perdedores)
         try {
           
 
@@ -75,7 +72,6 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
         }
 
       } else if (evento.Tipo == 1) {
-        console.log("evento tipo 1: desconectado")
         sessionStorage.removeItem('userId')
       }
       fetchStatus(false);
