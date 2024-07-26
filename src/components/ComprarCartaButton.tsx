@@ -12,7 +12,7 @@ interface ComprarCartaButtonProps {
   onCartaComprada: () => void; // Função para chamar após comprar a carta
 }
 
-const socket = io('http://localhost:3002', {
+const socket = io(`${process.env.SOCKET_URL}`, {
   transports: ['websocket'],
 });
 

@@ -10,7 +10,7 @@ export default function ListarPessoasButton() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("http://localhost:7071/api/usuarios/topfichas", { method: "GET" });
+        const res = await fetch(`${process.env.API_URL}/usuarios/topfichas`, { method: "GET" });
         const topJogadores = await res.json();
         console.log(topJogadores)
         setJogadores(topJogadores);
