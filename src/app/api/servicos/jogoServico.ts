@@ -22,14 +22,15 @@ export const pararJogada = async (salaId : string) => {
 }
 
 export const jogadorConectado = async (salaId : string) => {
-    try{
-        return await fetchServer('/jogo/conectar', {
-            method: 'post',
-            body: JSON.stringify({ "sala_id": salaId })
-        });
-    }catch(error){
-        throw error;
-    }
+    try {
+        const res = await fetch(`${process.env.API_URL}/jogo/conectar`, { 
+          method: "POST",
+          body: JSON.stringify({ "sala_id": salaId })
+         });
+        // const resp = await res.json();
+      } catch (error) {
+        console.error("Failed to fetch salas", error);
+      }
 }
 
 export const jogadorDesconectado = async (salaId : string) => {
