@@ -13,7 +13,7 @@ export default async function ConexaoMesa() {
 
   useEffect(() => {
     // console.log(process.env.API_URL);
-    const socket = io(`${process.env.REACT_APP_SOCKET_URL}`, {
+    const socket = io(`${process.env.SOCKET_URL}`, {
       transports: ['websocket'],
     });
 
