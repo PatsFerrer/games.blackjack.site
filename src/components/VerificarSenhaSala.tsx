@@ -49,7 +49,6 @@ const VerificarSenhaSala: FC<VerificarSenhaProps> = ({ sala }) => {
           name="senha"
           placeholder="Senha..."
           type="password"
-          autoComplete="current-password"
           required
           className="block w-80 rounded-md border text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 p-2  border-black"
         />
