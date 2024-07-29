@@ -12,8 +12,8 @@ export default async function ConexaoMesa() {
   const { setEventos } = context;
 
   useEffect(() => {
-    // console.log(process.env.API_URL);
-    const socket = io(`${process.env.SOCKET_URL}`, {
+    // console.log(process.env.NEXT_PUBLIC_API_URL);
+    const socket = io(`${process.env.NEXT_PUBLIC_SOCKET_URL}`, {
       transports: ['websocket'],
     });
 

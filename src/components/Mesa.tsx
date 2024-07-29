@@ -33,7 +33,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   const [perdedores, setPerdedores] = useState<string[]>([]);
 
   useEffect(() => {
-    const socket = io(`${process.env.SOCKET_URL}`, {
+    const socket = io(`${process.env.NEXT_PUBLIC_SOCKET_URL}`, {
       transports: ["websocket"],
     });
 
