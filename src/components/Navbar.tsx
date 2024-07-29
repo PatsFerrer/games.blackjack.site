@@ -30,7 +30,7 @@ export default async function Navbar() {
   } catch (error) {
     console.log(error);
   }
-console.log(jogadores)
+  
   const { nome, avatarUrl, fichas } = user;
 
   return (

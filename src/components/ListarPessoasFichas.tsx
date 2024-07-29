@@ -8,7 +8,6 @@ interface ITopJogadores {
 
 const ListarPessoasFichas: FC<ITopJogadores> = ({ topJogador }) => {
 
-  console.log(topJogador.login)
   return (
     <div className="overflow-x-auto mb-3">
       <div className="card flex-row bg-[#F2EFF0] mr-4 rounded-sm justify-around p-3 h-24">
