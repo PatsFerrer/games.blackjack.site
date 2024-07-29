@@ -3,24 +3,18 @@ import { ITopJogador } from "@/interface/ITopJogador";
 import React, { useEffect, useState } from "react";
 import { FaTrophy } from "react-icons/fa";
 import ListarPessoasFichas from "./ListarPessoasFichas";
+import usuariosTopFichas from "@/app/(auth)/home/_actions/usuariosTopFichas";
 
-export default function ListarPessoasButton() {
+interface topJogadoresProps {
+  topJogadores: ITopJogador[];
+}
+
+export default function ListarPessoasButton({topJogadores}: topJogadoresProps) {
   const [jogadores, setJogadores] = useState<ITopJogador[]>([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`${process.env.API_URL}/usuarios/topfichas`, { method: "GET" });
-        const topJogadores = await res.json();
-        // console.log(topJogadores)
-        setJogadores(topJogadores);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, []);
+    setJogadores(topJogadores)
+  }, [topJogadores]);
 
   return (
     <div className="">

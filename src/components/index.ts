@@ -13,7 +13,7 @@ import ComprarCartaButton from './ComprarCartaButton';
 import Mesa from './Mesa';
 import ConvidarAmigoModal from './ConvidarAmigoModal';
 import SnackbarGanhador from './SnackbarGanhador';
-import apostarFichas from '@/app/(auth)/mesa/_actions/apostarFichas';
+import ApostarFichas from './ApostarFichas';
 
 export {
   Jogador,
@@ -31,5 +31,5 @@ export {
   Mesa,
   ConvidarAmigoModal,
   SnackbarGanhador,
-  apostarFichas
+  ApostarFichas
 }

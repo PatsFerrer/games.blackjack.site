@@ -7,6 +7,8 @@ import { ListarPessoasButton } from "@/components";
 import { redirect } from "next/navigation";
 import validarImagem from "@/utils/imageUtil";
 import { getUsuario } from "@/app/api/endpoints/getUsuario";
+import usuariosTopFichas from "@/app/(auth)/home/_actions/usuariosTopFichas";
+import { ITopJogador } from "@/interface/ITopJogador";
 
 export default async function Navbar() {
 
@@ -21,6 +23,14 @@ export default async function Navbar() {
     redirect('/');
   }
 
+  let jogadores: ITopJogador[] = [];
+  try{
+    const response = await usuariosTopFichas();
+    jogadores = await response;
+  } catch (error) {
+    console.log(error);
+  }
+console.log(jogadores)
   const { nome, avatarUrl, fichas } = user;
 
   return (
@@ -81,7 +91,7 @@ export default async function Navbar() {
       </div>
 
       {/* trofeu */}
-      <ListarPessoasButton />
+      <ListarPessoasButton topJogadores = {jogadores}/>
     </nav>
   );
 }
