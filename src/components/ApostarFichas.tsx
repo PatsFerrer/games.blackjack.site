@@ -1,8 +1,8 @@
 "use client";
+import { apostarFichas } from "@/app/(auth)/mesa/_actions";
 import { FC } from "react";
 import React from "react";
 import { useEffect } from "react";
-import apostarFichas from "@/app/(auth)/mesa/_actions/apostarFichas";
 
 interface FichasProps {
   close: any;

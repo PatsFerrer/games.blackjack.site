@@ -2,10 +2,7 @@
 
 import { cookies } from "next/headers";
 
-export default async function entrarSala(FormData: FormData) {
-  const nome = FormData.get("nome");
-  const senha = FormData.get("senha");
-  const salaId = FormData.get("salaId");
+export default async function jogadorDesconectado(salaId:string) {
 
   const token = cookies().get("token")?.value;
 
@@ -13,16 +10,13 @@ export default async function entrarSala(FormData: FormData) {
     return { success: false, message: "Usuário não autenticado" };
   }
 
-  const response = await fetch(`${process.env.API_URL}/entrar-sala`, {
+  const response = await fetch(`${process.env.API_URL}/jogo/desconectar`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({
-      nome,
-      senha,
-    }),
+    body: JSON.stringify({ "sala_id": salaId })
   });
 
   if (response.status === 200) {

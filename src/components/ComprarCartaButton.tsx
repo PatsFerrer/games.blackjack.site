@@ -1,12 +1,12 @@
 'use client'
 
 import React from 'react';
-import { comprarCarta } from '@/app/api/endpoints';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { GiCardPickup } from 'react-icons/gi';
 import { useParams } from 'next/navigation';
 import io from 'socket.io-client';
+import comprarCarta from '@/app/(auth)/mesa/_actions/comprarCarta';
 
 interface ComprarCartaButtonProps {
   onCartaComprada: () => void; // Função para chamar após comprar a carta

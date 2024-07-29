@@ -1,12 +1,12 @@
 'use client'
 
 import React from 'react';
-import { pararJogada } from '@/app/api/servicos/jogoServico';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'next/navigation';
 import { TbHandStop } from "react-icons/tb";
 import io from 'socket.io-client';
+import pararJogada from '@/app/(auth)/mesa/_actions/pararJogada';
 
 const socket = io(`${process.env.SOCKET_URL}`, {
   transports: ['websocket'],
@@ -18,15 +18,10 @@ const PararJogadaButton = () => {
   const handlePararJogada = async () => {
     try {
       const result = await pararJogada(salaId);
-      if (result.ok) {
+      if (result.success) {
         console.log('Parada realizada com sucesso');
-        const evento = {
-          SalaId: salaId,
-          Tipo: 3
-        };
-        socket.emit('mensagem', JSON.stringify(evento))
       } else {
-        toast.error(result.statusText || 'Erro ao parar');
+        toast.error(result.message || 'Erro ao parar');
       }
     } catch (error) {
       console.error('Erro ao processar parada', error);

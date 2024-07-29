@@ -5,12 +5,12 @@ import { FaArrowLeft, FaShareAlt } from "react-icons/fa";
 import Dealer from "./Dealer";
 import Jogador from "./Jogador";
 import ComprarCartaButton from "./ComprarCartaButton";
-import { getStatusJogo, jogadorConectado, jogadorDesconectado } from "@/app/api/servicos/jogoServico";
 import { useEffect, useRef, useState } from "react";
 import ConvidarAmigoModal from "./ConvidarAmigoModal";
 import io from "socket.io-client";
 import PararJogadaButton from "./PararButton";
 import SnackbarGanhador from "./SnackbarGanhador";
+import { jogadorConectado, jogadorDesconectado, getStatusJogo } from "@/app/(auth)/mesa/_actions";
 import ApostarFichas from "./ApostarFichas";
 
 interface IProps {
@@ -92,7 +92,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
         setLoading(true);
       }
       const data = await getStatusJogo(salaId);
-      const jogo = await data.json();
+      const jogo = await data;
       setJogo(jogo);
     } catch (error) {
       setError(true);
