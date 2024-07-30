@@ -9,7 +9,6 @@ interface FichasProps {
   idSala: string;
 }
 
-
 const ApostarFichas: FC<FichasProps> =({ close, idSala }) => {
 
   const handleSubmit = () => {
@@ -43,12 +42,12 @@ const ApostarFichas: FC<FichasProps> =({ close, idSala }) => {
               />
             </label>
             <label hidden>
-              <input type="text" id="salaId" name="salaId" value={idSala} />
+              <input type="text" id="salaId" name="salaId" value={idSala} readOnly />
             </label>
 
             <button
               type="submit"
-              className="btn btn-success mt-5"
+              className="btn bg-blue-950 hover:bg-blue-900 text-white mt-5"
             >
               Apostar
             </button>

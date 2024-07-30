@@ -22,7 +22,7 @@ const Salas: FC<SalasProps> = ({ sala, onJoin }) => {
         <h2 className="card-title h-full text-2xl">{sala.nome}</h2>
         <div className="card-actions justify-end items-end">
           <button
-            className="bg-white p-2 text-terciary border-none  text-sm rounded-md"
+            className="btn bg-white p-2 text-terciary border-none text-sm rounded-md"
             onClick={() => onJoin(sala)}
           >
             Juntar-se

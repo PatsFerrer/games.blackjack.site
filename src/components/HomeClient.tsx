@@ -41,6 +41,7 @@ export default function HomeClient({ salas }: HomeClientProps) {
       <div className="justify-center items-center sm:flex">
         <div className="flex justify-center">
           <input
+            id="pesquisarSala"
             type="text"
             placeholder="Pesquisar sala..."
             className="input input-bordered min-w-80 ml-auto mr-auto"
