@@ -12,7 +12,7 @@ interface ComprarCartaButtonProps {
   onCartaComprada: () => void; // Função para chamar após comprar a carta
 }
 
-const socket = io(`${process.env.SOCKET_URL}`, {
+const socket = io("https://blackjack-socket.azurewebsites.net", {
   transports: ['websocket'],
 });
 

@@ -12,7 +12,7 @@ const nextConfig = {
     ],
   },
   env: {
-    SOCKET_URL: process.env.SOCKET_URL,
+    SOCKET_URL: "https://blackjack-socket.azurewebsites.net",
     API_URL: process.env.API_URL,
   },
 };

@@ -8,7 +8,7 @@ import { TbHandStop } from "react-icons/tb";
 import io from 'socket.io-client';
 import pararJogada from '@/app/(auth)/mesa/_actions/pararJogada';
 
-const socket = io(`${process.env.SOCKET_URL}`, {
+const socket = io("https://blackjack-socket.azurewebsites.net", {
   transports: ['websocket'],
 });
 
