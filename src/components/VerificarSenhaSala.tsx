@@ -38,10 +38,10 @@ const VerificarSenhaSala: FC<VerificarSenhaProps> = ({ sala }) => {
           Insira a senha de {sala.nome}
         </h3>
         <label hidden>
-          <input type="text" id="nome" name="nome" value={sala.nome} />
+          <input type="text" id="nome" name="nome" value={sala.nome} readOnly />
         </label>
         <label hidden>
-          <input type="text" id="salaId" name="salaId" value={sala.id} />
+          <input type="text" id="salaId" name="salaId" value={sala.id} readOnly />
         </label>
         <div className="flex justify-between"></div>
         <input

@@ -77,11 +77,11 @@ export default async function Navbar() {
                   Início
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="" className="justify-between">
                   Editar Perfil
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <LogoutButton />
               </li>
