@@ -2,6 +2,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import { FC, useState } from "react";
 import Loading from "./Loading";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import entrarSala from "@/app/(auth)/home/_actions/entrarSala";
 
 interface VerificarSenhaProps {
@@ -11,6 +12,7 @@ interface VerificarSenhaProps {
 const VerificarSenhaSala: FC<VerificarSenhaProps> = ({ sala }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -38,20 +40,28 @@ const VerificarSenhaSala: FC<VerificarSenhaProps> = ({ sala }) => {
           Insira a senha de {sala.nome}
         </h3>
         <label hidden>
-          <input type="text" name="nome" value={sala.nome} readOnly />
+          <input type="text" id="nomeSala" name="nome" value={sala.nome} readOnly />
         </label>
         <label hidden>
-          <input type="text" name="salaId" value={sala.id} readOnly />
+          <input type="text" id="salaId" name="salaId" value={sala.id} readOnly />
         </label>
         <div className="flex justify-between"></div>
-        <input
-          id="senhaSala"
-          name="senha"
-          placeholder="Senha..."
-          type="password"
-          required
-          className="block w-80 rounded-md border text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 p-2  border-black"
-        />
+        <div className="relative w-80">
+          <input
+            id="senhaSala"
+            name="senha"
+            placeholder="Senha..."
+            type={showPassword ? "text" : "password"}
+            required
+            className="block w-full rounded-md border text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6 p-2 border-black"
+          />
+          <div
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5 cursor-pointer"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </div>
+        </div>
         <button
           type="submit"
           className="w-28 flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-devland hover:bg-devland-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
