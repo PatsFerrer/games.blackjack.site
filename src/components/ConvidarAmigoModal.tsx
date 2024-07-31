@@ -11,7 +11,7 @@ const ConvidarAmigoModal: React.FC<ConvidarAmigoModalProps> = ({ onClose }) => {
   const [link, setLink] = useState<string>('');
   const { salaId } = useParams<{ salaId: string }>()
   useEffect(() => {
-    const mesaLink = `${window.location.origin}/sala/${salaId}`;
+    const mesaLink = `${window.location.origin}/mesa/${salaId}`;
     setLink(mesaLink);
   }, [])
 
