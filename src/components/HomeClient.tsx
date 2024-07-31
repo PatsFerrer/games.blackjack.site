@@ -18,6 +18,7 @@ export default function HomeClient({ salas }: HomeClientProps) {
   const [isLoading, setLoading] = useState(false);
   const [selectedSala, setSelectedSala] = useState<ISala | null>(null);
   const modalRef = useRef<HTMLDialogElement>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCreateSala = (novaSala: ISala) => {
     setClientSalas([...clientSalas, novaSala]);
@@ -26,10 +27,12 @@ export default function HomeClient({ salas }: HomeClientProps) {
 
   const handleOpenVerificarSenha = (sala: ISala) => {
     setSelectedSala(sala);
-    const modal = document.getElementById("verificarSenha") as HTMLDialogElement | null;
-    if (modal) {
-      modal.showModal();
-    }
+    setIsModalOpen(true);
+  };
+
+  const handleCloseVerificarSenha = () => {
+    setIsModalOpen(false);
+    setSelectedSala(null);
   };
 
   useEffect(() => {
@@ -84,18 +87,15 @@ export default function HomeClient({ salas }: HomeClientProps) {
             .map((sala) => <Salas key={sala.id} sala={sala} onJoin={handleOpenVerificarSenha}/>)}
       </div>
 
-      {selectedSala && (
-        <dialog id="verificarSenha" className="modal">
+      {isModalOpen && selectedSala && (
+        <dialog id="verificarSenha" className="modal" open>
           <div className="modal-box">
-            <form method="dialog">
-              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              <button onClick={handleCloseVerificarSenha} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                 ✕
               </button>
-            </form>
             <Suspense fallback={<Loading/>}>
               <VerificarSenhaSala sala={selectedSala} />
             </Suspense>
-            
           </div>
         </dialog>
       )}
