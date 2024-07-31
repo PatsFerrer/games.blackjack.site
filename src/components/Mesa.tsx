@@ -37,6 +37,10 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
       transports: ["websocket"],
     });
 
+    const handleBeforeUnload = async () => {
+      await jogadorDesconectado(salaId);
+    };
+
     socket.on("connect", async () => {
       console.log("Connected to socket server");
       await jogadorConectado(salaId);
@@ -52,16 +56,12 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
 
       if (evento.Tipo == 6) {
         // console.log('entrei no tipo 6')
-
       } else if (evento.Tipo == 8) {
         setShowSnackbar(true);
         const valorObj: Resultado = JSON.parse(evento.Valor);
         try {
-          
-
           setGanhadores(valorObj.Ganhadores)
           setPerdedores(valorObj.Perdedores)
-          
         } catch (error) {
           console.error('Erro ao parsear o JSON de Valor:', error);
         }
@@ -70,14 +70,16 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
         if (userId == null) {
           sessionStorage.setItem('userId', JSON.stringify(evento.UserId));
         }
-
       } else if (evento.Tipo == 1) {
         sessionStorage.removeItem('userId')
       }
       fetchStatus(false);
     });
 
+    window.addEventListener("beforeunload", handleBeforeUnload);
+
     return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
       socket.disconnect();
     };
   }, []);
@@ -116,7 +118,6 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
       ) : (
         <>
           <div className="flex justify-between w-full px-5 2xl:w-4/5">
-
             {/* botão deixar a mesa */}
             <Link
               href="/home"
@@ -147,8 +148,6 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
               Convidar amigos
               <FaShareAlt />
             </button>
-
-
           </div>
 
           {isOpen && <ConvidarAmigoModal onClose={() => setIsOpen(false)} />}
@@ -185,7 +184,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
               onClose={() => setShowSnackbar(false)}
             />
           )}
-          <ApostarFichas close={() => modalRef.current?.close()} idSala = {salaId}/>
+          <ApostarFichas close={() => modalRef.current?.close()} idSala={salaId}/>
 
           <div className="flex w-full px-5 justify-end gap-2 2xl:w-4/5">
             {/* chama função comprar carta */}
@@ -197,7 +196,6 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
       )}
     </main>
   );
-
 };
 
 export default Mesa;
