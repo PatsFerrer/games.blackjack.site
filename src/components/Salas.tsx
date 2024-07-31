@@ -16,6 +16,7 @@ const Salas: FC<SalasProps> = ({ sala, onJoin }) => {
           alt="Baralho de cartas"
           width={300}
           height={300}
+          priority={false}
         />
       </figure>
       <div className="card-body justify-center">
