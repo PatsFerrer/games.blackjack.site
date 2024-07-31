@@ -29,8 +29,8 @@ const VerificarSenhaSala: FC<VerificarSenhaProps> = ({ sala }) => {
       router.push(`/mesa/${sala.id}`);
     } else {
       setError(result.message || "Erro desconhecido");
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
