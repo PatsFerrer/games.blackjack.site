@@ -5,12 +5,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useParams } from 'next/navigation';
 import { TbHandStop } from "react-icons/tb";
-import io from 'socket.io-client';
 import pararJogada from '@/app/(auth)/mesa/_actions/pararJogada';
-
-const socket = io("https://blackjack-socket.azurewebsites.net", {
-  transports: ['websocket'],
-});
 
 const PararJogadaButton = () => {
   const { salaId } = useParams<{ salaId: string }>();
@@ -31,7 +26,6 @@ const PararJogadaButton = () => {
 
   return (
     <div>
-      {/* Botões para compra de carta */}
       <button onClick={handlePararJogada} className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900">
           <TbHandStop />
         </button>
@@ -40,7 +34,6 @@ const PararJogadaButton = () => {
           Parar
         </button>
 
-      {/* Exibição de toast de erro */}
       <ToastContainer
         position="bottom-left"
         autoClose={5000}
