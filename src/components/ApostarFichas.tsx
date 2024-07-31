@@ -1,20 +1,48 @@
 "use client";
 import { apostarFichas } from "@/app/(auth)/mesa/_actions";
-import { FC } from "react";
-import React from "react";
-import { useEffect } from "react";
+import { FC, useState, useEffect } from "react";
 
 interface FichasProps {
   close: any;
   idSala: string;
 }
 
-const ApostarFichas: FC<FichasProps> =({ close, idSala }) => {
+const ApostarFichas: FC<FichasProps> = ({ close, idSala }) => {
+  const [error, setError] = useState<string | null>(null);
+  const MinimoFichasAposta = 10;
 
-  const handleSubmit = () => {
-    const modal = document.getElementById("my_modal_3") as HTMLDialogElement | null;
-    if (modal) {
-      modal.close();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const fichas = formData.get('fichas');
+    const salaId = formData.get('salaId');
+
+    if (!fichas || !salaId) {
+      setError('Preencha todos os campos');
+      return;
+    }
+
+    const valorAposta = parseInt(fichas.toString(), 10);
+
+    if (isNaN(valorAposta)) {
+      setError('Quantidade de fichas inválida');
+      return;
+    }
+
+    if (valorAposta < MinimoFichasAposta) {
+      setError(`O valor da aposta deve ser no mínimo ${MinimoFichasAposta} fichas.`);
+      return;
+    }
+
+    try {
+      await apostarFichas(formData);
+      const modal = document.getElementById("my_modal_3") as HTMLDialogElement | null;
+      if (modal) {
+        modal.close();
+      }
+    } catch (error) {
+      setError('Erro ao apostar: ' + (error instanceof Error ? error.message : 'Desconhecido'));
     }
   };
 
@@ -29,8 +57,9 @@ const ApostarFichas: FC<FichasProps> =({ close, idSala }) => {
     <div>
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box">
-          <form action={apostarFichas} onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <h3 className="font-bold text-lg">Aposte suas fichas!</h3>
+            {error && <p className="text-red-500">{error}</p>}
             <label className="input input-bordered flex items-center gap-2 mt-3">
               <input
                 type="number"
@@ -44,7 +73,6 @@ const ApostarFichas: FC<FichasProps> =({ close, idSala }) => {
             <label hidden>
               <input type="text" id="salaId" name="salaId" value={idSala} readOnly />
             </label>
-
             <button
               type="submit"
               className="btn bg-blue-950 hover:bg-blue-900 text-white mt-5"

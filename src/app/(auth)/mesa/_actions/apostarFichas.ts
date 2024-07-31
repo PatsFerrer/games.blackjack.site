@@ -7,10 +7,6 @@ export default async function apostarFichas(FormData: FormData) {
   const fichas = FormData.get('fichas');
   const salaId = FormData.get('salaId');
 
-  if (!fichas ) {
-    throw new Error('Preencha todos os campos');
-  }
-
   const token = cookies().get('token')?.value;
 
   if (!token) {
@@ -24,8 +20,8 @@ export default async function apostarFichas(FormData: FormData) {
       'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify({
-        salaId,
-        fichas
+      salaId,
+      fichas
     })
   })
 
@@ -34,6 +30,6 @@ export default async function apostarFichas(FormData: FormData) {
     throw new Error(error.message || 'Erro ao apostar');
   }
 
-    redirect(`/mesa/${salaId}`);
+  redirect(`/mesa/${salaId}`);
 
 }
