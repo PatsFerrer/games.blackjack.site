@@ -24,6 +24,6 @@ export default async function comprarCarta(salaId:string) {
   } else if (response.status === 401 || response.status === 404) {
     return { success: false, message: "Senha inválida. Por favor, verifique a senha e tente novamente." };
   } else {
-    return { success: false, message: "Ocorreu um erro. Por favor, tente novamente mais tarde." };
+    return { success: false, message: "Não foi possível Comprar Carta! Aguarde sua vez!" };
   }
 }
