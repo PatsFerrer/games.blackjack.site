@@ -40,7 +40,7 @@ export default function Jogador({ jogador, index, ganhadores, perdedores, empate
         transform: `translate(-50%, -43%)`,
       }}
     >
-      <h3 className="text-lg text-white text-center font-semibold mb-1">{nome}</h3>
+      <h3 className={`text-lg  text-center font-semibold mb-1 ${jogador.ehVez ? 'text-yellow-300' : "text-white"}`}>{nome}</h3>
       <div className={`flex flex-col items-center text-center w-20 h-20 relative rounded-full border-4 ${statusClass}`}>
         {/* Cartas */}
         {cartas!.map((carta, cartaIndex) => (
