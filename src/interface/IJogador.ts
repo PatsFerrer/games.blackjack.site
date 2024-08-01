@@ -16,5 +16,6 @@ export interface IJogador {
   jogador: Jogador;
   index: number;
   ganhadores: string[],
-  perdedores: string[]
+  perdedores: string[],
+  empates: string[]
 }

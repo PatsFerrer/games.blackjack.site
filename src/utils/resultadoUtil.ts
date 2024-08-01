@@ -1,15 +1,16 @@
 import { Result } from "@/types";
 
-export const verificarResultado = (ganhadores: string[], perdedores: string[], userId?: string): Result => {
-  if(userId === undefined){
-    userId = JSON.parse(sessionStorage.getItem('userId')!);
-  }
+export const verificarResultado = (ganhadores: string[], perdedores: string[], empates: string[], userId: string) => {
 
-    if (ganhadores.includes(userId!)) {
+
+    if (ganhadores.includes(userId)) {
       return Result.VITORIA;
     }
-    if (perdedores.includes(userId!)) {
+    else if (perdedores.includes(userId)) {
       return Result.DERROTA;
     }
-    return Result.EMPATE;
+    else if (empates.includes(userId)){
+      return Result.EMPATE;
+    }
+    
   }

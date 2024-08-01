@@ -12,6 +12,7 @@ import PararJogadaButton from "./PararButton";
 import SnackbarGanhador from "./SnackbarGanhador";
 import { jogadorConectado, jogadorDesconectado, getStatusJogo } from "@/app/(auth)/mesa/_actions";
 import ApostarFichas from "./ApostarFichas";
+import getUser from "@/app/(auth)/mesa/_actions/getUser";
 
 interface IProps {
   salaId: string;
@@ -31,6 +32,9 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   const [messages, setMessages] = useState<string[]>([]);
   const [ganhadores, setGanhadores] = useState<string[]>([]);
   const [perdedores, setPerdedores] = useState<string[]>([]);
+  const [empates, setEmpates] = useState<string[]>([]);
+  const [userId, setUserId] = useState<string>("");
+  const [userLogin, setUserLogin] = useState<string>("");
 
   useEffect(() => {
     const socket = io("https://blackjack-socket.azurewebsites.net", {
@@ -40,6 +44,9 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
     socket.on("connect", async () => {
       console.log("Connected to socket server");
       await jogadorConectado(salaId);
+      let usuario = await getUser();
+      setUserId(usuario.id);
+      setUserLogin(usuario.login);
       fetchStatus(true);
     });
 
@@ -50,30 +57,20 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
     socket.on("mensagem", async (message: string) => {
       const evento = JSON.parse(message);
 
-      if (evento.Tipo == 6) {
-        // console.log('entrei no tipo 6')
-
-      } else if (evento.Tipo == 8) {
+      if (evento.Tipo == 8) {
         setShowSnackbar(true);
-        const valorObj: Resultado = JSON.parse(evento.Valor);
+        const valorObj = JSON.parse(evento.Valor);
         try {
           
 
           setGanhadores(valorObj.Ganhadores)
-          setPerdedores(valorObj.Perdedores)
-          
+          setPerdedores(valorObj.Perdedores)   
+          setEmpates(valorObj.Empates)    
         } catch (error) {
           console.error('Erro ao parsear o JSON de Valor:', error);
         }
-      } else if (evento.Tipo == 0) {
-        let userId = sessionStorage.getItem('userId')
-        if (userId == null) {
-          sessionStorage.setItem('userId', JSON.stringify(evento.UserId));
-        }
+      } 
 
-      } else if (evento.Tipo == 1) {
-        sessionStorage.removeItem('userId')
-      }
       fetchStatus(false);
     });
 
@@ -103,8 +100,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   };
 
   const handleCartaComprada = () => {
-    // Função para atualizar o estado do jogo após comprar a carta
-    fetchStatus(false); // Atualiza o estado do jogo
+    fetchStatus(false);
   };
 
   return (
@@ -170,6 +166,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
                   index={index}
                   ganhadores={ganhadores}
                   perdedores={perdedores}
+                  empates={empates}
                   jogador={jogador}
                 />
               ))}
@@ -181,8 +178,11 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
             <SnackbarGanhador
               ganhadores={ganhadores}
               perdedores={perdedores}
+              empates={empates}
               show={showSnackbar}
-              onClose={() => setShowSnackbar(false)}
+              onClose={() => setShowSnackbar(false)} 
+              userId={userId}
+              userLogin = {userLogin}
             />
           )}
           <ApostarFichas close={() => modalRef.current?.close()} idSala = {salaId}/>

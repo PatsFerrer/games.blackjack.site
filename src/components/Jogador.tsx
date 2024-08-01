@@ -5,8 +5,8 @@ import validarImagem from "@/utils/imageUtil";
 import { verificarResultado } from "@/utils/resultadoUtil";
 import { useEffect, useState } from "react";
 
-export default function Jogador({ jogador, index, ganhadores, perdedores }: IJogador) {
-  const [status, setStatus] = useState<Result>(Result.EMPATE)
+export default function Jogador({ jogador, index, ganhadores, perdedores, empates }: IJogador) {
+  const [status, setStatus] = useState<Result>()
   const { usuarioId } = jogador
 
   let statusClass = status === Result.VITORIA
@@ -16,8 +16,8 @@ export default function Jogador({ jogador, index, ganhadores, perdedores }: IJog
       : 'border-yellow-600';
 
   useEffect(() => {
-    setStatus(verificarResultado(ganhadores, perdedores, usuarioId!))
-  }, [usuarioId, ganhadores, perdedores])
+      setStatus(verificarResultado(ganhadores, perdedores, empates, usuarioId!))    
+  }, [usuarioId, ganhadores, perdedores, empates])
 
   let { avatarUrl, nome, fichas, fichasApostadas, cartas } = jogador;
 
