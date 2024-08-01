@@ -37,7 +37,7 @@ const VerificarSenhaSala: FC<VerificarSenhaProps> = ({ sala }) => {
     <form className="space-y-6 " onSubmit={handleSubmit}>
       <div className="flex items-center flex-col gap-2">
         <h3 className="text-2xl text-center font-bold text-gray-900">
-          Insira a senha de "{sala.nome}"
+          Insira a senha de &quot;{sala.nome}&quot;
         </h3>
         <label hidden>
           <input type="text" id="nomeSala" name="nome" value={sala.nome} readOnly />
