@@ -21,8 +21,7 @@ interface IProps {
 }
 
 const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
-  const { eventos } = useEventosContext();
-  const [jogo, setJogo] = useState<any>();
+  const [jogo, setJogo] = useState<any>({ dealer: { cartas: [] }, jogadores: [] });
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -82,7 +81,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
       socket.disconnect();
     };
-  }, []);
+  }, [salaId]);
 
   const handleSairMesa = () => {
     sessionStorage.removeItem('userId')
@@ -156,22 +155,30 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
             {/* cadeiras dos jogadores */}
             <div className="absolute inset-0 flex justify-center items-center">
               {/* Dealer */}
-              <Dealer
-                className={`absolute rounded-full border-4 border-yellow-600 w-24 h-24`}
-                cartas={jogo.dealer.cartas}
-              />
+              {jogo.dealer && jogo.dealer.cartas ? (
+                <Dealer
+                  className={`absolute rounded-full border-4 border-yellow-600 w-24 h-24`}
+                  cartas={jogo.dealer.cartas}
+                />
+              ) : (
+                <div className="text-white">Carregando dealer...</div>
+              )}
 
               {/* Jogadores ao redor da mesa */}
-              {jogo.jogadores.map((jogador: any, index: number) => (
-                <Jogador
-                  key={index}
-                  index={index}
-                  ganhadores={ganhadores}
-                  perdedores={perdedores}
-                  empates={empates}
-                  jogador={jogador}
-                />
-              ))}
+              {jogo.jogadores ? (
+                jogo.jogadores.map((jogador: any, index: number) => (
+                  <Jogador
+                    key={index}
+                    index={index}
+                    ganhadores={ganhadores}
+                    perdedores={perdedores}
+                    empates={empates}
+                    jogador={jogador}
+                  />
+                ))
+              ) : (
+                <div className="text-white">Carregando jogadores...</div>
+              )}
             </div>
           </div>
 
@@ -184,7 +191,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
               show={showSnackbar}
               onClose={() => setShowSnackbar(false)} 
               userId={userId}
-              userLogin = {userLogin}
+              userLogin={userLogin}
             />
           )}
           <ApostarFichas close={() => modalRef.current?.close()} idSala={salaId}/>
