@@ -40,13 +40,13 @@ export default function Jogador({ jogador, index, ganhadores, perdedores, empate
         transform: `translate(-50%, -43%)`,
       }}
     >
-      <h3 className={`text-lg  text-center font-semibold mb-1 ${jogador.ehVez ? 'text-yellow-300' : "text-white"}`}>{nome}</h3>
-      <div className={`flex flex-col items-center text-center w-20 h-20 relative rounded-full border-4 ${statusClass}`}>
+      <h3 className={`text-lg text-center font-semibold mb-1 ${jogador.ehVez ? 'text-yellow-300' : "text-white"}`}>{nome}</h3>
+      <div className={`flex flex-col items-center text-center w-20 h-20 relative rounded-full border-4 ${statusClass} ${jogador.ehVez ? 'transform scale-105 transition-transform duration-300' : ''}`}>
         {/* Cartas */}
         {cartas!.map((carta, cartaIndex) => (
           <div
             key={cartaIndex}
-            className="absolute w-16 shadow-md rounded-md"
+            className="absolute w-16 shadow-md rounded-md z-40"
             style={{
               left: `${posicionarCartasX(index, cartaIndex)}%`,
               top: `${65 + 50 * Math.sin((cartaIndex * 2 * Math.PI) / 30)}%`,
@@ -58,17 +58,16 @@ export default function Jogador({ jogador, index, ganhadores, perdedores, empate
         ))}
 
         <img
-          className="object-cover aspect-square rounded-full mb-2"
-          src={validarImagem(avatarUrl  || "")}
+          className={`object-cover aspect-square rounded-full mb-2 ${jogador.ehVez ? 'ring-4 ring-yellow-300 animate-pulse' : ''}`}
+          src={validarImagem(avatarUrl || "")}
           alt={`Foto de ${nome}`}
         />
 
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-1">
           <p className="text-sm text-white">Fichas: ${fichas}</p>
-          <p className="text-sm text-white">Fichas Apostadas: ${fichasApostadas}</p>
+          <p className="text-sm text-white">Apostadas: ${fichasApostadas}</p>
         </div>
       </div>
     </div>
-
   )
 }
