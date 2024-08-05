@@ -1,8 +1,7 @@
 'use client'
 import { IJogador } from "@/interface/IJogador"
 import { Result } from "@/types";
-import validarImagem from "@/utils/imageUtil";
-import { verificarResultado } from "@/utils/resultadoUtil";
+import { formatarFichas, validarImagem, verificarResultado } from "@/utils";
 import { useEffect, useState } from "react";
 
 export default function Jogador({ jogador, index, ganhadores, perdedores, empates }: IJogador) {
@@ -64,8 +63,8 @@ export default function Jogador({ jogador, index, ganhadores, perdedores, empate
         />
 
         <div className="flex flex-col gap-1">
-          <p className="text-sm text-white">Fichas: ${fichas}</p>
-          <p className="text-sm text-white">Apostadas: ${fichasApostadas}</p>
+          <p className="text-sm text-white">Fichas: ${formatarFichas(fichas)}</p>
+          <p className="text-sm text-white">Apostadas: ${formatarFichas(fichasApostadas)}</p>
         </div>
       </div>
     </div>

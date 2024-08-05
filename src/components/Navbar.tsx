@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
-import LogoutButton from "./LogoutButton";
 import Image from "next/image";
-
-import { ListarPessoasButton } from "@/components";
 import { redirect } from "next/navigation";
-import validarImagem from "@/utils/imageUtil";
+
+import LogoutButton from "./LogoutButton";
+import { ListarPessoasButton } from "@/components";
 import { getUsuario } from "@/app/api/endpoints/getUsuario";
 import usuariosTopFichas from "@/app/(auth)/home/_actions/usuariosTopFichas";
 import { ITopJogador } from "@/interface/ITopJogador";
+import { formatarFichas, validarImagem } from "@/utils";
 
 export default async function Navbar() {
 
@@ -50,7 +50,7 @@ export default async function Navbar() {
         <div tabIndex={0} role="button" className="btn flex flex-col bg-devland hover:bg-devland-100">
           <div className="text-white">{nome}</div>
           <div className="badge badge-neutral">
-            <span>${fichas}</span>
+            <span>${formatarFichas(fichas)}</span>
           </div>
           <div className="dropdown dropdown-end">
             <div
