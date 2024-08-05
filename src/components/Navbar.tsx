@@ -40,15 +40,22 @@ export default async function Navbar() {
           <Image
             src="/img/logo-devland-horiz.png"
             alt="Logo Devland"
-            className="h-6"
+            className="hidden sm:block"
             width={182}
             height={24}
+          />
+          <Image
+            src="/img/logo-icon_black_05x.png"
+            alt="Logo Devland"
+            className="sm:hidden h-10"
+            width={35}
+            height={10}
           />
         </Link>
       </div>
       <div className="dropdown dropdown-end">
         <div tabIndex={0} role="button" className="btn flex flex-col bg-devland hover:bg-devland-100">
-          <div className="text-white">{nome}</div>
+          <div className="text-white truncate max-w-20">{nome}</div>
           <div className="badge badge-neutral">
             <span>${formatarFichas(fichas)}</span>
           </div>
