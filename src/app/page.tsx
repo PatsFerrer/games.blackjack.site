@@ -1,4 +1,4 @@
-import Home from "./(login)/page"
+import Home from "./(login)/Home"
 
 function page() {
   return (
