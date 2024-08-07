@@ -24,10 +24,3 @@ export interface ITopJogador {
 export interface ICarta {
   imagemUrl: string;
 }
-
-
-// export interface IResultado {
-//   Empates: string[];
-//   Ganhadores: string[];
-//   Perdedores: string[];
-// }
