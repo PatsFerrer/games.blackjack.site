@@ -1,12 +1,12 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { ISala } from "@/interface/ISala";
-import Salas from "@/components/Salas";
-import SalaForm from "@/components/SalaForm";
 import VerificarSenhaSala from "./VerificarSenhaSala";
 import { Suspense } from 'react';
-import Loading from "./Loading";
+import SalaForm from "./SalaForm";
+import Salas from "./Salas";
+import { Loading } from "@/components";
+import { ISala } from "@/interface";
 
 interface HomeClientProps {
   salas: ISala[];

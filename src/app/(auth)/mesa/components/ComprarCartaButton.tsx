@@ -5,13 +5,9 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { GiCardPickup } from 'react-icons/gi';
 import { useParams } from 'next/navigation';
-import comprarCarta from '@/app/(auth)/mesa/_actions/comprarCarta';
+import { comprarCarta } from '../_actions';
 
-interface ComprarCartaButtonProps {
-  onCartaComprada: () => void;
-}
-
-const ComprarCartaButton: React.FC<ComprarCartaButtonProps> = ({ onCartaComprada }) => {
+const ComprarCartaButton = () => {
   const { salaId } = useParams<{ salaId: string }>();
 
   const handleCompraCarta = async () => {
@@ -19,7 +15,6 @@ const ComprarCartaButton: React.FC<ComprarCartaButtonProps> = ({ onCartaComprada
       const result = await comprarCarta(salaId);
       if (result.success) {
         console.log('Compra de carta realizada com sucesso');
-        onCartaComprada();
       } else {
         toast.error(result.message || 'Erro ao comprar carta');
       }

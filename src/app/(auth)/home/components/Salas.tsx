@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ISala } from "@/interface/ISala";
+import { ISala } from "@/interface";
 import Image from "next/image";
 
 interface SalasProps {
@@ -12,7 +12,7 @@ const Salas: FC<SalasProps> = ({ sala, onJoin }) => {
     <div className="card max-h-52 bg-base-100 shadow-xl image-full max-w-72">
       <figure>
         <Image
-          src="/img/baralho.jpg"
+          src="/assets/img/baralho.jpg"
           alt="Baralho de cartas"
           width={300}
           height={300}

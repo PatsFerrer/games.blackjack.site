@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ITopJogador } from "@/interface/ITopJogador";
+import { ITopJogador } from "@/interface";
 import { formatarFichas, validarImagem } from '@/utils';
 
 interface ITopJogadores {

@@ -1,5 +1,5 @@
 "use client";
-import { ITopJogador } from "@/interface/ITopJogador";
+import { ITopJogador } from "@/interface";
 import React, { useEffect, useState } from "react";
 import { FaTrophy } from "react-icons/fa";
 import ListarPessoasFichas from "./ListarPessoasFichas";

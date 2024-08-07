@@ -1,33 +1,42 @@
 "use client";
-import { useEventosContext } from "@/context/EventosContext";
+
 import Link from "next/link";
 import { FaArrowLeft, FaShareAlt } from "react-icons/fa";
 import Dealer from "./Dealer";
 import Jogador from "./Jogador";
-import ComprarCartaButton from "./ComprarCartaButton";
 import { useEffect, useRef, useState } from "react";
-import ConvidarAmigoModal from "./ConvidarAmigoModal";
 import io from "socket.io-client";
 import PararJogadaButton from "./PararButton";
 import SnackbarGanhador from "./SnackbarGanhador";
-import { jogadorConectado, jogadorDesconectado, getStatusJogo } from "@/app/(auth)/mesa/_actions";
+import {
+  jogadorConectado,
+  jogadorDesconectado,
+  getStatusJogo,
+} from "@/app/(auth)/mesa/_actions";
 import ApostarFichas from "./ApostarFichas";
 import getUser from "@/app/(auth)/mesa/_actions/getUser";
+import ConvidarAmigoModal from "@/app/(auth)/mesa/components/ConvidarAmigoModal";
+import ComprarCartaButton from "@/app/(auth)/mesa/components/ComprarCartaButton";
+import { TCarta } from "@/types";
+import NovaPartidaButton from "./NovaPartidaButton";
 
 interface IProps {
   salaId: string;
   [key: string]: any;
-  className?: string
+  className?: string;
 }
 
 const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
-  const [jogo, setJogo] = useState<any>({ dealer: { cartas: [] }, jogadores: [] });
+  const [jogo, setJogo] = useState<any>({
+    dealer: { cartas: [] },
+    jogadores: [],
+  });
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [showSnackbar, setShowSnackbar] = useState(false);
   const modalRef = useRef<HTMLDialogElement>(null);
-
+  const [dealerCartasFinais, setDealerCartasFinais] = useState<boolean>(false);
   const [messages, setMessages] = useState<string[]>([]);
   const [ganhadores, setGanhadores] = useState<string[]>([]);
   const [perdedores, setPerdedores] = useState<string[]>([]);
@@ -36,7 +45,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   const [userLogin, setUserLogin] = useState<string>("");
 
   useEffect(() => {
-    const socket = io("https://blackjack-socket.azurewebsites.net", {
+    const socket = io("https://blackjack-socket.azurewebsites.net/" , {
       transports: ["websocket"],
     });
 
@@ -60,19 +69,50 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
     socket.on("mensagem", async (message: string) => {
       const evento = JSON.parse(message);
 
-      if (evento.Tipo == 8) {
-        setShowSnackbar(true);
+      if (evento.Tipo == 2) {
+        //comprar carta
+        const novaCarta: TCarta = { alt: evento.Valor };
+        setJogo((prevJogo: any) => {
+          const jogadoresAtualizados = prevJogo.jogadores.map(
+            (jogador: any) => {
+              if (jogador.usuarioId === evento.UserId) {
+                return { ...jogador, cartas: [...jogador.cartas, novaCarta] };
+              }
+              return jogador;
+            }
+          );
+          return { ...prevJogo, jogadores: jogadoresAtualizados };
+        });
+      } else if (evento.Tipo == 3) {
+        //passar a vez
+      } else if (evento.Tipo == 5) {
+        //dealer joga
+        
+      } else if (evento.Tipo == 6) {
+        //definir ganhadores
+        const cartas: TCarta[] = evento.Valor.map((alt: string) => ({ alt }));
+        setJogo((prevJogo: any) => {
+          return { ...prevJogo, dealer: { cartas } };
+        });
+        setDealerCartasFinais(true);
+
+      } else if(evento.Tipo == 7){
+        //iniciar jogo
+        fetchStatus(false)
+        setDealerCartasFinais(false)
+      }
+      else if (evento.Tipo == 8) {
+        //nova partida
+         setShowSnackbar(true);
         const valorObj = JSON.parse(evento.Valor);
         try {
-          setGanhadores(valorObj.Ganhadores)
-          setPerdedores(valorObj.Perdedores)   
-          setEmpates(valorObj.Empates)    
+          setGanhadores(valorObj.Ganhadores);
+          setPerdedores(valorObj.Perdedores);
+          setEmpates(valorObj.Empates);
         } catch (error) {
-          console.error('Erro ao parsear o JSON de Valor:', error);
+          console.error("Erro ao parsear o JSON de Valor:", error);
         }
-      } 
-
-      fetchStatus(false);
+      }
     });
 
     window.addEventListener("beforeunload", handleBeforeUnload);
@@ -82,12 +122,8 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
       socket.disconnect();
     };
   }, [salaId]);
-
-  const handleSairMesa = () => {
-    sessionStorage.removeItem('userId')
-  }
-
-  const fetchStatus = async (hasLoading: boolean) => {
+  
+  const fetchStatus = async (hasLoading: boolean = true) => {
     try {
       if (hasLoading) {
         setLoading(true);
@@ -101,10 +137,6 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleCartaComprada = () => {
-    fetchStatus(false);
   };
 
   return (
@@ -126,7 +158,6 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
             <Link
               href="/home"
               className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900"
-              onClick={() => handleSairMesa()}
             >
               <FaArrowLeft />
               Deixar a mesa
@@ -158,7 +189,8 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
               {jogo.dealer && jogo.dealer.cartas ? (
                 <Dealer
                   className={`absolute rounded-full border-4 border-yellow-600 w-24 h-24`}
-                  cartas={jogo.dealer.cartas}
+                  cartas={dealerCartasFinais ? jogo.dealer.cartas : jogo.dealer.cartas.slice(0, 2)}
+                  virarCarta = {dealerCartasFinais}
                 />
               ) : (
                 <div className="text-white">Carregando dealer...</div>
@@ -189,16 +221,28 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
               perdedores={perdedores}
               empates={empates}
               show={showSnackbar}
-              onClose={() => setShowSnackbar(false)} 
+              onClose={() => setShowSnackbar(false)}
               userId={userId}
               userLogin={userLogin}
             />
           )}
-          <ApostarFichas close={() => modalRef.current?.close()} idSala={salaId}/>
+          <ApostarFichas
+            close={() => modalRef.current?.close()}
+            idSala={salaId}
+          />
+
+          
 
           <div className="flex w-full px-5 justify-end gap-2 2xl:w-4/5">
+          
+            <NovaPartidaButton 
+            // setVisibilidade={setDealerCartasFinais}
+            // atualizarJogo={fetchStatus}
+            className = {dealerCartasFinais ? "" : "hidden"}/>
+            
             {/* chama função comprar carta */}
-            <ComprarCartaButton onCartaComprada={handleCartaComprada} />
+            <ComprarCartaButton />
+            
             {/* chama a função Parar */}
             <PararJogadaButton />
           </div>

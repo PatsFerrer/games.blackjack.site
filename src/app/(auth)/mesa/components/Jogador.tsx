@@ -1,5 +1,6 @@
 'use client'
-import { IJogador } from "@/interface/IJogador"
+
+import { IJogador } from "@/interface";
 import { Result } from "@/types";
 import { formatarFichas, validarImagem, verificarResultado } from "@/utils";
 import { useEffect, useState } from "react";
@@ -52,7 +53,7 @@ export default function Jogador({ jogador, index, ganhadores, perdedores, empate
               transform: `translate(-10%, -50%)`,
             }}
           >
-            <img src={`./../cartas/${carta.alt}.png`} alt={`Carta ${cartaIndex + 1}`} className="rounded-md shadow-md" />
+            <img src={`./../assets/cartas/${carta.alt}.png`} alt={`Carta ${cartaIndex + 1}`} className="rounded-md shadow-md" />
           </div>
         ))}
 

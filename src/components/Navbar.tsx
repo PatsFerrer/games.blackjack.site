@@ -1,3 +1,4 @@
+"use server"
 import Link from "next/link";
 import { cookies } from "next/headers";
 import Image from "next/image";
@@ -7,7 +8,7 @@ import LogoutButton from "./LogoutButton";
 import { ListarPessoasButton } from "@/components";
 import { getUsuario } from "@/app/api/endpoints/getUsuario";
 import usuariosTopFichas from "@/app/(auth)/home/_actions/usuariosTopFichas";
-import { ITopJogador } from "@/interface/ITopJogador";
+import { ITopJogador } from "@/interface";
 import { formatarFichas, validarImagem } from "@/utils";
 
 export default async function Navbar() {
@@ -38,14 +39,14 @@ export default async function Navbar() {
       <div className="flex-1">
         <Link href="/home">
           <Image
-            src="/img/logo-devland-horiz.png"
+            src="/assets/img/logo-devland-horiz.png"
             alt="Logo Devland"
             className="hidden sm:block"
             width={182}
             height={24}
           />
           <Image
-            src="/img/logo-icon_black_05x.png"
+            src="/assets/img/logo-icon_black_05x.png"
             alt="Logo Devland"
             className="sm:hidden h-10"
             width={35}

@@ -1,4 +1,5 @@
-import { FormCadastro } from "@/components";
+import FormCadastro from "./components/FormCadastro";
+
 
 export default async function Cadastro() { //coloquei async
   return (

@@ -2,9 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-
 import cadastro from "@/app/cadastro/_actions/cadastro";
-import Loading from "./Loading";
+import { Loading } from "@/components";
 
 export default function FormCadastro() {
 
@@ -15,7 +14,7 @@ export default function FormCadastro() {
 
       <div className="avatar flex flex-col gap-2 items-center justify-center">
         <div className="w-24 rounded-full">
-          <Image src="/img/logo-circ_black_05x.png" width={150} height={150} alt="Logo da Devland" />
+          <Image src="/assets/img/logo-circ_black_05x.png" width={150} height={150} alt="Logo da Devland" />
         </div>
         {/* <input type="file" className="file-input file-input-xs" /> */}
       </div>

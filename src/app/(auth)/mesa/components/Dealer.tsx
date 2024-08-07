@@ -1,11 +1,6 @@
-import { Carta } from "@/interface/IJogador";
+import { TDealer } from "@/types";
 
-type Dealer = {
-  cartas?: Carta[],
-  className?: string
-};
-
-export default function Dealer({ cartas = [], className }: Dealer) {
+export default function Dealer({ cartas = [], className, virarCarta }: TDealer) {
   return (
     <div
       className={className}
@@ -26,15 +21,15 @@ export default function Dealer({ cartas = [], className }: Dealer) {
             transform: `translate(-10%, -50%)`,
           }}
         >
-          {cartaIndex === 1 ? (
+          {cartaIndex === 1 && virarCarta === false ? (
             <img
-              src="./../cartas/BACK.png"
+              src="./../assets/cartas/BACK.png"
               alt="Carta Escondida"
               className="w-14 rounded-md shadow-md"
             />
           ) : (
             <img
-              src={`./../cartas/${carta.alt}.png`}
+              src={`./../assets/cartas/${carta.alt}.png`}
               alt={`Carta ${carta.alt}`}
               className="w-14 rounded-md shadow-md"
             />
@@ -44,7 +39,7 @@ export default function Dealer({ cartas = [], className }: Dealer) {
 
       <img
         className="object-cover aspect-square rounded-full"
-        src="./../dealer.png"
+        src="./../assets/img/dealer.png"
         alt="Foto de Dealer"
       />
     </div>

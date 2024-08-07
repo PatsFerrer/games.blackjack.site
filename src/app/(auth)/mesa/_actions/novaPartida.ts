@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 
-export default async function comprarCarta(salaId:string) {
+export default async function novaPartida(salaId:string) {
 
   const token = cookies().get("token")?.value;
 
@@ -10,7 +10,7 @@ export default async function comprarCarta(salaId:string) {
     return { success: false, message: "Usuário não autenticado" };
   }
 
-  const response = await fetch(`${process.env.API_URL}/jogo/comprar`, {
+  const response = await fetch(`${process.env.API_URL}/jogo/nova-partida`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -22,8 +22,8 @@ export default async function comprarCarta(salaId:string) {
   if (response.status === 200) {
     return { success: true };
   } else if (response.status === 401 || response.status === 404) {
-    return { success: false, message: "Não foi possível Comprar Carta! Aguarde sua vez!" };
+    return { success: false, message: "Não foi possível iniciar uma nova partida!" };
   } else {
-    return { success: false, message: "Não foi possível Comprar Carta! Aguarde sua vez!" };
+    return { success: false, message: "Não foi possível iniciar uma nova partida!" };
   }
 }

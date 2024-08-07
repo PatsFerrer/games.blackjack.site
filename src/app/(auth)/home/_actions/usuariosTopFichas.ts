@@ -1,7 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { ITopJogador } from "@/interface/ITopJogador";
+import { ITopJogador } from "@/interface";
 
 export default async function usuariosTopFichas() {
 

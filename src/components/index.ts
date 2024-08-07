@@ -1,35 +1,12 @@
-import Jogador from './Jogador';
+
 import Navbar from './Navbar';
-import SalaForm from './SalaForm';
-import Dealer from './Dealer';
-import FormLogin from './FormLogin';
 import LogoutButton from './LogoutButton';
-import FormCadastro from './FormCadastro';
 import ListarPessoasButton from './ListarPessoasButton';
 import Loading from './Loading';
-import Salas from './Salas';
-import HomeClient from './HomeClient';
-import ComprarCartaButton from './ComprarCartaButton';
-import Mesa from './Mesa';
-import ConvidarAmigoModal from './ConvidarAmigoModal';
-import SnackbarGanhador from './SnackbarGanhador';
-import ApostarFichas from './ApostarFichas';
 
 export {
-  Jogador,
   Navbar,
-  Salas,
-  SalaForm,
-  Dealer,
-  FormLogin,
   LogoutButton,
-  FormCadastro,
   ListarPessoasButton,
-  Loading,
-  HomeClient,
-  ComprarCartaButton,
-  Mesa,
-  ConvidarAmigoModal,
-  SnackbarGanhador,
-  ApostarFichas
+  Loading
 }

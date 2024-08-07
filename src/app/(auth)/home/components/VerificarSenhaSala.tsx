@@ -1,9 +1,10 @@
 "use client"
 import { useSearchParams, useRouter } from "next/navigation";
 import { FC, useState } from "react";
-import Loading from "./Loading";
+
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import entrarSala from "@/app/(auth)/home/_actions/entrarSala";
+import { Loading } from "@/components";
 
 interface VerificarSenhaProps {
   sala: any;
