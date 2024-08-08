@@ -4,10 +4,13 @@ import Link from "next/link";
 import { useState } from "react";
 import cadastro from "@/app/cadastro/_actions/cadastro";
 import { Loading } from "@/components";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function FormCadastro() {
 
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   return (
     <div className="mx-auto w-full max-w-sm bg-white p-6 shadow-md rounded-lg mt-4 mb-4">
@@ -16,7 +19,6 @@ export default function FormCadastro() {
         <div className="w-24 rounded-full">
           <Image src="/assets/img/logo-circ_black_05x.png" width={150} height={150} alt="Logo da Devland" />
         </div>
-        {/* <input type="file" className="file-input file-input-xs" /> */}
       </div>
 
       <h3 className="mt-2 text-xl text-center font-bold text-gray-900">
@@ -60,30 +62,47 @@ export default function FormCadastro() {
               Senha
             </label>
           </div>
-          <input
-            id="senha"
-            name="senha"
-            type="password"
-            required
-            className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-devland-200 sm:text-sm sm:leading-6"
-            placeholder="Digite sua senha"
-          />
+          <div className="relative">
+            <input
+              id="senha"
+              name="senha"
+              type={showPassword ? "text" : "password"}
+              required
+              className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-devland-200 sm:text-sm sm:leading-6"
+              placeholder="Digite sua senha"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
         </div>
 
         <div className="mt-4">
           <label htmlFor="confirmSenha" className="block text-sm font-medium text-gray-900">
             Confirmar Senha
           </label>
-          <input
-            id="confirmSenha"
-            name="confirmSenha"
-            type="password"
-            required
-            className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-devland-200 sm:text-sm sm:leading-6"
-            placeholder="Confirme sua senha"
-          />
+          <div className="relative">
+            <input
+              id="confirmSenha"
+              name="confirmSenha"
+              type={showConfirmPassword ? "text" : "password"}
+              required
+              className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-devland-200 sm:text-sm sm:leading-6"
+              placeholder="Confirme sua senha"
+            />
+            <button
+              type="button"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500"
+            >
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
         </div>
-
         <div className="mt-4">
           <label htmlFor="avatar" className="block text-sm font-medium text-gray-900">
             Imagem URL
@@ -109,7 +128,6 @@ export default function FormCadastro() {
             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-devland-200 sm:text-sm sm:leading-6"
           />
         </div>
-
 
         <div className="mt-6">
           <button
