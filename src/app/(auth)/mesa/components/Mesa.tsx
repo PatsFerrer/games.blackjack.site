@@ -2,22 +2,24 @@
 
 import Link from "next/link";
 import { FaArrowLeft, FaShareAlt } from "react-icons/fa";
-import Dealer from "./Dealer";
-import Jogador from "./Jogador";
 import { useEffect, useRef, useState } from "react";
+
 import io from "socket.io-client";
-import PararJogadaButton from "./PararButton";
-import SnackbarGanhador from "./SnackbarGanhador";
 import {
   jogadorConectado,
   jogadorDesconectado,
   getStatusJogo,
 } from "@/app/(auth)/mesa/_actions";
-import ApostarFichas from "./ApostarFichas";
 import getUser from "@/app/(auth)/mesa/_actions/getUser";
-import ConvidarAmigoModal from "@/app/(auth)/mesa/components/ConvidarAmigoModal";
-import ComprarCartaButton from "@/app/(auth)/mesa/components/ComprarCartaButton";
 import { TCarta } from "@/types";
+import ConvidarAmigoModal from "./ConvidarAmigoModal";
+import Dealer from "./Dealer";
+import Jogador from "./Jogador";
+import SnackbarGanhador from "./SnackbarGanhador";
+import ApostarFichas from "./ApostarFichas";
+// import NovaPartidaButton from "./NovaPartidaButton";
+import ComprarCartaButton from "./ComprarCartaButton";
+import PararJogadaButton from "./PararJogadaButton";
 import NovaPartidaButton from "./NovaPartidaButton";
 
 interface IProps {
@@ -87,7 +89,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
         //passar a vez
       } else if (evento.Tipo == 5) {
         //dealer joga
-        
+
       } else if (evento.Tipo == 6) {
         //definir ganhadores
         const cartas: TCarta[] = evento.Valor.map((alt: string) => ({ alt }));
@@ -103,7 +105,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
       }
       else if (evento.Tipo == 8) {
         //nova partida
-         setShowSnackbar(true);
+        setShowSnackbar(true);
         const valorObj = JSON.parse(evento.Valor);
         try {
           setGanhadores(valorObj.Ganhadores);
@@ -122,7 +124,6 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
       socket.disconnect();
     };
   }, [salaId]);
-  
   const fetchStatus = async (hasLoading: boolean = true) => {
     try {
       if (hasLoading) {
@@ -190,7 +191,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
                 <Dealer
                   className={`absolute rounded-full border-4 border-yellow-600 w-24 h-24`}
                   cartas={dealerCartasFinais ? jogo.dealer.cartas : jogo.dealer.cartas.slice(0, 2)}
-                  virarCarta = {dealerCartasFinais}
+                  virarCarta={dealerCartasFinais}
                 />
               ) : (
                 <div className="text-white">Carregando dealer...</div>
@@ -231,20 +232,19 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
             idSala={salaId}
           />
 
-          
+          <div className="flex w-full px-5 2xl:w-4/5 justify-between">
+            <div>
+              <NovaPartidaButton
+                // setVisibilidade={setDealerCartasFinais}
+                // atualizarJogo={fetchStatus}
+                className={dealerCartasFinais ? "" : "hidden"}
+              />
+            </div>
 
-          <div className="flex w-full px-5 justify-end gap-2 2xl:w-4/5">
-          
-            <NovaPartidaButton 
-            // setVisibilidade={setDealerCartasFinais}
-            // atualizarJogo={fetchStatus}
-            className = {dealerCartasFinais ? "" : "hidden"}/>
-            
-            {/* chama função comprar carta */}
-            <ComprarCartaButton />
-            
-            {/* chama a função Parar */}
-            <PararJogadaButton />
+            <div className="flex gap-1">
+              <ComprarCartaButton />
+              <PararJogadaButton />
+            </div>
           </div>
         </>
       )}

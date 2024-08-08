@@ -25,7 +25,7 @@ const ComprarCartaButton = () => {
   };
 
   return (
-    <div>
+    <>
       <button onClick={handleCompraCarta} className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900">
         <GiCardPickup />
       </button>
@@ -45,7 +45,7 @@ const ComprarCartaButton = () => {
         draggable
         pauseOnHover
       />
-    </div>
+    </>
   );
 };
 
