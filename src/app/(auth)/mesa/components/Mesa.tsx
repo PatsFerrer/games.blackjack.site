@@ -61,6 +61,8 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
       setUserId(usuario.id);
       setUserLogin(usuario.login);
       fetchStatus(true);
+
+      socket.emit('join_room', salaId)
     });
 
     socket.on("disconnect", async () => {
