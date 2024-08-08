@@ -100,12 +100,15 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
           return { ...prevJogo, jogadores: jogadoresAtualizados };
         });
       } else if (evento.Tipo == 4) {
+        //apostar
         setJogo((prevJogo: any) => {
-          prevJogo.jogadores.map((jogador: any) => {
+          const apostaAtualizada = prevJogo.jogadores.map((jogador: any) => {
             if (jogador.usuarioId === evento.UserId) {
-              return { ...jogador, aposta: [evento.Valor] };
+              return { ...jogador, fichasApostadas: [evento.Valor] };
             }
+            return jogador;
           });
+          return { ...prevJogo, jogadores: apostaAtualizada };
         });
       } else if (evento.Tipo == 6) {
         //definir ganhadores
