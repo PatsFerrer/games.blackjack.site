@@ -4,10 +4,12 @@ import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Loading } from "@/components";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function FormLogin() {
 
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const searchParams = useSearchParams();
   const error = searchParams.get('error');
@@ -52,13 +54,22 @@ export default function FormLogin() {
             Esqueceu a senha?
           </Link>
         </div>
-        <input
-          id="senha"
-          name="senha"
-          type="password"
-          required
-          className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
-        />
+        <div className="relative">
+          <input
+            id="senha"
+            name="senha"
+            type={showPassword ? "text" : "password"}
+            required
+            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 p-2"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500"
+          >
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </button>
+        </div>
       </div>
 
       <div className="mt-6">
