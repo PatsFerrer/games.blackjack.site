@@ -17,7 +17,6 @@ import Dealer from "./Dealer";
 import Jogador from "./Jogador";
 import SnackbarGanhador from "./SnackbarGanhador";
 import ApostarFichas from "./ApostarFichas";
-// import NovaPartidaButton from "./NovaPartidaButton";
 import ComprarCartaButton from "./ComprarCartaButton";
 import PararJogadaButton from "./PararJogadaButton";
 import NovaPartidaButton from "./NovaPartidaButton";
@@ -149,7 +148,6 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
       ) : (
         <>
           <div className="flex justify-between w-full px-5 2xl:w-4/5">
-            {/* botão deixar a mesa */}
             <Link
               href="/home"
               className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900"
@@ -164,7 +162,6 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
               Deixar a mesa
             </Link>
 
-            {/*  botao convidar amigos */}
             <button
               onClick={() => setIsOpen(true)}
               className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900"
@@ -182,11 +179,8 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
 
           {isOpen && <ConvidarAmigoModal onClose={() => setIsOpen(false)} />}
 
-          {/* Mesa */}
           <div className="relative w-4/5 h-96 border border-indigo-100 rounded-3xl md:max-w-[950px] bg-blue-950 shadow-sm shadow-slate-900 hover:shadow-lg">
-            {/* cadeiras dos jogadores */}
             <div className="absolute inset-0 flex justify-center items-center">
-              {/* Dealer */}
               {jogo.dealer && jogo.dealer.cartas ? (
                 <Dealer
                   className={`absolute rounded-full border-4 border-yellow-600 w-24 h-24`}
@@ -197,7 +191,6 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
                 <div className="text-white">Carregando dealer...</div>
               )}
 
-              {/* Jogadores ao redor da mesa */}
               {jogo.jogadores ? (
                 jogo.jogadores.map((jogador: any, index: number) => (
                   <Jogador
@@ -215,7 +208,6 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
             </div>
           </div>
 
-          {/*  snackbar informa ganhador */}
           {showSnackbar && (
             <SnackbarGanhador
               ganhadores={ganhadores}
