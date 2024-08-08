@@ -17,7 +17,7 @@ import ApostarFichas from "./ApostarFichas";
 import getUser from "@/app/(auth)/mesa/_actions/getUser";
 import ConvidarAmigoModal from "@/app/(auth)/mesa/components/ConvidarAmigoModal";
 import ComprarCartaButton from "@/app/(auth)/mesa/components/ComprarCartaButton";
-import { TCarta } from "@/types";
+import { TCarta, TJogador } from "@/types";
 import NovaPartidaButton from "./NovaPartidaButton";
 
 interface IProps {
@@ -69,7 +69,23 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
     socket.on("mensagem", async (message: string) => {
       const evento = JSON.parse(message);
 
-      if (evento.Tipo == 2) {
+      if (evento.Tipo == 0){
+        const valorObj = evento.Valor;
+        let novoJogador: TJogador = {
+          avatarUrl: valorObj.AvatarUrl,
+          cartas: valorObj.Cartas,
+          ehVez: valorObj.EhVez,
+          fichas: valorObj.Fichas,
+          fichasApostadas: valorObj.FichasApostadas,
+          nome: valorObj.Nome,
+          usuarioId: evento.Valor.UsuarioId,
+        };
+        setJogo((prevJogo: any) => {
+          const jogadoresAtualizados = [...prevJogo.jogadores, novoJogador];
+          return { ...prevJogo, jogadores: jogadoresAtualizados };
+        });
+
+      } else if(evento.Tipo == 2) {
         //comprar carta
         const novaCarta: TCarta = { alt: evento.Valor };
         setJogo((prevJogo: any) => {
@@ -83,11 +99,6 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
           );
           return { ...prevJogo, jogadores: jogadoresAtualizados };
         });
-      } else if (evento.Tipo == 3) {
-        //passar a vez
-      } else if (evento.Tipo == 5) {
-        //dealer joga
-        
       } else if (evento.Tipo == 6) {
         //definir ganhadores
         const cartas: TCarta[] = evento.Valor.map((alt: string) => ({ alt }));
@@ -100,8 +111,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
         //iniciar jogo
         fetchStatus(false)
         setDealerCartasFinais(false)
-      }
-      else if (evento.Tipo == 8) {
+      } else if (evento.Tipo == 8) {
         //nova partida
          setShowSnackbar(true);
         const valorObj = JSON.parse(evento.Valor);
