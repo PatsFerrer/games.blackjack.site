@@ -2,22 +2,23 @@
 
 import Link from "next/link";
 import { FaArrowLeft, FaShareAlt } from "react-icons/fa";
-import Dealer from "./Dealer";
-import Jogador from "./Jogador";
 import { useEffect, useRef, useState } from "react";
+
 import io from "socket.io-client";
-import PararJogadaButton from "./PararButton";
-import SnackbarGanhador from "./SnackbarGanhador";
 import {
   jogadorConectado,
   jogadorDesconectado,
   getStatusJogo,
 } from "@/app/(auth)/mesa/_actions";
-import ApostarFichas from "./ApostarFichas";
 import getUser from "@/app/(auth)/mesa/_actions/getUser";
-import ConvidarAmigoModal from "@/app/(auth)/mesa/components/ConvidarAmigoModal";
-import ComprarCartaButton from "@/app/(auth)/mesa/components/ComprarCartaButton";
 import { TCarta, TJogador } from "@/types";
+import ConvidarAmigoModal from "./ConvidarAmigoModal";
+import Dealer from "./Dealer";
+import Jogador from "./Jogador";
+import SnackbarGanhador from "./SnackbarGanhador";
+import ApostarFichas from "./ApostarFichas";
+import ComprarCartaButton from "./ComprarCartaButton";
+import PararJogadaButton from "./PararJogadaButton";
 import NovaPartidaButton from "./NovaPartidaButton";
 
 interface IProps {
@@ -113,7 +114,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
         setDealerCartasFinais(false)
       } else if (evento.Tipo == 8) {
         //nova partida
-         setShowSnackbar(true);
+        setShowSnackbar(true);
         const valorObj = JSON.parse(evento.Valor);
         try {
           setGanhadores(valorObj.Ganhadores);
@@ -132,7 +133,6 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
       socket.disconnect();
     };
   }, [salaId]);
-  
   const fetchStatus = async (hasLoading: boolean = true) => {
     try {
       if (hasLoading) {
@@ -158,7 +158,6 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
       ) : (
         <>
           <div className="flex justify-between w-full px-5 2xl:w-4/5">
-            {/* botão deixar a mesa */}
             <Link
               href="/home"
               className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900"
@@ -173,7 +172,6 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
               Deixar a mesa
             </Link>
 
-            {/*  botao convidar amigos */}
             <button
               onClick={() => setIsOpen(true)}
               className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900"
@@ -191,22 +189,18 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
 
           {isOpen && <ConvidarAmigoModal onClose={() => setIsOpen(false)} />}
 
-          {/* Mesa */}
           <div className="relative w-4/5 h-96 border border-indigo-100 rounded-3xl md:max-w-[950px] bg-blue-950 shadow-sm shadow-slate-900 hover:shadow-lg">
-            {/* cadeiras dos jogadores */}
             <div className="absolute inset-0 flex justify-center items-center">
-              {/* Dealer */}
               {jogo.dealer && jogo.dealer.cartas ? (
                 <Dealer
                   className={`absolute rounded-full border-4 border-yellow-600 w-24 h-24`}
                   cartas={dealerCartasFinais ? jogo.dealer.cartas : jogo.dealer.cartas.slice(0, 2)}
-                  virarCarta = {dealerCartasFinais}
+                  virarCarta={dealerCartasFinais}
                 />
               ) : (
                 <div className="text-white">Carregando dealer...</div>
               )}
 
-              {/* Jogadores ao redor da mesa */}
               {jogo.jogadores ? (
                 jogo.jogadores.map((jogador: any, index: number) => (
                   <Jogador
@@ -224,7 +218,6 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
             </div>
           </div>
 
-          {/*  snackbar informa ganhador */}
           {showSnackbar && (
             <SnackbarGanhador
               ganhadores={ganhadores}
@@ -241,20 +234,19 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
             idSala={salaId}
           />
 
-          
+          <div className="flex w-full px-5 2xl:w-4/5 justify-between">
+            <div>
+              <NovaPartidaButton
+                // setVisibilidade={setDealerCartasFinais}
+                // atualizarJogo={fetchStatus}
+                className={dealerCartasFinais ? "" : "hidden"}
+              />
+            </div>
 
-          <div className="flex w-full px-5 justify-end gap-2 2xl:w-4/5">
-          
-            <NovaPartidaButton 
-            // setVisibilidade={setDealerCartasFinais}
-            // atualizarJogo={fetchStatus}
-            className = {dealerCartasFinais ? "" : "hidden"}/>
-            
-            {/* chama função comprar carta */}
-            <ComprarCartaButton />
-            
-            {/* chama a função Parar */}
-            <PararJogadaButton />
+            <div className="flex gap-1">
+              <ComprarCartaButton />
+              <PararJogadaButton />
+            </div>
           </div>
         </>
       )}

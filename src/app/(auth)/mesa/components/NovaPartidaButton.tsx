@@ -1,7 +1,8 @@
+'use client'
 import { useParams } from "next/navigation";
-import { TbHandStop } from "react-icons/tb";
 import novaPartida from "../_actions/novaPartida";
 import { toast } from "react-toastify";
+import { VscDebugRestart } from "react-icons/vsc";
 
 interface NovaPartidaProps{
   className: string
@@ -9,22 +10,22 @@ interface NovaPartidaProps{
   // atualizarJogo: () => void;
 }
 
-export default function NovaPartida({className}: NovaPartidaProps) {
+export default function NovaPartidaButton({className}: NovaPartidaProps) {
   const { salaId } = useParams<{ salaId: string }>();
 
   const handleNovaPartida = async () => {
     try {
       const result = await novaPartida(salaId);
       if (result.success) {
-        console.log("Compra de carta realizada com sucesso");
+        console.log("Nova partida realizada com sucesso");
         // setVisibilidade(false);
         // atualizarJogo();
       } else {
         toast.error(result.message || "Erro ao comprar carta");
       }
     } catch (error) {
-      console.error("Erro ao processar compra de carta", error);
-      toast.error("Erro ao comprar carta");
+      console.error("Erro ao processar nova partida", error);
+      toast.error("Erro ao iniciar nova partida");
     }
   };
   
@@ -32,11 +33,11 @@ export default function NovaPartida({className}: NovaPartidaProps) {
     <div className={className}>
       {/* botão deixar a mesa */}
       <button onClick={handleNovaPartida} className="md:hidden btn bg-blue-950 text-white hover:bg-blue-900">
-        <TbHandStop />
+        <VscDebugRestart />
       </button>
       <button onClick={handleNovaPartida} className="hidden md:flex btn bg-blue-950 text-white hover:bg-blue-900">
-        <TbHandStop />
-        Iniciar nova partida
+        <VscDebugRestart />
+        Nova partida
       </button>
     </div>
   );
