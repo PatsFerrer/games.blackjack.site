@@ -87,6 +87,16 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
           const jogadoresAtualizados = [...prevJogo.jogadores, novoJogador];
           return { ...prevJogo, jogadores: jogadoresAtualizados };
         });
+      } else if(evento.Tipo == 1){
+        const valorObj = evento.Valor;
+        const jogadorDesconectado = valorObj.UserId
+        setJogo((prevJogo: any) => {
+          const jogadoresAtualizados = prevJogo.jogadores.filter(
+            (jogador: any) => jogador.usuarioId !== jogadorDesconectado
+          );
+          return { ...prevJogo, jogadores: jogadoresAtualizados };
+        });
+
       } else if (evento.Tipo == 2) {
         //comprar carta
         const novaCarta: TCarta = { alt: evento.Valor };
