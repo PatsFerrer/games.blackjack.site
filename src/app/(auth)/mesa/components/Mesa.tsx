@@ -70,7 +70,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
     socket.on("mensagem", async (message: string) => {
       const evento = JSON.parse(message);
 
-      if (evento.Tipo == 0){
+      if (evento.Tipo == 0) {
         const valorObj = evento.Valor;
         let novoJogador: TJogador = {
           avatarUrl: valorObj.AvatarUrl,
@@ -85,8 +85,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
           const jogadoresAtualizados = [...prevJogo.jogadores, novoJogador];
           return { ...prevJogo, jogadores: jogadoresAtualizados };
         });
-
-      } else if(evento.Tipo == 2) {
+      } else if (evento.Tipo == 2) {
         //comprar carta
         const novaCarta: TCarta = { alt: evento.Valor };
         setJogo((prevJogo: any) => {
@@ -100,6 +99,14 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
           );
           return { ...prevJogo, jogadores: jogadoresAtualizados };
         });
+      } else if (evento.Tipo == 4) {
+        setJogo((prevJogo: any) => {
+          prevJogo.jogadores.map((jogador: any) => {
+            if (jogador.usuarioId === evento.UserId) {
+              return { ...jogador, aposta: [evento.Valor] };
+            }
+          });
+        });
       } else if (evento.Tipo == 6) {
         //definir ganhadores
         const cartas: TCarta[] = evento.Valor.map((alt: string) => ({ alt }));
@@ -107,11 +114,10 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
           return { ...prevJogo, dealer: { cartas } };
         });
         setDealerCartasFinais(true);
-
-      } else if(evento.Tipo == 7){
+      } else if (evento.Tipo == 7) {
         //iniciar jogo
-        fetchStatus(false)
-        setDealerCartasFinais(false)
+        fetchStatus(false);
+        setDealerCartasFinais(false);
       } else if (evento.Tipo == 8) {
         //nova partida
         setShowSnackbar(true);
@@ -133,6 +139,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
       socket.disconnect();
     };
   }, [salaId]);
+
   const fetchStatus = async (hasLoading: boolean = true) => {
     try {
       if (hasLoading) {
@@ -140,7 +147,18 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
       }
       const data = await getStatusJogo(salaId);
       const jogo = await data;
-      setJogo(jogo);
+      const jogoAtualizado = {
+        ...jogo,
+        dealer: {
+          ...jogo.dealer,
+          cartas: jogo.dealer.cartas.map((carta: string) => ({ alt: carta })),
+        },
+        jogadores: jogo.jogadores.map((jogador: any) => ({
+          ...jogador,
+          cartas: jogador.cartas.map((carta: string) => ({ alt: carta })),
+        })),
+      };
+      setJogo(jogoAtualizado);
     } catch (error) {
       setError(true);
       console.error("Deu ruim", error);
@@ -194,7 +212,11 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
               {jogo.dealer && jogo.dealer.cartas ? (
                 <Dealer
                   className={`absolute rounded-full border-4 border-yellow-600 w-24 h-24`}
-                  cartas={dealerCartasFinais ? jogo.dealer.cartas : jogo.dealer.cartas.slice(0, 2)}
+                  cartas={
+                    dealerCartasFinais
+                      ? jogo.dealer.cartas
+                      : jogo.dealer.cartas.slice(0, 2)
+                  }
                   virarCarta={dealerCartasFinais}
                 />
               ) : (
