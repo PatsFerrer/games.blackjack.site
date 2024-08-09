@@ -71,7 +71,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
 
     socket.on("mensagem", async (message: string) => {
       const evento = JSON.parse(message);
-
+      
       if (evento.Tipo == 0) {
         const valorObj = evento.Valor;
         let novoJogador: TJogador = {
@@ -110,7 +110,24 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
           );
           return { ...prevJogo, jogadores: jogadoresAtualizados };
         });
-      } else if (evento.Tipo == 4) {
+      } else if (evento.Tipo == 3) {
+        // Passar vez
+
+        setJogo((prevJogo: any) => {
+          const jogadoresAtualizados = prevJogo.jogadores.map((jogador: any, index: number) => {
+              if (jogador.usuarioId === evento.UserId) {
+                  // Desativar a vez do jogador atual
+                  return { ...jogador, ehVez: false };
+              } else if (index === (prevJogo.jogadores.findIndex((j: any) => j.usuarioId === evento.UserId) + 1) % prevJogo.jogadores.length) {
+                  // Ativar a vez do próximo jogador
+                  return { ...jogador, ehVez: true };
+              }
+              return jogador;
+          });
+          return { ...prevJogo, jogadores: jogadoresAtualizados };
+      });
+
+    } else if (evento.Tipo == 4) {
         //apostar
         setJogo((prevJogo: any) => {
           const apostaAtualizada = prevJogo.jogadores.map((jogador: any) => {

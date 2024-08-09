@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { IJogador } from "@/interface";
 import { Result } from "@/types";
@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function Jogador({ jogador, index, ganhadores, perdedores, empates }: IJogador) {
   const [status, setStatus] = useState<Result>()
-  const { usuarioId } = jogador
+  const { usuarioId, ehVez } = jogador;
 
   let statusClass = status === Result.VITORIA
     ? 'border-emerald-500'
@@ -17,7 +17,7 @@ export default function Jogador({ jogador, index, ganhadores, perdedores, empate
 
   useEffect(() => {
       setStatus(verificarResultado(ganhadores, perdedores, empates, usuarioId!))    
-  }, [usuarioId, ganhadores, perdedores, empates])
+  }, [usuarioId, ganhadores, perdedores, empates]);
 
   let { avatarUrl, nome, fichas, fichasApostadas, cartas } = jogador;
 
@@ -30,7 +30,6 @@ export default function Jogador({ jogador, index, ganhadores, perdedores, empate
   }
 
   return (
-
     <div
       key={jogador.usuarioId}
       className={` absolute `}
@@ -40,8 +39,8 @@ export default function Jogador({ jogador, index, ganhadores, perdedores, empate
         transform: `translate(-50%, -43%)`,
       }}
     >
-      <h3 className={`text-lg text-center font-semibold mb-1 ${jogador.ehVez ? 'text-yellow-300' : "text-white"}`}>{nome}</h3>
-      <div className={`flex flex-col items-center text-center w-20 h-20 relative rounded-full border-4 ${statusClass} ${jogador.ehVez ? 'transform scale-105 transition-transform duration-300' : ''}`}>
+      <h3 className={`text-lg text-center font-semibold mb-1 ${ehVez ? 'text-yellow-300' : "text-white"}`}>{nome}</h3>
+      <div className={`flex flex-col items-center text-center w-20 h-20 relative rounded-full border-4 ${statusClass} ${ehVez ? 'transform scale-105 transition-transform duration-300' : ''}`}>
         {/* Cartas */}
         {cartas!.map((carta, cartaIndex) => (
           <div
@@ -58,7 +57,7 @@ export default function Jogador({ jogador, index, ganhadores, perdedores, empate
         ))}
 
         <img
-          className={`object-cover aspect-square rounded-full mb-2 ${jogador.ehVez ? 'ring-4 ring-yellow-300 animate-pulse' : ''}`}
+          className={`object-cover aspect-square rounded-full mb-2 ${ehVez ? 'ring-4 ring-yellow-300 animate-pulse' : ''}`}
           src={validarImagem(avatarUrl || "")}
           alt={`Foto de ${nome}`}
         />
