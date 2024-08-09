@@ -3,17 +3,18 @@ import { apostarFichas } from "@/app/(auth)/mesa/_actions";
 import { FC, useState, useEffect } from "react";
 
 interface FichasProps {
-  close: any;
+  exibirModal: boolean;
   idSala: string;
 }
 
-const ApostarFichas: FC<FichasProps> = ({ close, idSala }) => {
+const ApostarFichas: FC<FichasProps> = ({ exibirModal, idSala }) => {
   const [error, setError] = useState<string | null>(null);
   const MinimoFichasAposta = 10;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const form = event.currentTarget;
     const formData = new FormData(event.currentTarget);
     const fichas = formData.get('fichas');
     const salaId = formData.get('salaId');
@@ -41,6 +42,9 @@ const ApostarFichas: FC<FichasProps> = ({ close, idSala }) => {
       if (modal) {
         modal.close();
       }
+
+      form.reset();
+      setError(null);
     } catch (error) {
       setError('Erro ao apostar: ' + (error instanceof Error ? error.message : 'Desconhecido'));
     }
@@ -48,10 +52,11 @@ const ApostarFichas: FC<FichasProps> = ({ close, idSala }) => {
 
   useEffect(() => {
     const modal = document.getElementById("my_modal_3") as HTMLDialogElement | null;
-    if (modal) {
+    if(exibirModal==true && modal){
       modal.showModal();
+      modal.addEventListener('cancel', (e) => e.preventDefault());
     }
-  }, []);
+  }, [exibirModal]);
 
   return (
     <div>

@@ -38,6 +38,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
   const [showSnackbar, setShowSnackbar] = useState(false);
   const modalRef = useRef<HTMLDialogElement>(null);
   const [dealerCartasFinais, setDealerCartasFinais] = useState<boolean>(false);
+  const [apostar, setApostar] = useState<boolean>(true);
   const [messages, setMessages] = useState<string[]>([]);
   const [ganhadores, setGanhadores] = useState<string[]>([]);
   const [perdedores, setPerdedores] = useState<string[]>([]);
@@ -115,12 +116,14 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
         setJogo((prevJogo: any) => {
           const apostaAtualizada = prevJogo.jogadores.map((jogador: any) => {
             if (jogador.usuarioId === evento.UserId) {
-              return { ...jogador, fichasApostadas: [evento.Valor] };
+              return { ...jogador, fichasApostadas: [evento.Valor]};
             }
             return jogador;
           });
           return { ...prevJogo, jogadores: apostaAtualizada };
         });
+        
+        setApostar(false)
       } else if (evento.Tipo == 6) {
         //definir ganhadores
         const cartas: TCarta[] = evento.Valor.map((alt: string) => ({ alt }));
@@ -132,6 +135,7 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
         //iniciar jogo
         fetchStatus(false);
         setDealerCartasFinais(false);
+        setApostar(true)
       } else if (evento.Tipo == 8) {
         //nova partida
         setShowSnackbar(true);
@@ -266,15 +270,13 @@ const Mesa: React.FC<IProps> = ({ salaId, ...props }) => {
             />
           )}
           <ApostarFichas
-            close={() => modalRef.current?.close()}
+            exibirModal={apostar}
             idSala={salaId}
           />
 
           <div className="flex w-full px-5 2xl:w-4/5 justify-between">
             <div>
               <NovaPartidaButton
-                // setVisibilidade={setDealerCartasFinais}
-                // atualizarJogo={fetchStatus}
                 className={dealerCartasFinais ? "" : "hidden"}
               />
             </div>
