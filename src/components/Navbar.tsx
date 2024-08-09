@@ -55,10 +55,12 @@ export default async function Navbar() {
         </Link>
       </div>
       <div className="dropdown dropdown-end">
-        <div tabIndex={0} role="button" className="btn flex flex-col bg-devland hover:bg-devland-100">
-          <div className="text-white truncate max-w-20">{nome}</div>
-          <div className="badge badge-neutral">
-            <span>${formatarFichas(fichas)}</span>
+        <div tabIndex={0} role="button" className="btn flex bg-devland hover:bg-devland-100 content-center">
+          <div className="flex flex-col gap-1 items-center">
+            <div className="text-white truncate max-w-20 h-4">{nome}</div>
+            <div className="badge badge-neutral">
+              <span>${formatarFichas(fichas)}</span>
+            </div>
           </div>
           <div className="dropdown dropdown-end">
             <div
