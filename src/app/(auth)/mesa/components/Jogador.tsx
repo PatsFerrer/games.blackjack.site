@@ -57,7 +57,7 @@ export default function Jogador({ jogador, index, ganhadores, perdedores, empate
 
         <div className="flex flex-col gap-1">
           <img
-            className={`object-cover aspect-square rounded-full mb-2 ${ehVez ? 'border-2 border-yellow-300 animate-pulse' : ''}`}
+            className={`object-cover aspect-square rounded-full mb-2 ${ehVez ? `${statusClass} animate-pulse` : ''}`}
             src={validarImagem(avatarUrl || "")}
             alt={`Foto de ${nome}`}
           />
