@@ -23,16 +23,16 @@ export default function Jogador({ jogador, index, ganhadores, perdedores, empate
 
   function posicionarCartasX(index: number, cartaIndex: number) {
     if (index === 2 || index === 3) {
-      return 155 + -30 * Math.cos((cartaIndex * 2 * Math.PI) / 5);
+      return 115 + -20 * Math.cos((cartaIndex * 2 * Math.PI) / 5);
     }
 
-    return -55 + -30 * Math.cos((cartaIndex * 2 * Math.PI) / 5);
+    return -35 + -20 * Math.cos((cartaIndex * 2 * Math.PI) / 5);
   }
 
   return (
     <div
       key={jogador.usuarioId}
-      className={`absolute`}
+      className={` absolute `}
       style={{
         left: `${46 + 55 * Math.cos((index * 2 * Math.PI) / 5)}%`, // Posição X
         top: `${42 + 53 * Math.sin((index * 2 * Math.PI) / 5)}%`, // Posição Y
@@ -47,7 +47,7 @@ export default function Jogador({ jogador, index, ganhadores, perdedores, empate
             className="absolute w-16 shadow-md rounded-md z-40"
             style={{
               left: `${posicionarCartasX(index, cartaIndex)}%`,
-              top: `${65 + 50 * Math.sin((cartaIndex * 2 * Math.PI) / 30)}%`,
+              top: `${45 + 50 * Math.sin((cartaIndex * 2 * Math.PI) / 30)}%`,
               transform: `translate(-10%, -50%)`,
             }}
           >
