@@ -32,7 +32,7 @@ export default function Jogador({ jogador, index, ganhadores, perdedores, empate
   return (
     <div
       key={jogador.usuarioId}
-      className={` absolute `}
+      className={`absolute`}
       style={{
         left: `${46 + 55 * Math.cos((index * 2 * Math.PI) / 5)}%`, // Posição X
         top: `${42 + 53 * Math.sin((index * 2 * Math.PI) / 5)}%`, // Posição Y
@@ -40,7 +40,7 @@ export default function Jogador({ jogador, index, ganhadores, perdedores, empate
       }}
     >
       <h3 className={`text-lg text-center font-semibold mb-1 ${ehVez ? 'text-yellow-300' : "text-white"}`}>{nome}</h3>
-      <div className={`flex flex-col items-center text-center w-20 h-20 relative rounded-full border-4 ${statusClass} ${ehVez ? 'transform scale-105 transition-transform duration-300' : ''}`}>
+      <div className={`flex flex-col items-center text-center relative`}>
         {cartas!.map((carta, cartaIndex) => (
           <div
             key={cartaIndex}
@@ -55,12 +55,17 @@ export default function Jogador({ jogador, index, ganhadores, perdedores, empate
           </div>
         ))}
 
-        <div className="flex flex-col gap-1">
-          <img
-            className={`object-cover aspect-square rounded-full mb-2 ${ehVez ? `${statusClass} animate-pulse` : ''}`}
-            src={validarImagem(avatarUrl || "")}
-            alt={`Foto de ${nome}`}
-          />
+        <div className="flex flex-col gap-1 items-center">
+
+          <div className={`w-20 h-20 rounded-full border-4 ${statusClass} overflow-hidden ${ehVez ? 'transform scale-105 transition-transform duration-300' : ''}`}>
+            <img
+              className={`w-full h-full object-cover rounded-full ${ehVez ? `${statusClass} animate-pulse` : ''}`}
+              src={validarImagem(avatarUrl || "")}
+              alt={`Foto de ${nome}`}
+            />
+          </div>
+
+
           <p className="text-sm text-white">Fichas: ${formatarFichas(fichas)}</p>
           <p className="text-sm text-white">Apostadas: ${formatarFichas(fichasApostadas)}</p>
         </div>
