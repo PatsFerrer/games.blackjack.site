@@ -88,7 +88,6 @@ public/           # Imagens e assets estáticos
 | `npm run lint` | Analisa o código com ESLint                 |
 
 ## Prints de Tela
-> Substitua os caminhos das imagens abaixo pelos prints reais após capturá-los.
 
 ### Login
 ![Login](./public/login.png)
