@@ -11,8 +11,7 @@ Aplicação web de **Blackjack** em tempo real, construída com **Next.js 14**, 
 6. [Estrutura de Pastas](#estrutura-de-pastas)
 7. [Scripts Disponíveis](#scripts-disponíveis)
 8. [Prints de Tela](#prints-de-tela)
-9. [Contribuindo](#contribuindo)
-10. [Licença](#licença)
+9. [Licença](#licença)
 
 ## Visão Geral
 Este projeto foi desenvolvido com o objetivo de praticar conceitos modernos de desenvolvimento web full-stack, tais como Server Actions, autenticação com NextAuth e comunicação em tempo real via WebSockets. O jogo implementa as regras clássicas do Blackjack (ou **21**) e mantém o estado das partidas sincronizado entre todos os participantes.
