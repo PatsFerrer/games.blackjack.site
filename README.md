@@ -90,17 +90,20 @@ public/           # Imagens e assets estáticos
 ## Prints de Tela
 > Substitua os caminhos das imagens abaixo pelos prints reais após capturá-los.
 
-1. ![Login](![login](https://github.com/user-attachments/assets/ac63f977-67af-455f-a845-c87782c0945f)
-)
-2. ![Lobby de Salas](![lobby](https://github.com/user-attachments/assets/c292c170-b9de-47dc-ae9e-d6d4e94617a4)
-)
-3. ![Aposta e Fichas](![mesa1](https://github.com/user-attachments/assets/dd82e4b3-ba30-494e-9139-8a356a0f4f17)
-)
-4. ![Mesa de Jogo](![mesa2](https://github.com/user-attachments/assets/246814a8-9fc2-4265-9990-16b59b4585d2)
-)
+### Login
+![Login](./public/login.png)
 
-5. ![Ranking](![mesa3](https://github.com/user-attachments/assets/71cec6e9-2653-4ca2-86b9-7a156b94e29c)
-)
+### Lobby de Salas
+![Lobby de Salas](/public/lobby.png)
+
+### Aposta e Fichas
+![Aposta e Fichas](/public/mesa1.png)
+
+### Mesa de Jogo
+![Mesa de Jogo](/public/mesa2.png)
+
+### Ranking
+![Ranking](/public/mesa3.png)
 
 ## Licença
 Distribuído sob a licença MIT. Veja `LICENSE` para mais detalhes.
